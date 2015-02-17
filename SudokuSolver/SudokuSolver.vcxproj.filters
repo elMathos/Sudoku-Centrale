@@ -30,6 +30,12 @@
     <ClInclude Include="TripleHolder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ColumnHolder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RegionHolder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Cell.cpp">
@@ -45,6 +51,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TripleHolder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ColumnHolder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RegionHolder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

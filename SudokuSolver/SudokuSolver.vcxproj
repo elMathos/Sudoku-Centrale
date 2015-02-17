@@ -77,15 +77,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Cell.h" />
+    <ClInclude Include="ColumnHolder.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="Region.h" />
+    <ClInclude Include="RegionHolder.h" />
     <ClInclude Include="RowHolder.h" />
     <ClInclude Include="TripleHolder.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Cell.cpp" />
+    <ClCompile Include="ColumnHolder.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="Region.cpp" />
+    <ClCompile Include="RegionHolder.cpp" />
     <ClCompile Include="RowHolder.cpp" />
     <ClCompile Include="TripleHolder.cpp" />
   </ItemGroup>
