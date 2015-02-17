@@ -1,4 +1,11 @@
 #pragma once
+
+#ifdef SUDOKUSOLVER_EXPORTS
+#define ExportedByDll __declspec(dllexport)
+#else
+#define ExportedByDll __declspec(dllimport)
+#endif
+
 #include "Region.h"
 #include <string>
 #include <vector>

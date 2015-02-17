@@ -1,5 +1,13 @@
 #pragma once
-class Cell
+
+#ifdef SUDOKUSOLVER_EXPORTS
+#define ExportedByDll __declspec(dllexport)
+#else
+#define ExportedByDll __declspec(dllimport)
+#endif
+
+
+class ExportedByDll Cell
 {
 public:
 	Cell();

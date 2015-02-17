@@ -1,11 +1,18 @@
 #pragma once
+
+#ifdef SUDOKUSOLVER_EXPORTS
+#define ExportedByDll __declspec(dllexport)
+#else
+#define ExportedByDll __declspec(dllimport)
+#endif
+
 #include "Cell.h"
 #include <string>
 #include <vector>
 #include <memory>
 using namespace std;
 
-class Region
+class ExportedByDll Region
 {
 public:
 	Region(string);
