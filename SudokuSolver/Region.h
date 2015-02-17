@@ -19,10 +19,10 @@ public:
 	Region();
 	~Region();
 	Region& operator=(const Region& r);
+	bool IsFull();
 
 private:
 	vector<vector<Cell>> _cells;
 	const int L = 3;
-	bool IsFull();
 };
 

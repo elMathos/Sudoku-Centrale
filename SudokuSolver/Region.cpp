@@ -34,8 +34,15 @@ Region::~Region()
 
 bool Region::IsFull()
 {
-	//TODO : to be filled
-	return false;
+	for (int i = 0; i < L; i++){
+		for (int j = 0; j < L; j++){
+			if (_cells[i][j].IsEmpty()) {
+				return false;
+			}
+		}
+	}
+	//If we get out of the loop, all the cells are full (not empty)
+	return true;
 }
 
 Region& Region::operator=(const Region& r)
