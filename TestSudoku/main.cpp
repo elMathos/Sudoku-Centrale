@@ -18,5 +18,5 @@ void main()
 
 	Grid grid(values);
 
-	Cell c=3;
+	Cell c = 3;
 }
