@@ -41,6 +41,9 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+
+# VS files
 *.ilk
 *.exe
 *.pdb
@@ -52,3 +55,10 @@ Temporary Items
 *.idb
 *.vcxproj
 *.filters
+
+
+# ReSharper
+_Resharper*
+
+*.user
+Sudoku.opensdf
