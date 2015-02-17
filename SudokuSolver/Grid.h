@@ -13,7 +13,7 @@
 using namespace std;
 
 
-class Grid
+class ExportedByDll Grid
 {
 public:
 	Grid(vector<vector<string>>& values);
