@@ -64,3 +64,5 @@ _Resharper*
 Sudoku.opensdf
 Release/SudokuSolver.dll
 Debug/SudokuSolver.dll
+Release/SudokuSolver.exp
+Release/SudokuSolver.lib
