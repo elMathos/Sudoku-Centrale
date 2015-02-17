@@ -53,7 +53,7 @@ Temporary Items
 *.log
 *.tlog
 *.idb
-*.filters
+
 
 
 # ReSharper
