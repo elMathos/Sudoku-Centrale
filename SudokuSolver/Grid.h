@@ -7,7 +7,6 @@
 #endif
 
 #include "Region.h"
-#include "RegionHolder.h"
 #include <string>
 #include <vector>
 #include <memory>
@@ -21,7 +20,9 @@ public:
 	Grid(vector<vector<Region>>& regions);
 	~Grid();
 	bool IsFull();
-	RegionHolder HoldRegion(int i, int j);
+	Region& Get_Region_0_0();
+	void Accept(const IVisitor& visitor);
+
 private:
 	vector<vector<Region>> _regions;
 	const int M = 3;

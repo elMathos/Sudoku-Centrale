@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Strategies">
+      <UniqueIdentifier>{a68e959d-c4f9-460f-bc74-0aee5e486ee1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Strategies">
+      <UniqueIdentifier>{497ded1b-1450-46b1-b275-c3d774720859}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cell.h">
@@ -36,6 +42,18 @@
     <ClInclude Include="RegionHolder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LastCellFinder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IVisitor.h">
+      <Filter>Header Files\Strategies</Filter>
+    </ClInclude>
+    <ClInclude Include="OnlyOneChoiceInRowVisitor.h">
+      <Filter>Header Files\Strategies</Filter>
+    </ClInclude>
+    <ClInclude Include="ValueEliminator.h">
+      <Filter>Header Files\Strategies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Cell.cpp">
@@ -58,6 +76,18 @@
     </ClCompile>
     <ClCompile Include="RegionHolder.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LastCellFinder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IVisitor.cpp">
+      <Filter>Source Files\Strategies</Filter>
+    </ClCompile>
+    <ClCompile Include="OnlyOneChoiceInRowVisitor.cpp">
+      <Filter>Source Files\Strategies</Filter>
+    </ClCompile>
+    <ClCompile Include="ValueEliminator.cpp">
+      <Filter>Source Files\Strategies</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

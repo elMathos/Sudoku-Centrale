@@ -1,33 +1,47 @@
 #include "RegionHolder.h"
 
 
-RegionHolder::RegionHolder()
+
+//TODO : update i,j and move up
+RegionHolder::RegionHolder(Region& reg) : _cell_1_1(reg.cells[0][0]),
 {
+	//TODO : update i,j
+	_cell_1_1 = reg.cells[0][0];
+	_cell_1_2 = reg.cells[0][0];
+	_cell_1_3 = reg.cells[0][0];
+	_cell_2_1 = reg.cells[0][0];
+	_cell_2_2 = reg.cells[0][0];
+	_cell_2_3 = reg.cells[0][0];
+	_cell_3_1 = reg.cells[0][0];
+	_cell_3_2 = reg.cells[0][0];
+	_cell_3_3 = reg.cells[0][0];
 }
 
+//TODO : implement all accessors 
 
-RegionHolder::RegionHolder(Region& reg)
-{
-	_cells = vector<vector<Cell>>(L);
-
-	for (int i = 0; i < L; i++)
-	{
-		_cells[i] = vector<Cell>(L);
-		for (int j = 0; j < L; j++)
-		{
-			_cells[i][j] = reg.cells[i][j];
-		}
-	}
-}
-
-Cell RegionHolder::AccessCell(int i, int j)
-{
-	return _cells[i][j];
-}
 
 RowHolder RegionHolder::TopRow()
 {
-	return RowHolder(AccessCell(0, 0), AccessCell(0, 1), AccessCell(0, 2));
+	return RowHolder(Cell_1_1(), AccessCell(0, 1), AccessCell(0, 2));
+}
+
+RowHolder RegionHolder::TopRow() const
+{
+	return RowHolder(Cell_1_1(), AccessCell(0, 1), AccessCell(0, 2));
+}
+
+set<unsigned char> RegionHolder::FlagValues(ValueEliminator& valueEliminator)
+{
+	valueEliminator.SetFlags(*this);
+	return valueEliminator.AvailableValue();
+}
+
+bool RegionHolder::IsValuePresent(unsigned char iTarget)
+{
+	ValueEliminator valueEliminator;
+	set<unsigned char> availableValues = FlagValues(valueEliminator);
+	
+	return availableValues.find(iTarget) != availableValues.end(); 
 }
 
 RegionHolder::~RegionHolder()

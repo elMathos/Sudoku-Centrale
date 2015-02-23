@@ -19,23 +19,10 @@ Region::Region(string initialValue)
 
 		for (int j = 0; j < L; j++)
 		{
-			char chr = initialValue[i*L + j];
-			if (_allowed.find(chr) != string::npos) {
-					if (chr == '-'){
-						cells[i][j] = Cell();
-					}
-					else{
-						int value = chr - '0';
-						cells[i][j] = Cell(value);
-					}
-				
-
-				}
-				else{
-					throw invalid_argument("Invalid input character to instanciate Cell\n");
-				}
+			//TODO: test for invalid characters
+			int value = initialValue[i*L + j] - '0';
 			
-			
+			cells[i][j] = Cell(value);
 		}
 	}
 }

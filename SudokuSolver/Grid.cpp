@@ -1,4 +1,5 @@
 #include "Grid.h"
+#include "IVisitor.h"
 #include <vector>
 #include <string>
 using namespace std;
@@ -51,7 +52,12 @@ bool Grid::IsFull(){
 	return true;
 }
 
-RegionHolder Grid::HoldRegion(int i, int j)
+Region& Grid::Get_Region_0_0()
 {
-	return RegionHolder(_regions[i][j]);
+	return _regions[0][0];
+}
+
+void Grid::Accept(const IVisitor& visitor)
+{
+	visitor.Visit(*this);
 }

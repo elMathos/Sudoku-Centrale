@@ -7,17 +7,12 @@ Cell::Cell()
 	_value = -1;
 }
 
-int Cell::GetValue()
-{
-	return _value;
-}
-
 Cell::Cell(int value)
 {
 	if (value < 0 || value > 9)
 	{
 		_isEmpty = true;
-		throw invalid_argument("incorrect input value for Cell\n");
+		throw invalid_argument("incorrect input value for Cell");
 	}
 	else
 	{
@@ -27,7 +22,7 @@ Cell::Cell(int value)
 	
 }
 
-bool Cell::IsEmpty()
+bool Cell::IsEmpty() const
 {
 	return _isEmpty;
 }
