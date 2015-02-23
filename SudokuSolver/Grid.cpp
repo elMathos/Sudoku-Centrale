@@ -6,7 +6,7 @@ using namespace std;
 
 Grid::Grid(vector<string>& values)
 {	
-	if (values.size != 9) {
+	if (values.size() != 9) {
 		throw invalid_argument("Length of the string should be 9.\n");
 	}
 
@@ -23,7 +23,7 @@ Grid::Grid(vector<string>& values)
 
 Grid::Grid(vector<Region>& regions)
 {
-	if (regions.size != 9) {
+	if (regions.size() != 9) {
 		throw invalid_argument("Length of the string should be 9.\n");
 	}
 

@@ -48,7 +48,7 @@ void ValueEliminator::SetFlags(const RegionHolder& regionHolder)
 {
 	//TODO iterate on all Cells
 	//TODO how to access _cNW ?
-	if (! regionHolder._cNW.IsEmpty())
-		Flag(regionHolder.Cell_1_1());
+	if (! regionHolder.Get_cNW().IsEmpty())
+		Flag(regionHolder.Get_cNW());
 
 }

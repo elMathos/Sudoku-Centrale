@@ -16,21 +16,21 @@ Region::Region(string initialValue)
 	string allowed = "123456789-";
 	int value = initialValue[0] - '0';
 	_cNW = Cell(value, allowed);
-	int value = initialValue[1] - '0';
+	value = initialValue[1] - '0';
 	_cN = Cell(value, allowed);
-	int value = initialValue[2] - '0';
+	int value2 = initialValue[2] - '0';
 	_cNE = Cell(value, allowed);
-	int value = initialValue[3] - '0';
+	value = initialValue[3] - '0';
 	_cW = Cell(value, allowed);
-	int value = initialValue[4] - '0';
+	value = initialValue[4] - '0';
 	_cC = Cell(value, allowed);
-	int value = initialValue[5] - '0';
+	value = initialValue[5] - '0';
 	_cE = Cell(value, allowed);
-	int value = initialValue[6] - '0';
+	value = initialValue[6] - '0';
 	_cSW = Cell(value, allowed);
-	int value = initialValue[7] - '0';
+	value = initialValue[7] - '0';
 	_cS = Cell(value, allowed);
-	int value = initialValue[8] - '0';
+	value = initialValue[8] - '0';
 	_cSE = Cell(value, allowed);
 }
 

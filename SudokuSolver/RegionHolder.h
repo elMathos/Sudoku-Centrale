@@ -6,9 +6,10 @@
 #define ExportedByDll __declspec(dllimport)
 #endif
 
+class ValueEliminator;
 #include "Region.h"
 #include "RowHolder.h"
-#include "ValueEliminator.h"
+//#include "ValueEliminator.h"
 #include <set>
 
 using namespace std;

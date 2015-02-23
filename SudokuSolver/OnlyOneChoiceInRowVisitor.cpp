@@ -16,8 +16,8 @@ bool OnlyOneChoiceInRowVisitor::Visit(Grid& ioGrid) const
 	bool success = false;
 
 	//TODO : do it 9 times
-	LastCellFinder l_0(RegionHolder(ioGrid.Get_Region_0_0()).TopRow(), 
-		RegionHolder(ioGrid.Get_Region_0_1()).TopRow(), RegionHolder(ioGrid.Get_Region_0_2()).TopRow());
+	LastCellFinder l_0(RegionHolder(ioGrid.Get_rNW()).TopRow(), 
+		RegionHolder(ioGrid.Get_rN()).TopRow(), RegionHolder(ioGrid.Get_rNE()).TopRow());
 	success |= l_0.Fill();
 
 	return success;
