@@ -6,11 +6,13 @@
 #define ExportedByDll __declspec(dllimport)
 #endif
 
+class IVisitor;
+
 #include "Region.h"
-#include "IVisitor.h"
 #include <string>
 #include <vector>
 #include <memory>
+
 using namespace std;
 
 
