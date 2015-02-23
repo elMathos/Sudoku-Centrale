@@ -7,6 +7,7 @@
 #endif
 
 #include "Region.h"
+#include "IVisitor.h"
 #include <string>
 #include <vector>
 #include <memory>

@@ -1,7 +1,13 @@
 #pragma once
 #include "Grid.h"
 
-class IVisitor
+#ifdef SUDOKUSOLVER_EXPORTS
+#define ExportedByDll __declspec(dllexport)
+#else
+#define ExportedByDll __declspec(dllimport)
+#endif
+
+class ExportedByDll IVisitor
 {
 public:
 	IVisitor();
