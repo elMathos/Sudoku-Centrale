@@ -65,3 +65,8 @@ Sudoku.opensdf
 */SudokuSolver.dll
 */SudokuSolver.exp
 */SudokuSolver.lib
+Release/SudokuUnitTest.dll
+Release/SudokuUnitTest.exp
+Release/SudokuUnitTest.lib
+*.ipch
+*.pch
