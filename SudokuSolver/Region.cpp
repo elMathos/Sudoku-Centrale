@@ -40,7 +40,14 @@ Region::~Region()
 }
 
 Cell& Region::Get_cNW(){ return _cNW; }
-//TODO 9 more accessors
+Cell& Region::Get_cN(){ return _cN; }
+Cell& Region::Get_cNE(){ return _cNE; }
+Cell& Region::Get_cW(){ return _cW; }
+Cell& Region::Get_cC(){ return _cC; }
+Cell& Region::Get_cE(){ return _cE; }
+Cell& Region::Get_cSW(){ return _cSW; }
+Cell& Region::Get_cS(){ return _cS; }
+Cell& Region::Get_cSE(){ return _cSE; }
 
 bool Region::IsFull()
 {

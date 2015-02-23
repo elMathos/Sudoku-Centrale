@@ -12,7 +12,6 @@ LastCellFinder::~LastCellFinder()
 
 bool LastCellFinder::Fill()
 {
-	//TODO : no magic numbers
 	bool values[9];
 
 	int valuesAvailable = 0;
