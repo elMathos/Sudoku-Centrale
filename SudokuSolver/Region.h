@@ -24,14 +24,14 @@ public:
 
 private:
 	const int L = 3;
-	Cell _NW;
-	Cell _N;
-	Cell _NE;
-	Cell _W;
-	Cell _C;
-	Cell _E;
-	Cell _SW;
-	Cell _S;
-	Cell _SE;
+	Cell _cNW;
+	Cell _cN;
+	Cell _cNE;
+	Cell _cW;
+	Cell _cC;
+	Cell _cE;
+	Cell _cSW;
+	Cell _cS;
+	Cell _cSE;
 };
 
