@@ -14,7 +14,7 @@ class ExportedByDll LastCellFinder
 public:
 	LastCellFinder(TripleHolder& t1, TripleHolder& t2, TripleHolder& t3);
 	~LastCellFinder();
-	bool Fill();
+	bool fill();
 
 private:
 	TripleHolder& _t1; 

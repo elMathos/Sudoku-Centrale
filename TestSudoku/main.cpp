@@ -1,6 +1,7 @@
 #include "Region.h"
 #include "Grid.h"
 #include "RegionHolder.h"
+#include "LastCellFinder.h"
 #include "stdio.h"
 #include <stdexcept>
 #include <string.h>
@@ -45,21 +46,29 @@ int main(int argc, char *argv[])
 		printf(e.what());
 	}
 
-	vector<string> values = vector<string>(9);
-	for (int i = 0; i < 9; i++)
+	vector<string> values1 = vector<string>(9);
+	values1[0] = "1234-6789";
+	for (int i = 1; i < 9; i++)
 	{
-
-	
-		
-			values[i] = "123456789";
-		
+			values1[i] = "123456789";
 	}
 
-	Grid grid1 = Grid(values);
+	Grid grid1 = Grid(values1);
 
 	RegionHolder regHold1 = RegionHolder(grid1.Get_rSE());
 	regHold1.Get_cNW() = 8;
 	printf("Expected 8, got %i\n", grid1.Get_rSE().Get_cNW().GetValue());
+
+	/*TripleHolder topRow1 = TripleHolder(grid1.Get_rNW().Get_cNW(), grid1.Get_rNW().Get_cN(), grid1.Get_rNW().Get_cNE());
+	TripleHolder middleRow1 = TripleHolder(grid1.Get_rNW().Get_cW(), grid1.Get_rNW().Get_cC(), grid1.Get_rNW().Get_cE());
+	TripleHolder bottomRow1 = TripleHolder(grid1.Get_rNW().Get_cSW(), grid1.Get_rNW().Get_cS(), grid1.Get_rNW().Get_cSE());
+
+	LastCellFinder last1 = LastCellFinder(topRow1, middleRow1, bottomRow1);
+	printf("Expected -1, got %i\n", middleRow1.Cell2().GetValue());
+	last1.fill();
+	printf("Expected 5, got %i\n", middleRow1.Cell2().GetValue());*/
+
+
 
 	return 0;
 }
