@@ -1,5 +1,6 @@
 #include "Region.h"
 #include "Grid.h"
+#include "RegionHolder.h"
 #include "stdio.h"
 #include <stdexcept>
 #include <string.h>
@@ -44,21 +45,21 @@ int main(int argc, char *argv[])
 		printf(e.what());
 	}
 
-	//vector<vector<string>> values = vector<vector<string>>(3);
-	//for (int i = 0; i < 3; i++)
-	//{
-	//	values[i] = vector<string>(3);
+	vector<string> values = vector<string>(9);
+	for (int i = 0; i < 9; i++)
+	{
 
-	//	for (int j = 0; j < 3; j++)
-	//	{
-	//		values[i][j] = "123456789";
-	//	}
-	//}
+	
+		
+			values[i] = "123456789";
+		
+	}
 
-	//Grid grid(values);
+	Grid grid1 = Grid(values);
 
-	//Cell c = 3;
-
+	RegionHolder regHold1 = RegionHolder(grid1.Get_rSE());
+	regHold1.Get_cNW() = 8;
+	printf("Expected 8, got %i\n", grid1.Get_rSE().Get_cNW().GetValue());
 
 	return 0;
 }
