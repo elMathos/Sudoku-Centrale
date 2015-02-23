@@ -10,6 +10,7 @@ class ValueEliminator;
 #include "Region.h"
 #include "RowHolder.h"
 //#include "ValueEliminator.h"
+#include "ColumnHolder.h"
 #include <set>
 
 using namespace std;
@@ -21,6 +22,16 @@ public:
 	~RegionHolder();
 	RowHolder TopRow();
 	RowHolder TopRow() const;
+	RowHolder MiddleRow();
+	RowHolder MiddleRow() const;
+	RowHolder BottomRow();
+	RowHolder BottomRow() const;
+	ColumnHolder LeftColumn();
+	ColumnHolder LeftColumn() const;
+	ColumnHolder MiddleColumn();
+	ColumnHolder MiddleColumn() const;
+	ColumnHolder RightColumn();
+	ColumnHolder RightColumn() const;
 	set<unsigned char> FlagValues(ValueEliminator& v);
 	bool IsValuePresent(unsigned char);
 

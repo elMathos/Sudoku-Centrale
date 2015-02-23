@@ -13,9 +13,9 @@ class ExportedByDll RowHolder : public TripleHolder
 {
 public:
 	RowHolder(Cell& cell1, Cell& cell2, Cell& cell3);
-	Cell& G();
+	Cell& L();
 	Cell& C();
-	Cell& D();
+	Cell& R();
 	~RowHolder();
 
 };
