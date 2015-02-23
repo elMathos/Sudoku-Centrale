@@ -15,6 +15,7 @@ bool LastCellFinder::fill()
 	bool values[9];
 
 	int valuesAvailable = 0;
+	for (int i = 0; i < 9; i++) { values[i] = false; }
 
 	if (!_t1.Cell1().IsEmpty())
 	{
