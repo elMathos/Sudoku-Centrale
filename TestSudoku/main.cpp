@@ -30,10 +30,8 @@ int main(int argc, char *argv[])
 
 	try{
 		Region myRegion1 = Region("1-3456789");
-		//TODO this does not compile
-		//printf("%i\n", myRegion1.Get_cNW().GetValue()); //should print 1
-		//printf("%i\n", myRegion1.Get_cNW().GetValue()); //TODO change cNW to cN
-		//should print -1
+		printf("Expected 1, got %i\n", myRegion1.Get_cNW().GetValue());
+		printf("Expected -1, got %i\n", myRegion1.Get_cN().GetValue());
 	}
 	catch (const invalid_argument& e){
 		printf(e.what());

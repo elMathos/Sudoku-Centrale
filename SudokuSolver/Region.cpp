@@ -14,23 +14,23 @@ Region::Region(string initialValue)
 	}
 
 	string allowed = "123456789-";
-	int value = initialValue[0] - '0';
+	int value = initialValue[0];
 	_cNW = Cell(value, allowed);
-	value = initialValue[1] - '0';
+	value = initialValue[1];
 	_cN = Cell(value, allowed);
-	int value2 = initialValue[2] - '0';
+	value = initialValue[2];
 	_cNE = Cell(value, allowed);
-	value = initialValue[3] - '0';
+	value = initialValue[3];
 	_cW = Cell(value, allowed);
-	value = initialValue[4] - '0';
+	value = initialValue[4];
 	_cC = Cell(value, allowed);
-	value = initialValue[5] - '0';
+	value = initialValue[5];
 	_cE = Cell(value, allowed);
-	value = initialValue[6] - '0';
+	value = initialValue[6];
 	_cSW = Cell(value, allowed);
-	value = initialValue[7] - '0';
+	value = initialValue[7];
 	_cS = Cell(value, allowed);
-	value = initialValue[8] - '0';
+	value = initialValue[8];
 	_cSE = Cell(value, allowed);
 }
 

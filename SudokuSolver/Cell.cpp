@@ -36,7 +36,7 @@ Cell::Cell(char chr, string allowed){
 		}
 	}
 	else{
-		throw invalid_argument("Invalid input character to instanciate Cell\n");
+		throw invalid_argument("Invalid input character to instanciate Cell.\n");
 	}
 }
 
