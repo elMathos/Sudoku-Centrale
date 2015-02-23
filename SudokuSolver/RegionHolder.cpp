@@ -2,19 +2,9 @@
 
 
 
-//TODO : update i,j and move up
-RegionHolder::RegionHolder(Region& reg) : _cell_1_1(reg.cells[0][0]),
+//TODO do we need accessors or public Cells ?
+RegionHolder::RegionHolder(Region& reg) : _cNW(reg.Get_cNW()), //TODO 8 more in the initialisation list
 {
-	//TODO : update i,j
-	_cell_1_1 = reg.cells[0][0];
-	_cell_1_2 = reg.cells[0][0];
-	_cell_1_3 = reg.cells[0][0];
-	_cell_2_1 = reg.cells[0][0];
-	_cell_2_2 = reg.cells[0][0];
-	_cell_2_3 = reg.cells[0][0];
-	_cell_3_1 = reg.cells[0][0];
-	_cell_3_2 = reg.cells[0][0];
-	_cell_3_3 = reg.cells[0][0];
 }
 
 //TODO : implement all accessors 
@@ -22,13 +12,15 @@ RegionHolder::RegionHolder(Region& reg) : _cell_1_1(reg.cells[0][0]),
 
 RowHolder RegionHolder::TopRow()
 {
-	return RowHolder(Cell_1_1(), AccessCell(0, 1), AccessCell(0, 2));
+	return RowHolder(_cNW, _cN, _cNE);
 }
 
 RowHolder RegionHolder::TopRow() const
 {
-	return RowHolder(Cell_1_1(), AccessCell(0, 1), AccessCell(0, 2));
+	return RowHolder(_cNW, _cN, _cNE);
 }
+
+//TODO 10 others as ^
 
 set<unsigned char> RegionHolder::FlagValues(ValueEliminator& valueEliminator)
 {

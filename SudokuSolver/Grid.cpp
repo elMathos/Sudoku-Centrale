@@ -26,15 +26,9 @@ Grid::~Grid()
 
 
 bool Grid::IsFull(){
-	for (int i = 0; i < M; i++){
-		for (int j = 0; j < M; j++){
-			if (!_regions[i][j].IsFull()) {
-				return false;
-			}
-		}
-	}
-	//If we get out of the loop, all the regions are full, the grid is full
-	return true;
+	//A grid is full iff its 9 regions are
+	bool isFull = _rNW.IsFull() && _rN.IsFull() && _rNE.IsFull() && _rW.IsFull() && _rC.IsFull() && _rE.IsFull() && _rSW.IsFull() && _rS.IsFull() && _rSE.IsFull();
+	return isFull;;
 }
 
 Region& Grid::Get_rNW()
