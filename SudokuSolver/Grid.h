@@ -16,15 +16,25 @@ using namespace std;
 class ExportedByDll Grid
 {
 public:
+	//TODO fix the constructor when prof specifies input format of grids.
 	Grid(vector<vector<string>>& values);
+	//TODO understand this
 	Grid(vector<vector<Region>>& regions);
 	~Grid();
 	bool IsFull();
-	Region& Get_Region_0_0();
+	Region& Get_rNW();
 	void Accept(const IVisitor& visitor);
 
 private:
-	vector<vector<Region>> _regions;
+	Region _rNW;
+	Region _rN;
+	Region _rNE;
+	Region _rW;
+	Region _rC;
+	Region _rE;
+	Region _rSW;
+	Region _rS;
+	Region _rSE;
 	const int M = 3;
 };
 

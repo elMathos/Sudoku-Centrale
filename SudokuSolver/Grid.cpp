@@ -4,34 +4,19 @@
 #include <string>
 using namespace std;
 
-Grid::Grid(vector<vector<string>>& values)
-{
-	_regions = vector<vector<Region>>(M);
-
-	for (int i = 0; i < M; i++)
-	{
-		_regions[i] = vector<Region>(M);
-		
-		for (int j = 0; j < M; j++)
-		{
-			_regions[i][j] = Region(values[i][j]);
-		}
-	}
+Grid::Grid(vector<string>& values)
+{	
+	//TODO Check that values is of length 9
+	_rNW = Region(values[0]);
+	_rN = Region(values[1]);
+	//TODO do this 7 more times
 }
 
-Grid::Grid(vector<vector<Region>>& regions)
+Grid::Grid(vector<Region>& regions)
 {
-	_regions = vector<vector<Region>>(M);
-
-	for (int i = 0; i < M; i++)
-	{
-		_regions[i] = vector<Region>(M);
-
-		for (int j = 0; j < M; j++)
-		{
-			_regions[i][j] = regions[i][j];
-		}
-	}
+	//TODO check that 9 regions are given as input (length of vector)
+	_rNW = regions[0];
+	//TODO do this 9 times
 }
 
 
@@ -52,10 +37,12 @@ bool Grid::IsFull(){
 	return true;
 }
 
-Region& Grid::Get_Region_0_0()
+Region& Grid::Get_rNW()
 {
-	return _regions[0][0];
+	return _rNW;;
 }
+
+//TODO implement the other accessors Get_rN();
 
 void Grid::Accept(const IVisitor& visitor)
 {
