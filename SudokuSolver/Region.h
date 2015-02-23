@@ -20,7 +20,7 @@ public:
 	~Region();
 	Region& operator=(const Region& r);
 	bool IsFull();
-	//vector<vector<Cell>> cells;
+	Cell& Get_cNW();
 
 private:
 	const int L = 3;

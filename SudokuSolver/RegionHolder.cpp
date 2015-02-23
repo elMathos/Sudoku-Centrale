@@ -3,7 +3,10 @@
 
 
 //TODO do we need accessors or public Cells ?
-RegionHolder::RegionHolder(Region& reg) : _cNW(reg.Get_cNW()), //TODO 8 more in the initialisation list
+RegionHolder::RegionHolder(Region& reg) : _cNW(reg.Get_cNW()), _cN(reg.Get_cNW()), _cNE(reg.Get_cNW()),
+_cW(reg.Get_cNW()), _cC(reg.Get_cNW()), _cE(reg.Get_cNW())
+, _cSW(reg.Get_cNW()), _cS(reg.Get_cNW()), _cSE(reg.Get_cNW())
+//TODO fix the arguments in the initialisation list
 {
 }
 

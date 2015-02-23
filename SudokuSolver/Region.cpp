@@ -39,6 +39,9 @@ Region::~Region()
 {
 }
 
+Cell& Region::Get_cNW(){ return _cNW; }
+//TODO 9 more accessors
+
 bool Region::IsFull()
 {
 	bool gridIsEmpty = _cNW.IsEmpty() || _cN.IsEmpty() || _cNE.IsEmpty() || _cW.IsEmpty() || _cC.IsEmpty() || _cE.IsEmpty() || _cSW.IsEmpty() || _cS.IsEmpty() || _cSE.IsEmpty();
