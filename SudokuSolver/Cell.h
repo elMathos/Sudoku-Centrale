@@ -6,6 +6,7 @@
 #define ExportedByDll __declspec(dllimport)
 #endif
 
+#include <string>
 
 class ExportedByDll Cell
 {
