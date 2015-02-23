@@ -9,22 +9,14 @@ Region::Region()
 
 Region::Region(string initialValue)
 {
-	char* letters = (char*)initialValue.c_str();
-
-	cells = vector<vector<Cell>>(L);
-
-	for (int i = 0; i < L; i++)
-	{
-		cells[i] = vector<Cell>(L);
-
-		for (int j = 0; j < L; j++)
-		{
-			//TODO: test for invalid characters
-			int value = initialValue[i*L + j] - '0';
-			
-			cells[i][j] = Cell(value);
-		}
-	}
+	//TODO test string length
+	//TODO test for invalid characters in cell
+	//TODO sepcial case for '-'
+	int value = initialValue[0] - '0';
+	_NW = Cell(value);
+	int value = initialValue[1] - '0';
+	_N = Cell(value);
+	//TODO do this for the others cell
 }
 
 
@@ -34,19 +26,15 @@ Region::~Region()
 
 bool Region::IsFull()
 {
-	for (int i = 0; i < L; i++){
-		for (int j = 0; j < L; j++){
-			if (cells[i][j].IsEmpty()) {
-				return false;
-			}
-		}
-	}
+	//TODO complete with 7 other ||...
+	bool gridIsEmpty = _NW.IsEmpty() || _N.IsEmpty();
 	//If we get out of the loop, all the cells are full (not empty)
 	return true;
 }
 
 Region& Region::operator=(const Region& r)
 {
-	cells = r.cells;
+	//TODO do this for 8 other cells
+	_NW = r._NW;
 	return *this;
 }

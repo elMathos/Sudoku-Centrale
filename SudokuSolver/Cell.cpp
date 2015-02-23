@@ -11,7 +11,6 @@ Cell::Cell(int value)
 {
 	if (value < 0 || value > 9)
 	{
-		_isEmpty = true;
 		throw invalid_argument("incorrect input value for Cell");
 	}
 	else
