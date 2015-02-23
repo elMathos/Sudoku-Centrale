@@ -19,7 +19,6 @@ public:
 	bool operator==(unsigned char iValue) const;
 
 private:
-	bool _isEmpty;
 	int _value;
 };
 

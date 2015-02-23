@@ -17,14 +17,13 @@ Cell::Cell(int value)
 	else
 	{
 		_value = value;
-		_isEmpty = false;
 	}
 	
 }
 
 bool Cell::IsEmpty() const
 {
-	return _isEmpty;
+	return _value==-1;
 }
 
 //Bad practiiiiiiiiiice
