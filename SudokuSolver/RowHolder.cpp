@@ -10,7 +10,7 @@ RowHolder::~RowHolder()
 {
 }
 
-Cell& RowHolder::G()
+Cell& RowHolder::L()
 {
 	return Cell1();
 }
@@ -20,7 +20,7 @@ Cell& RowHolder::C()
 	return Cell2();
 }
 
-Cell& RowHolder::D()
+Cell& RowHolder::R()
 {
 	return Cell3();
 }

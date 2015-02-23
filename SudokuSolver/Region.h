@@ -21,6 +21,14 @@ public:
 	Region& operator=(const Region& r);
 	bool IsFull();
 	Cell& Get_cNW();
+	Cell& Get_cN();
+	Cell& Get_cNE();
+	Cell& Get_cW();
+	Cell& Get_cC();
+	Cell& Get_cE();
+	Cell& Get_cSW();
+	Cell& Get_cS();
+	Cell& Get_cSE();
 
 private:
 	const int L = 3;
