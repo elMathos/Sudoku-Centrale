@@ -17,6 +17,7 @@ public:
 	Cell& operator=(unsigned char iValue);
 	operator unsigned char() const;
 	bool operator==(unsigned char iValue) const;
+	int GetValue();
 
 private:
 	bool _isEmpty;

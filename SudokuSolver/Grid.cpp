@@ -50,3 +50,8 @@ bool Grid::IsFull(){
 	//If we get out of the loop, all the regions are full, the grid is full
 	return true;
 }
+
+RegionHolder Grid::HoldRegion(int i, int j)
+{
+	return RegionHolder(_regions[i][j]);
+}

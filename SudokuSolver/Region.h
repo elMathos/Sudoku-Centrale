@@ -24,5 +24,6 @@ public:
 
 private:
 	const int L = 3;
+	const string _allowed = "123456789-";
 };
 
