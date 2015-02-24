@@ -9,9 +9,9 @@
 class IVisitor;
 
 #include "Region.h"
+#include "NineHolder.h"
 #include <string>
 #include <vector>
-#include <memory>
 
 using namespace std;
 
@@ -23,8 +23,10 @@ public:
 	Grid(vector<string>& values);
 	Grid(vector<Region>& regions);
 	~Grid();
-	bool IsFull();
 	Region& GetRegion(unsigned char i, unsigned char j);
+	NineHolder GetRow(unsigned char i);
+	//TODO implement GetColumn
+	bool IsFull();
 	bool Accept(const IVisitor& visitor);
 
 private:
@@ -38,4 +40,3 @@ private:
 	Region _rS;
 	Region _rSE;
 };
-

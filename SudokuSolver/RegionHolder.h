@@ -36,6 +36,7 @@ public:
 	bool isValuePresent(unsigned char);
 
 	//TODO: (also?) Make all accessors as const
+	//TODO make one single accessor
 	Cell& Get_cNW() const{ return _cNW; }
 	Cell& Get_cN() const{ return _cN; }
 	Cell& Get_cNE() const{ return _cNE; }

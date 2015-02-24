@@ -157,8 +157,31 @@ namespace SudokuUnitTest
 			Assert::AreEqual(1, grid.GetRegion(2, 0).GetCell(0, 0).GetValue());
 			Assert::AreEqual(1, grid.GetRegion(2, 0).GetCell(1, 0).GetValue());
 			Assert::AreEqual(1, grid.GetRegion(2, 0).GetCell(2, 0).GetValue());
-
 		}
 
+		TEST_METHOD(NineHolderForGrid)
+		{
+			vector<string> stringInput = vector<string>(9);
+			/*grid:
+			123456789
+			123456789
+			123456789
+			foo foo foo foo foo foo
+			First row should be filled
+			*/
+
+			stringInput[0] = "123123123";
+			stringInput[1] = "456456456";
+			stringInput[2] = "789789789";
+			for (int i = 3; i < 9; i++)
+			{
+				stringInput[i] = "123456789";
+			}
+			Grid grid = Grid(stringInput);
+			NineHolder nh = grid.GetRow(0);
+			for (int i = 0; i < 9; i++){
+				Assert::AreEqual(i + 1, nh.GetCell(i).GetValue());
+			}
+		}
 	};
 }

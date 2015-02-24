@@ -12,6 +12,10 @@ OnlySquareVisitor::~OnlySquareVisitor()
 
 bool OnlySquareVisitor::Visit(Grid& ioGrid) const
 {
+	for (unsigned char i = 0; i < 9; i++)
+	{
+
+	}
 	//foreach regionHolder in grid
 	//	set<unsigned char> valuesAvailable = regionHolder.FlagValues;
 	//	if (valuesAvailable.count==2)

@@ -1,5 +1,6 @@
 #include "Grid.h"
 #include "IVisitor.h"
+#include "RegionHolder.h"
 #include <vector>
 #include <string>
 using namespace std;
@@ -24,7 +25,7 @@ Grid::Grid(vector<string>& values)
 Grid::Grid(vector<Region>& regions)
 {
 	if (regions.size() != 9) {
-		throw invalid_argument("Length of the string should be 9.\n");
+		throw invalid_argument("Exactly 9 regions must be provided.\n");
 	}
 
 	_rNW = regions[0];
@@ -67,4 +68,100 @@ Region& Grid::GetRegion(unsigned char i, unsigned char j)
 bool Grid::Accept(const IVisitor& visitor)
 {
 	return visitor.Visit(*this);
+}
+
+NineHolder Grid::GetRow(unsigned char i)
+{
+	if (i == 0)
+	{
+		RegionHolder r1 = RegionHolder(_rNW);
+		RegionHolder r2 = RegionHolder(_rN);
+		RegionHolder r3 = RegionHolder(_rNE);
+		TripleHolder t1 = r1.TopRow();
+		TripleHolder t2 = r2.TopRow();
+		TripleHolder t3 = r3.TopRow();
+		return NineHolder(t1, t2, t3);
+	}
+	if (i == 1)
+	{
+		RegionHolder r1 = RegionHolder(_rNW);
+		RegionHolder r2 = RegionHolder(_rN);
+		RegionHolder r3 = RegionHolder(_rNE);
+		TripleHolder t1 = r1.MiddleRow();
+		TripleHolder t2 = r2.MiddleRow();
+		TripleHolder t3 = r3.MiddleRow();
+		return NineHolder(t1, t2, t3);
+	}
+	if (i == 2)
+	{
+		RegionHolder r1 = RegionHolder(_rNW);
+		RegionHolder r2 = RegionHolder(_rN);
+		RegionHolder r3 = RegionHolder(_rNE);
+		TripleHolder t1 = r1.BottomRow();
+		TripleHolder t2 = r2.BottomRow();
+		TripleHolder t3 = r3.BottomRow();
+		return NineHolder(t1, t2, t3);
+	}if (i == 3)
+	{
+		RegionHolder r1 = RegionHolder(_rNW);
+		RegionHolder r2 = RegionHolder(_rN);
+		RegionHolder r3 = RegionHolder(_rNE);
+		TripleHolder t1 = r1.TopRow();
+		TripleHolder t2 = r2.TopRow();
+		TripleHolder t3 = r3.TopRow();
+		return NineHolder(t1, t2, t3);
+	}
+	if (i == 4)
+	{
+		RegionHolder r1 = RegionHolder(_rW);
+		RegionHolder r2 = RegionHolder(_rC);
+		RegionHolder r3 = RegionHolder(_rE);
+		TripleHolder t1 = r1.MiddleRow();
+		TripleHolder t2 = r2.MiddleRow();
+		TripleHolder t3 = r3.MiddleRow();
+		return NineHolder(t1, t2, t3);
+	}
+	if (i == 5)
+	{
+		RegionHolder r1 = RegionHolder(_rW);
+		RegionHolder r2 = RegionHolder(_rC);
+		RegionHolder r3 = RegionHolder(_rE);
+		TripleHolder t1 = r1.BottomRow();
+		TripleHolder t2 = r2.BottomRow();
+		TripleHolder t3 = r3.BottomRow();
+		return NineHolder(t1, t2, t3);
+	}if (i == 6)
+	{
+		RegionHolder r1 = RegionHolder(_rSW);
+		RegionHolder r2 = RegionHolder(_rS);
+		RegionHolder r3 = RegionHolder(_rSE);
+		TripleHolder t1 = r1.TopRow();
+		TripleHolder t2 = r2.TopRow();
+		TripleHolder t3 = r3.TopRow();
+		return NineHolder(t1, t2, t3);
+	}
+	if (i == 7)
+	{
+		RegionHolder r1 = RegionHolder(_rSW);
+		RegionHolder r2 = RegionHolder(_rS);
+		RegionHolder r3 = RegionHolder(_rSE);
+		TripleHolder t1 = r1.MiddleRow();
+		TripleHolder t2 = r2.MiddleRow();
+		TripleHolder t3 = r3.MiddleRow();
+		return NineHolder(t1, t2, t3);
+	}
+	if (i == 8)
+	{
+		RegionHolder r1 = RegionHolder(_rSW);
+		RegionHolder r2 = RegionHolder(_rS);
+		RegionHolder r3 = RegionHolder(_rSE);
+		TripleHolder t1 = r1.BottomRow();
+		TripleHolder t2 = r2.BottomRow();
+		TripleHolder t3 = r3.BottomRow();
+		return NineHolder(t1, t2, t3);
+	}
+	else {
+		//TODO throw exception if i not between 0 and 8
+
+	}
 }
