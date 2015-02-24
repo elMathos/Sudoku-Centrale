@@ -21,7 +21,6 @@ class ExportedByDll Grid
 public:
 	//TODO fix the constructor when prof specifies input format of grids.
 	Grid(vector<string>& values);
-	//TODO understand this
 	Grid(vector<Region>& regions);
 	~Grid();
 	bool IsFull();
