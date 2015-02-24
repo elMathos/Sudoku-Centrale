@@ -5,6 +5,7 @@
 #include "Grid.h"
 #include "RegionHolder.h"
 #include "LastCellFinder.h"
+#include "OnlyOneChoiceInRowVisitor.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -104,7 +105,14 @@ namespace SudokuUnitTest
 				stringInput[i] = "123456789";
 			}
 
-			Grid grid1 = Grid(stringInput);
+			OnlyOneChoiceInRowVisitor visitor = OnlyOneChoiceInRowVisitor();
+			Grid grid = Grid(stringInput);
+			Assert::AreEqual(-1, grid.Get_rNW().Get_cNW().GetValue());
+			bool filled = grid.Accept(visitor);
+			//First cell of grid should have been filled with a 1
+			Assert::IsTrue(filled);
+			Assert::AreEqual(1, grid.Get_rNW().Get_cNW().GetValue());
+
 		}
 
 	};
