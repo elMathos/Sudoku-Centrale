@@ -61,6 +61,7 @@ Region& Grid::GetRegion(unsigned char i, unsigned char j)
 	if (i == 2 && j == 0) return _rSW;
 	if (i == 2 && j == 1) return _rS;
 	if (i == 2 && j == 2) return _rSE;
+	else throw invalid_argument("i and j must be between 0 and 2.\n");
 }
 
 bool Grid::Accept(const IVisitor& visitor)

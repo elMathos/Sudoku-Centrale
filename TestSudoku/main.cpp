@@ -10,8 +10,6 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-	//Other testing
-	//Testing branching
 	Cell myCell1 =  Cell();
 	printf("Expected -1, got %i\n", myCell1.GetValue());
 
@@ -34,8 +32,8 @@ int main(int argc, char *argv[])
 
 	try{
 		Region myRegion1 = Region("1-3456789");
-		printf("Expected 1, got %i\n", myRegion1.Get_cNW().GetValue());
-		printf("Expected -1, got %i\n", myRegion1.Get_cN().GetValue());
+		printf("Expected 1, got %i\n", myRegion1.GetCell(0,0).GetValue());
+		printf("Expected -1, got %i\n", myRegion1.GetCell(0,1).GetValue());
 	}
 	catch (const invalid_argument& e){
 		printf(e.what());
@@ -57,20 +55,19 @@ int main(int argc, char *argv[])
 
 	Grid grid1 = Grid(values1);
 
-	RegionHolder regHold1 = RegionHolder(grid1.Get_rSE());
+	RegionHolder regHold1 = RegionHolder(grid1.GetRegion(2,2));
 	regHold1.Get_cNW() = 8;
-	printf("Expected 8, got %i\n", grid1.Get_rSE().Get_cNW().GetValue());
+	printf("Expected 8, got %i\n", grid1.GetRegion(2,2).GetCell(0,0).GetValue());
 
-	RegionHolder regHold2 = RegionHolder(grid1.Get_rNW());
+	RegionHolder regHold2 = RegionHolder(grid1.GetRegion(0,0));
 	RowHolder topRow1 = regHold2.TopRow();
 	RowHolder middleRow1 = regHold2.MiddleRow();
 	RowHolder bottomRow1 = regHold2.BottomRow();
 
 	LastCellFinder last1 = LastCellFinder(topRow1, middleRow1, bottomRow1);
-	printf("Expected -1, got %i\n", grid1.Get_rNW().Get_cC().GetValue());
+	printf("Expected -1, got %i\n", grid1.GetRegion(0, 0).GetCell(1,1).GetValue());
 	last1.fill();
-	printf("Expected 5, got %i\n", grid1.Get_rNW().Get_cC().GetValue());
-
+	printf("Expected 5, got %i\n", grid1.GetRegion(0, 0).GetCell(1,1).GetValue());
 
 
 	return 0;

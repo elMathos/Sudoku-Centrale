@@ -51,6 +51,7 @@ Cell& Region::GetCell(unsigned char i, unsigned char j)
 	if (i == 2 && j == 0) return _cSW;
 	if (i == 2 && j == 1) return _cS;
 	if (i == 2 && j == 2) return _cSE;
+	else throw invalid_argument("i and j must be between 0 and 2.\n");
 }
 
 bool Region::IsFull()
