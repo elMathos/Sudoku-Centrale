@@ -51,16 +51,15 @@ namespace SudokuUnitTest
 
 			Grid grid1 = Grid(values1);
 
-			RegionHolder regHold1 = RegionHolder(grid1.Get_rSE());
+			RegionHolder regHold = RegionHolder(grid1.Get_rNW());
 
-			//TODO Use Region::TopRow() and 2 other
-			TripleHolder topRow1 = TripleHolder(grid1.Get_rNW().Get_cNW(), grid1.Get_rNW().Get_cN(), grid1.Get_rNW().Get_cNE());
-			TripleHolder middleRow1 = TripleHolder(grid1.Get_rNW().Get_cW(), grid1.Get_rNW().Get_cC(), grid1.Get_rNW().Get_cE());
-			TripleHolder bottomRow1 = TripleHolder(grid1.Get_rNW().Get_cSW(), grid1.Get_rNW().Get_cS(), grid1.Get_rNW().Get_cSE());
+			RowHolder topRow1 = regHold.TopRow();
+			RowHolder middleRow1 = regHold.MiddleRow();
+			RowHolder bottomRow1 = regHold.BottomRow();
 
-			LastCellFinder last1 = LastCellFinder(topRow1, middleRow1, bottomRow1);
+			LastCellFinder last = LastCellFinder(topRow1, middleRow1, bottomRow1);
 			Assert::AreEqual(-1 , grid1.Get_rNW().Get_cC().GetValue());
-			last1.fill();
+			last.fill();
 			Assert::AreEqual(5, grid1.Get_rNW().Get_cC().GetValue());
 		}
 

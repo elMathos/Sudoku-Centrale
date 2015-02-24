@@ -59,9 +59,10 @@ int main(int argc, char *argv[])
 	regHold1.Get_cNW() = 8;
 	printf("Expected 8, got %i\n", grid1.Get_rSE().Get_cNW().GetValue());
 
-	TripleHolder topRow1 = TripleHolder(grid1.Get_rNW().Get_cNW(), grid1.Get_rNW().Get_cN(), grid1.Get_rNW().Get_cNE());
-	TripleHolder middleRow1 = TripleHolder(grid1.Get_rNW().Get_cW(), grid1.Get_rNW().Get_cC(), grid1.Get_rNW().Get_cE());
-	TripleHolder bottomRow1 = TripleHolder(grid1.Get_rNW().Get_cSW(), grid1.Get_rNW().Get_cS(), grid1.Get_rNW().Get_cSE());
+	RegionHolder regHold2 = RegionHolder(grid1.Get_rNW());
+	RowHolder topRow1 = regHold2.TopRow();
+	RowHolder middleRow1 = regHold2.MiddleRow();
+	RowHolder bottomRow1 = regHold2.BottomRow();
 
 	LastCellFinder last1 = LastCellFinder(topRow1, middleRow1, bottomRow1);
 	printf("Expected -1, got %i\n", grid1.Get_rNW().Get_cC().GetValue());
