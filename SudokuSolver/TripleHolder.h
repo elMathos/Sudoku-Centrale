@@ -7,6 +7,9 @@
 #endif
 
 #include "Cell.h"
+//#include "ValueEliminator.h"
+#include <set>
+using namespace std;
 
 
 class ExportedByDll TripleHolder
@@ -17,6 +20,8 @@ public:
 	Cell& Cell1();
 	Cell& Cell2();
 	Cell& Cell3();
+	set<unsigned char> flagValues(ValueEliminator& v);
+	bool isValuePresent(unsigned char);
 
 protected:
 	Cell& _cell1;
