@@ -6,6 +6,7 @@
 #include "RegionHolder.h"
 #include "LastCellFinder.h"
 #include "OnlyOneChoiceInRowVisitor.h"
+#include "OnlyOneChoiceInColumnVisitor.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -155,7 +156,88 @@ namespace SudokuUnitTest
 			Assert::AreEqual(1, grid.Get_rSW().Get_cNW().GetValue());
 			Assert::AreEqual(1, grid.Get_rSW().Get_cW().GetValue());
 			Assert::AreEqual(1, grid.Get_rSW().Get_cSW().GetValue());
+		}
 
+		TEST_METHOD(OnlyOneChoiceColumn1)
+		{
+			vector<string> stringInput = vector<string>(9);
+			/*grid:
+			-11111111
+			222222222
+			333333333
+			etc
+			999999999
+			First row should be filled
+			*/
+
+			stringInput[0] = "-11222333";
+			stringInput[1] = "111222333";
+			stringInput[2] = "111222333";
+
+			for (int i = 3; i < 6; i++)
+			{
+				stringInput[i] = "444555666";
+				stringInput[i + 3] = "777888999";
+			}
+
+			Assert::AreEqual(1, 1);
+			//Here we vist the grid column by column
+			OnlyOneChoiceInColumnVisitor visitor = OnlyOneChoiceInColumnVisitor();
+			Grid grid = Grid(stringInput);
+
+
+			Assert::AreEqual(-1, grid.Get_rNW().Get_cNW().GetValue());
+			bool filled = grid.Accept(visitor);
+			//First cell of grid should have been filled with a 1
+			Assert::IsTrue(filled);
+			Assert::AreEqual(1, grid.Get_rNW().Get_cNW().GetValue());
+		}
+
+		TEST_METHOD(OnlyOneChoiceColumn2)
+		{
+			vector<string> stringInput = vector<string>(9);
+			/*grid:
+			---------
+			888888888
+			777777777
+			etc
+			...
+			111111111
+			First row should be filled
+			*/
+
+			for (int i = 3; i < 9; i++)
+			{
+				stringInput[3*i] = "---888777";
+				stringInput[3 * i+1] = "666555444";
+				stringInput[3 * i + 1] = "333222111";
+			}
+
+			OnlyOneChoiceInColumnVisitor visitor = OnlyOneChoiceInColumnVisitor();
+			Grid grid = Grid(stringInput);
+			Assert::AreEqual(-1, grid.Get_rNW().Get_cNW().GetValue());
+			Assert::AreEqual(-1, grid.Get_rNW().Get_cN().GetValue());
+			Assert::AreEqual(-1, grid.Get_rNW().Get_cNE().GetValue());		
+			Assert::AreEqual(-1, grid.Get_rN().Get_cNW().GetValue());
+			Assert::AreEqual(-1, grid.Get_rN().Get_cN().GetValue());
+			Assert::AreEqual(-1, grid.Get_rN().Get_cNE().GetValue());			
+			Assert::AreEqual(-1, grid.Get_rNE().Get_cNW().GetValue());
+			Assert::AreEqual(-1, grid.Get_rNE().Get_cN().GetValue());
+			Assert::AreEqual(-1, grid.Get_rNE().Get_cNE().GetValue());
+
+
+			bool filled = grid.Accept(visitor);
+			//First row of grid should have been filled with 9
+			Assert::IsTrue(filled);
+			Assert::AreEqual(9, grid.Get_rNW().Get_cNW().GetValue());
+			Assert::AreEqual(9, grid.Get_rNW().Get_cN().GetValue());
+			Assert::AreEqual(9, grid.Get_rNW().Get_cNE().GetValue());
+			Assert::AreEqual(9, grid.Get_rN().Get_cNW().GetValue());
+			Assert::AreEqual(9, grid.Get_rN().Get_cN().GetValue());
+			Assert::AreEqual(9, grid.Get_rN().Get_cNE().GetValue());
+			Assert::AreEqual(9, grid.Get_rNE().Get_cNW().GetValue());
+			Assert::AreEqual(9, grid.Get_rNE().Get_cN().GetValue());
+			Assert::AreEqual(9, grid.Get_rNE().Get_cNE().GetValue());
 		}
 
 	};
