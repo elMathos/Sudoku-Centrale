@@ -60,7 +60,8 @@ namespace SudokuUnitTest
 
 			LastCellFinder last = LastCellFinder(topRow1, middleRow1, bottomRow1);
 			Assert::AreEqual(-1 , grid1.GetRegion(0, 0).GetCell(1, 1).GetValue());
-			last.fill();
+			bool filled = last.fill();
+			Assert::IsTrue(filled);
 			Assert::AreEqual(5, grid1.GetRegion(0, 0).GetCell(1, 1).GetValue());
 		}
 
@@ -77,13 +78,14 @@ namespace SudokuUnitTest
 
 			Grid grid1 = Grid(stringInput);
 			//Here's the different part
-			TripleHolder topRow1 = TripleHolder(grid1.GetRegion(0, 0).GetCell(0, 0), grid1.GetRegion(0, 0).GetCell(0, 1), grid1.GetRegion(0, 0).GetCell(0, 1));
+			TripleHolder topRow1 = TripleHolder(grid1.GetRegion(0, 0).GetCell(0, 0), grid1.GetRegion(0, 0).GetCell(0, 1), grid1.GetRegion(0, 0).GetCell(0, 2));
 			TripleHolder middleRow1 = TripleHolder(grid1.GetRegion(0, 0).GetCell(1, 0), grid1.GetRegion(0, 0).GetCell(1, 1), grid1.GetRegion(0, 0).GetCell(1, 2));
 			TripleHolder bottomRow1 = TripleHolder(grid1.GetRegion(0, 0).GetCell(2, 0), grid1.GetRegion(0, 0).GetCell(2, 1), grid1.GetRegion(0, 0).GetCell(2, 2));
 
 			LastCellFinder lastCF = LastCellFinder(topRow1, middleRow1, bottomRow1);
 			Assert::AreEqual(-1, grid1.GetRegion(0, 0).GetCell(1, 1).GetValue());
-			lastCF.fill();
+			bool filled = lastCF.fill();
+			Assert::IsTrue(filled);
 			Assert::AreEqual(5, grid1.GetRegion(0, 0).GetCell(1, 1).GetValue());
 		}
 
