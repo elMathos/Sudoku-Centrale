@@ -54,6 +54,15 @@
     <ClInclude Include="ValueEliminator.h">
       <Filter>Header Files\Strategies</Filter>
     </ClInclude>
+    <ClInclude Include="OnlyOneChoiceInColumnVisitor.h">
+      <Filter>Header Files\Strategies</Filter>
+    </ClInclude>
+    <ClInclude Include="OnlyOneChoiceInRegionVisitor.h">
+      <Filter>Header Files\Strategies</Filter>
+    </ClInclude>
+    <ClInclude Include="OnlySquareVisitor.h">
+      <Filter>Header Files\Strategies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Cell.cpp">
@@ -87,6 +96,15 @@
       <Filter>Source Files\Strategies</Filter>
     </ClCompile>
     <ClCompile Include="ValueEliminator.cpp">
+      <Filter>Source Files\Strategies</Filter>
+    </ClCompile>
+    <ClCompile Include="OnlyOneChoiceInColumnVisitor.cpp">
+      <Filter>Source Files\Strategies</Filter>
+    </ClCompile>
+    <ClCompile Include="OnlyOneChoiceInRegionVisitor.cpp">
+      <Filter>Source Files\Strategies</Filter>
+    </ClCompile>
+    <ClCompile Include="OnlySquareVisitor.cpp">
       <Filter>Source Files\Strategies</Filter>
     </ClCompile>
   </ItemGroup>
