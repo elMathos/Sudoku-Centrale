@@ -15,41 +15,41 @@ bool OnlyOneChoiceInRowVisitor::Visit(Grid& ioGrid) const
 {
 	bool success = false;
 
-	LastCellFinder l_0(RegionHolder(ioGrid.Get_rNW()).TopRow(), 
+	LastCellFinder lcf1(RegionHolder(ioGrid.Get_rNW()).TopRow(), 
 		RegionHolder(ioGrid.Get_rN()).TopRow(), RegionHolder(ioGrid.Get_rNE()).TopRow());
-	success |= l_0.fill();
+	success |= lcf1.fill();
 
-	LastCellFinder l_0(RegionHolder(ioGrid.Get_rNW()).MiddleRow(),
+	LastCellFinder lcf2(RegionHolder(ioGrid.Get_rNW()).MiddleRow(),
 		RegionHolder(ioGrid.Get_rN()).MiddleRow(), RegionHolder(ioGrid.Get_rNE()).MiddleRow());
-	success |= l_0.fill();
+	success |= lcf2.fill();
 
-	LastCellFinder l_0(RegionHolder(ioGrid.Get_rNW()).BottomRow(),
+	LastCellFinder lcf3(RegionHolder(ioGrid.Get_rNW()).BottomRow(),
 		RegionHolder(ioGrid.Get_rN()).BottomRow(), RegionHolder(ioGrid.Get_rNE()).BottomRow());
-	success |= l_0.fill();
+	success |= lcf3.fill();
 
-	LastCellFinder l_0(RegionHolder(ioGrid.Get_rW()).TopRow(),
+	LastCellFinder lcf4(RegionHolder(ioGrid.Get_rW()).TopRow(),
 		RegionHolder(ioGrid.Get_rC()).TopRow(), RegionHolder(ioGrid.Get_rE()).TopRow());
-	success |= l_0.fill();
+	success |= lcf4.fill();
 
-	LastCellFinder l_0(RegionHolder(ioGrid.Get_rW()).MiddleRow(),
+	LastCellFinder lcf5(RegionHolder(ioGrid.Get_rW()).MiddleRow(),
 		RegionHolder(ioGrid.Get_rC()).MiddleRow(), RegionHolder(ioGrid.Get_rE()).MiddleRow());
-	success |= l_0.fill();
+	success |= lcf5.fill();
 
-	LastCellFinder l_0(RegionHolder(ioGrid.Get_rW()).BottomRow(),
+	LastCellFinder lcf6(RegionHolder(ioGrid.Get_rW()).BottomRow(),
 		RegionHolder(ioGrid.Get_rC()).BottomRow(), RegionHolder(ioGrid.Get_rE()).BottomRow());
-	success |= l_0.fill();
+	success |= lcf6.fill();
 
-	LastCellFinder l_0(RegionHolder(ioGrid.Get_rSW()).TopRow(),
+	LastCellFinder lcf7(RegionHolder(ioGrid.Get_rSW()).TopRow(),
 		RegionHolder(ioGrid.Get_rS()).TopRow(), RegionHolder(ioGrid.Get_rSE()).TopRow());
-	success |= l_0.fill();
+	success |= lcf7.fill();
 
-	LastCellFinder l_0(RegionHolder(ioGrid.Get_rSW()).MiddleRow(),
+	LastCellFinder lcf8(RegionHolder(ioGrid.Get_rSW()).MiddleRow(),
 		RegionHolder(ioGrid.Get_rS()).MiddleRow(), RegionHolder(ioGrid.Get_rSE()).MiddleRow());
-	success |= l_0.fill();
+	success |= lcf8.fill();
 
-	LastCellFinder l_0(RegionHolder(ioGrid.Get_rSW()).BottomRow(),
+	LastCellFinder lcf9(RegionHolder(ioGrid.Get_rSW()).BottomRow(),
 		RegionHolder(ioGrid.Get_rS()).BottomRow(), RegionHolder(ioGrid.Get_rSE()).BottomRow());
-	success |= l_0.fill();
+	success |= lcf9.fill();
 
 	return success;
 }
