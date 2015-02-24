@@ -42,14 +42,14 @@ namespace SudokuUnitTest
 
 		TEST_METHOD(LastCellFinderWithHolderAccessors)
 		{
-			vector<string> values1 = vector<string>(9);
-			values1[0] = "1234-6789";
+			vector<string> stringInput = vector<string>(9);
+			stringInput[0] = "1234-6789";
 			for (int i = 1; i < 9; i++)
 			{
-				values1[i] = "123456789";
+				stringInput[i] = "123456789";
 			}
 
-			Grid grid1 = Grid(values1);
+			Grid grid1 = Grid(stringInput);
 
 			RegionHolder regHold = RegionHolder(grid1.Get_rNW());
 
@@ -67,14 +67,14 @@ namespace SudokuUnitTest
 		{
 
 
-			vector<string> values1 = vector<string>(9);
-			values1[0] = "1234-6789";
+			vector<string> stringInput = vector<string>(9);
+			stringInput[0] = "1234-6789";
 			for (int i = 1; i < 9; i++)
 			{
-				values1[i] = "123456789";
+				stringInput[i] = "123456789";
 			}
 
-			Grid grid1 = Grid(values1);
+			Grid grid1 = Grid(stringInput);
 			//Here's the different part
 			TripleHolder topRow1 = TripleHolder(grid1.Get_rNW().Get_cNW(), grid1.Get_rNW().Get_cN(), grid1.Get_rNW().Get_cNE());
 			TripleHolder middleRow1 = TripleHolder(grid1.Get_rNW().Get_cW(), grid1.Get_rNW().Get_cC(), grid1.Get_rNW().Get_cE());
@@ -84,6 +84,27 @@ namespace SudokuUnitTest
 			Assert::AreEqual(-1, grid1.Get_rNW().Get_cC().GetValue());
 			lastCF.fill();
 			Assert::AreEqual(5, grid1.Get_rNW().Get_cC().GetValue());
+		}
+
+		TEST_METHOD(OnlyOneChoiceRow)
+		{
+			vector<string> stringInput = vector<string>(9);
+		    /*grid:
+			-23456789
+			123456789
+			etc
+			First row should be filled
+			*/
+
+			stringInput[0] = "-23123123";
+			stringInput[1] = "456456456";
+			stringInput[2] = "789789789";
+			for (int i = 3; i < 9; i++)
+			{
+				stringInput[i] = "123456789";
+			}
+
+			Grid grid1 = Grid(stringInput);
 		}
 
 	};
