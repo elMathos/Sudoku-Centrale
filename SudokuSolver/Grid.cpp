@@ -50,49 +50,17 @@ bool Grid::IsFull(){
 	return isFull;
 }
 
-Region& Grid::Get_rNW()
+Region& Grid::GetRegion(unsigned char i, unsigned char j)
 {
-	return _rNW;
-}
-
-Region& Grid::Get_rN()
-{
-	return _rN;
-}
-
-Region& Grid::Get_rNE()
-{
-	return _rNE;
-}
-
-Region& Grid::Get_rW()
-{
-	return _rW;
-}
-
-Region& Grid::Get_rC()
-{
-	return _rC;
-}
-
-Region& Grid::Get_rE()
-{
-	return _rE;
-}
-
-Region& Grid::Get_rSW()
-{
-	return _rSW;
-}
-
-Region& Grid::Get_rS()
-{
-	return _rS;
-}
-
-Region& Grid::Get_rSE()
-{
-	return _rSE;
+	if (i == 0 && j == 0) return _rNW;
+	if (i == 0 && j == 1) return _rN;
+	if (i == 0 && j == 2) return _rNE;
+	if (i == 1 && j == 0) return _rW;
+	if (i == 1 && j == 1) return _rC;
+	if (i == 1 && j == 2) return _rE;
+	if (i == 2 && j == 0) return _rSW;
+	if (i == 2 && j == 1) return _rS;
+	if (i == 2 && j == 2) return _rSE;
 }
 
 bool Grid::Accept(const IVisitor& visitor)

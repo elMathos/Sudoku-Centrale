@@ -24,15 +24,7 @@ public:
 	Grid(vector<Region>& regions);
 	~Grid();
 	bool IsFull();
-	Region& Get_rNW();
-	Region& Get_rN();
-	Region& Get_rNE();
-	Region& Get_rW();
-	Region& Get_rC();
-	Region& Get_rE();
-	Region& Get_rSW();
-	Region& Get_rS();
-	Region& Get_rSE();
+	Region& GetRegion(unsigned char i, unsigned char j);
 	bool Accept(const IVisitor& visitor);
 
 private:
