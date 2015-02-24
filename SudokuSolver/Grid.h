@@ -45,6 +45,5 @@ private:
 	Region _rSW;
 	Region _rS;
 	Region _rSE;
-	const int M = 3;
 };
 

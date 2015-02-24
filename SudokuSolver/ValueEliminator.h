@@ -8,15 +8,14 @@ class ValueEliminator
 public:
 	ValueEliminator();
 	~ValueEliminator();
-	set<unsigned char> AvailableValue();
-	void SetFlags(const RegionHolder& region);
+	set<unsigned char> availableValue();
+	void setFlags(const RegionHolder& region);
+	void setFlags(TripleHolder& tripleHolder);
 
 private:
 	bool _alreadySeen[9];
-	void Flag(unsigned char iValue);
-	
-	//So good naming practices....
-	int AvailableValues();
+	void flag(unsigned char iValue);
+	int availableValues();
 
 	//Note : added by us
 };

@@ -31,7 +31,6 @@ public:
 	Cell& Get_cSE();
 
 private:
-	const int L = 3;
 	Cell _cNW;
 	Cell _cN;
 	Cell _cNE;

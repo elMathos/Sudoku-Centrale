@@ -32,8 +32,8 @@ public:
 	ColumnHolder MiddleColumn() const;
 	ColumnHolder RightColumn();
 	ColumnHolder RightColumn() const;
-	set<unsigned char> FlagValues(ValueEliminator& v);
-	bool IsValuePresent(unsigned char);
+	set<unsigned char> flagValues(ValueEliminator& v);
+	bool isValuePresent(unsigned char);
 
 	//TODO: (also?) Make all accessors as const
 	Cell& Get_cNW() const{ return _cNW; }
@@ -47,7 +47,6 @@ public:
 	Cell& Get_cSE() const{ return _cSE; }
 
 private:
-	const int L = 3;
 
 	Cell& _cNW;
 	Cell& _cN;
