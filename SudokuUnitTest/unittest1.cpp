@@ -13,7 +13,7 @@ namespace SudokuUnitTest
 	TEST_CLASS(UnitTest1)
 	{
 	public:
-		
+		//TODO rename tests explicitly
 		TEST_METHOD(CellValue1)
 		{
 			Cell cell = Cell(2);
