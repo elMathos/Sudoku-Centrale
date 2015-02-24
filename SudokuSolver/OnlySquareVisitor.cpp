@@ -29,4 +29,6 @@ bool OnlySquareVisitor::Visit(Grid& ioGrid) const
 	//		//chercher les available values sur la RowHolder indice v1_i. si ne contient pas v1, alors la Cell(i,j) vaut v2. Si ca ne contient pas v2, alors la Cell(i,j) vaut v1
 
 	//	}
+	//TODO fix this
+	return true;
 }
