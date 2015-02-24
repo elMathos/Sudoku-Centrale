@@ -32,7 +32,7 @@ namespace SudokuUnitTest
 
 			Assert::AreEqual(1, myRegion1.GetCell(0, 0).GetValue());
 			Assert::AreEqual(-1, myRegion1.GetCell(0, 1).GetValue());
-			Assert::AreEqual(3, myRegion1.GetCell(0, 1).GetValue());
+			Assert::AreEqual(3, myRegion1.GetCell(0, 2).GetValue());
 			Assert::AreEqual(4, myRegion1.GetCell(1, 0).GetValue());
 			Assert::AreEqual(5, myRegion1.GetCell(1, 1).GetValue());
 			Assert::AreEqual(6, myRegion1.GetCell(1, 2).GetValue());
