@@ -39,15 +39,19 @@ Region::~Region()
 {
 }
 
-Cell& Region::Get_cNW(){ return _cNW; }
-Cell& Region::Get_cN(){ return _cN; }
-Cell& Region::Get_cNE(){ return _cNE; }
-Cell& Region::Get_cW(){ return _cW; }
-Cell& Region::Get_cC(){ return _cC; }
-Cell& Region::Get_cE(){ return _cE; }
-Cell& Region::Get_cSW(){ return _cSW; }
-Cell& Region::Get_cS(){ return _cS; }
-Cell& Region::Get_cSE(){ return _cSE; }
+
+Cell& Region::GetCell(unsigned char i, unsigned char j)
+{
+	if (i == 0 && j == 0) return _cNW;
+	if (i == 0 && j == 1) return _cN;
+	if (i == 0 && j == 2) return _cNE;
+	if (i == 1 && j == 0) return _cW;
+	if (i == 1 && j == 1) return _cC;
+	if (i == 1 && j == 2) return _cE;
+	if (i == 2 && j == 0) return _cSW;
+	if (i == 2 && j == 1) return _cS;
+	if (i == 2 && j == 2) return _cSE;
+}
 
 bool Region::IsFull()
 {

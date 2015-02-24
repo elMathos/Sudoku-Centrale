@@ -3,9 +3,9 @@
 
 
 //TODO do we need accessors or public Cells ?
-RegionHolder::RegionHolder(Region& reg) : _cNW(reg.Get_cNW()), _cN(reg.Get_cN()), _cNE(reg.Get_cNE()),
-_cW(reg.Get_cW()), _cC(reg.Get_cC()), _cE(reg.Get_cE()),
-_cSW(reg.Get_cSW()), _cS(reg.Get_cS()), _cSE(reg.Get_cSE())
+RegionHolder::RegionHolder(Region& reg) : _cNW(reg.GetCell(0, 0)), _cN(reg.GetCell(0, 1)), _cNE(reg.GetCell(0, 2)),
+_cW(reg.GetCell(1, 0)), _cC(reg.GetCell(1, 1)), _cE(reg.GetCell(1, 2)),
+_cSW(reg.GetCell(2, 0)), _cS(reg.GetCell(2, 1)), _cSE(reg.GetCell(2, 2))
 {
 }
 
