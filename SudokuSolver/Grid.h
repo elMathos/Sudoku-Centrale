@@ -33,7 +33,7 @@ public:
 	Region& Get_rSW();
 	Region& Get_rS();
 	Region& Get_rSE();
-	void Accept(const IVisitor& visitor);
+	bool Accept(const IVisitor& visitor);
 
 private:
 	Region _rNW;
