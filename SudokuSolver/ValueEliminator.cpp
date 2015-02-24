@@ -13,7 +13,7 @@ ValueEliminator::~ValueEliminator()
 
 void ValueEliminator::flag(unsigned char iValue)
 {
-	_alreadySeen[iValue] = true;
+	_alreadySeen[iValue-1] = true;
 }
 
 int ValueEliminator::availableValues()
@@ -34,7 +34,7 @@ set<unsigned char> ValueEliminator::availableValue()
 	for (int i = 0; i < 9; i++)
 	{
 		if (!_alreadySeen[i])
-			valueSet.insert(i);
+			valueSet.insert(i+1);
 	}
 
 	if (valueSet.size() == 0)
