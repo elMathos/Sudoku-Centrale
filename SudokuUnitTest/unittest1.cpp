@@ -87,7 +87,7 @@ namespace SudokuUnitTest
 			Assert::AreEqual(5, grid1.Get_rNW().Get_cC().GetValue());
 		}
 
-		TEST_METHOD(OnlyOneChoiceRow)
+		TEST_METHOD(OnlyOneChoiceRow1)
 		{
 			vector<string> stringInput = vector<string>(9);
 		    /*grid:
@@ -112,6 +112,49 @@ namespace SudokuUnitTest
 			//First cell of grid should have been filled with a 1
 			Assert::IsTrue(filled);
 			Assert::AreEqual(1, grid.Get_rNW().Get_cNW().GetValue());
+		}
+
+		TEST_METHOD(OnlyOneChoiceRow2)
+		{
+			vector<string> stringInput = vector<string>(9);
+			/*grid:
+			-23456789
+			-23456789
+			etc
+			First column should be filled with ones
+			*/
+
+			for (int i = 0; i < 3; i++)
+			{
+				stringInput[0+3*i] = "-23-23-23";
+				stringInput[1+3*i] = "456456456";
+				stringInput[2+3*i] = "789789789";
+			}
+
+			OnlyOneChoiceInRowVisitor visitor = OnlyOneChoiceInRowVisitor();
+			Grid grid = Grid(stringInput);
+			Assert::AreEqual(-1, grid.Get_rNW().Get_cNW().GetValue());
+			Assert::AreEqual(-1, grid.Get_rNW().Get_cW().GetValue());
+			Assert::AreEqual(-1, grid.Get_rNW().Get_cSW().GetValue());
+			Assert::AreEqual(-1, grid.Get_rW().Get_cNW().GetValue());
+			Assert::AreEqual(-1, grid.Get_rW().Get_cW().GetValue());
+			Assert::AreEqual(-1, grid.Get_rW().Get_cSW().GetValue());
+			Assert::AreEqual(-1, grid.Get_rSW().Get_cNW().GetValue());
+			Assert::AreEqual(-1, grid.Get_rSW().Get_cW().GetValue());
+			Assert::AreEqual(-1, grid.Get_rSW().Get_cSW().GetValue());
+			bool filled = grid.Accept(visitor);
+			Assert::IsTrue(filled);
+
+			//First column of grid should have been filled with 1s
+			Assert::AreEqual(1, grid.Get_rNW().Get_cNW().GetValue());
+			Assert::AreEqual(1, grid.Get_rNW().Get_cW().GetValue());
+			Assert::AreEqual(1, grid.Get_rNW().Get_cSW().GetValue());
+			Assert::AreEqual(1, grid.Get_rW().Get_cNW().GetValue());
+			Assert::AreEqual(1, grid.Get_rW().Get_cW().GetValue());
+			Assert::AreEqual(1, grid.Get_rW().Get_cSW().GetValue());
+			Assert::AreEqual(1, grid.Get_rSW().Get_cNW().GetValue());
+			Assert::AreEqual(1, grid.Get_rSW().Get_cW().GetValue());
+			Assert::AreEqual(1, grid.Get_rSW().Get_cSW().GetValue());
 
 		}
 
