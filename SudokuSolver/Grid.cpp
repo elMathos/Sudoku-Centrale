@@ -95,7 +95,7 @@ Region& Grid::Get_rSE()
 	return _rSE;
 }
 
-void Grid::Accept(const IVisitor& visitor)
+bool Grid::Accept(const IVisitor& visitor)
 {
-	visitor.Visit(*this);
+	return visitor.Visit(*this);
 }
