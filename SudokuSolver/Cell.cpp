@@ -45,7 +45,6 @@ bool Cell::IsEmpty() const
 	return _value==-1;
 }
 
-//Bad practice
 Cell& Cell::operator=(unsigned char iValue)
 {
 	_value = iValue;
