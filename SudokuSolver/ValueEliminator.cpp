@@ -30,17 +30,17 @@ int ValueEliminator::availableValues()
 
 set<unsigned char> ValueEliminator::availableValue()
 {
-	set<unsigned char> set;
+	set<unsigned char> valueSet;
 	for (int i = 0; i < 9; i++)
 	{
 		if (!_alreadySeen[i])
-			set.insert(i);
+			valueSet.insert(i);
 	}
 
-	if (set.count == 0)
+	if (valueSet.size() == 0)
 		throw invalid_argument("No available value.\n");
 
-	return set;
+	return valueSet;
 }
 
 void ValueEliminator::setFlags(const RegionHolder& regionHolder)

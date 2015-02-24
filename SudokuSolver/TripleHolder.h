@@ -6,6 +6,8 @@
 #define ExportedByDll __declspec(dllimport)
 #endif
 
+//forward declarations
+class ValueEliminator;
 #include "Cell.h"
 //#include "ValueEliminator.h"
 #include <set>
