@@ -30,15 +30,15 @@ namespace SudokuUnitTest
 		{
 			Region myRegion1 = Region("1-3456789");
 
-			Assert::AreEqual(1, myRegion1.Get_cNW().GetValue());
-			Assert::AreEqual(-1, myRegion1.Get_cN().GetValue());
-			Assert::AreEqual(3, myRegion1.Get_cNE().GetValue());
-			Assert::AreEqual(4, myRegion1.Get_cW().GetValue());
-			Assert::AreEqual(5, myRegion1.Get_cC().GetValue());
-			Assert::AreEqual(6, myRegion1.Get_cE().GetValue());
-			Assert::AreEqual(7, myRegion1.Get_cSW().GetValue());
-			Assert::AreEqual(8, myRegion1.Get_cS().GetValue());
-			Assert::AreEqual(9, myRegion1.Get_cSE().GetValue());
+			Assert::AreEqual(1, myRegion1.GetCell(0, 0).GetValue());
+			Assert::AreEqual(-1, myRegion1.GetCell(0, 1).GetValue());
+			Assert::AreEqual(3, myRegion1.GetCell(0, 1).GetValue());
+			Assert::AreEqual(4, myRegion1.GetCell(1, 0).GetValue());
+			Assert::AreEqual(5, myRegion1.GetCell(1, 1).GetValue());
+			Assert::AreEqual(6, myRegion1.GetCell(1, 2).GetValue());
+			Assert::AreEqual(7, myRegion1.GetCell(2, 0).GetValue());
+			Assert::AreEqual(8, myRegion1.GetCell(2, 1).GetValue());
+			Assert::AreEqual(9, myRegion1.GetCell(2, 2).GetValue());
 		}
 
 		TEST_METHOD(LastCellFinderWithHolderAccessors)
@@ -52,16 +52,16 @@ namespace SudokuUnitTest
 
 			Grid grid1 = Grid(stringInput);
 
-			RegionHolder regHold = RegionHolder(grid1.Get_rNW());
+			RegionHolder regHold = RegionHolder(grid1.GetRegion(0, 0));
 
 			RowHolder topRow1 = regHold.TopRow();
 			RowHolder middleRow1 = regHold.MiddleRow();
 			RowHolder bottomRow1 = regHold.BottomRow();
 
 			LastCellFinder last = LastCellFinder(topRow1, middleRow1, bottomRow1);
-			Assert::AreEqual(-1 , grid1.Get_rNW().Get_cC().GetValue());
+			Assert::AreEqual(-1 , grid1.GetRegion(0, 0).GetCell(1, 1).GetValue());
 			last.fill();
-			Assert::AreEqual(5, grid1.Get_rNW().Get_cC().GetValue());
+			Assert::AreEqual(5, grid1.GetRegion(0, 0).GetCell(1, 1).GetValue());
 		}
 
 		TEST_METHOD(LastCellFinderWithHolderCells)
@@ -77,14 +77,14 @@ namespace SudokuUnitTest
 
 			Grid grid1 = Grid(stringInput);
 			//Here's the different part
-			TripleHolder topRow1 = TripleHolder(grid1.Get_rNW().Get_cNW(), grid1.Get_rNW().Get_cN(), grid1.Get_rNW().Get_cNE());
-			TripleHolder middleRow1 = TripleHolder(grid1.Get_rNW().Get_cW(), grid1.Get_rNW().Get_cC(), grid1.Get_rNW().Get_cE());
-			TripleHolder bottomRow1 = TripleHolder(grid1.Get_rNW().Get_cSW(), grid1.Get_rNW().Get_cS(), grid1.Get_rNW().Get_cSE());
+			TripleHolder topRow1 = TripleHolder(grid1.GetRegion(0, 0).GetCell(0, 0), grid1.GetRegion(0, 0).GetCell(0, 1), grid1.GetRegion(0, 0).GetCell(0, 1));
+			TripleHolder middleRow1 = TripleHolder(grid1.GetRegion(0, 0).GetCell(1, 0), grid1.GetRegion(0, 0).GetCell(1, 1), grid1.GetRegion(0, 0).GetCell(1, 2));
+			TripleHolder bottomRow1 = TripleHolder(grid1.GetRegion(0, 0).GetCell(2, 0), grid1.GetRegion(0, 0).GetCell(2, 1), grid1.GetRegion(0, 0).GetCell(2, 2));
 
 			LastCellFinder lastCF = LastCellFinder(topRow1, middleRow1, bottomRow1);
-			Assert::AreEqual(-1, grid1.Get_rNW().Get_cC().GetValue());
+			Assert::AreEqual(-1, grid1.GetRegion(0, 0).GetCell(1, 1).GetValue());
 			lastCF.fill();
-			Assert::AreEqual(5, grid1.Get_rNW().Get_cC().GetValue());
+			Assert::AreEqual(5, grid1.GetRegion(0, 0).GetCell(1, 1).GetValue());
 		}
 
 		TEST_METHOD(OnlyOneChoiceRow1)
@@ -107,11 +107,11 @@ namespace SudokuUnitTest
 
 			OnlyOneChoiceInRowVisitor visitor = OnlyOneChoiceInRowVisitor();
 			Grid grid = Grid(stringInput);
-			Assert::AreEqual(-1, grid.Get_rNW().Get_cNW().GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(0, 0).GetValue());
 			bool filled = grid.Accept(visitor);
 			//First cell of grid should have been filled with a 1
 			Assert::IsTrue(filled);
-			Assert::AreEqual(1, grid.Get_rNW().Get_cNW().GetValue());
+			Assert::AreEqual(1, grid.GetRegion(0, 0).GetCell(0, 0).GetValue());
 		}
 
 		TEST_METHOD(OnlyOneChoiceRow2)
@@ -133,28 +133,28 @@ namespace SudokuUnitTest
 
 			OnlyOneChoiceInRowVisitor visitor = OnlyOneChoiceInRowVisitor();
 			Grid grid = Grid(stringInput);
-			Assert::AreEqual(-1, grid.Get_rNW().Get_cNW().GetValue());
-			Assert::AreEqual(-1, grid.Get_rNW().Get_cW().GetValue());
-			Assert::AreEqual(-1, grid.Get_rNW().Get_cSW().GetValue());
-			Assert::AreEqual(-1, grid.Get_rW().Get_cNW().GetValue());
-			Assert::AreEqual(-1, grid.Get_rW().Get_cW().GetValue());
-			Assert::AreEqual(-1, grid.Get_rW().Get_cSW().GetValue());
-			Assert::AreEqual(-1, grid.Get_rSW().Get_cNW().GetValue());
-			Assert::AreEqual(-1, grid.Get_rSW().Get_cW().GetValue());
-			Assert::AreEqual(-1, grid.Get_rSW().Get_cSW().GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(0, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(1, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(1, 0).GetCell(0, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(1, 0).GetCell(1, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(1, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(2, 0).GetCell(0, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(2, 0).GetCell(1, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(2, 0).GetCell(2, 0).GetValue());
 			bool filled = grid.Accept(visitor);
 			Assert::IsTrue(filled);
 
 			//First column of grid should have been filled with 1s
-			Assert::AreEqual(1, grid.Get_rNW().Get_cNW().GetValue());
-			Assert::AreEqual(1, grid.Get_rNW().Get_cW().GetValue());
-			Assert::AreEqual(1, grid.Get_rNW().Get_cSW().GetValue());
-			Assert::AreEqual(1, grid.Get_rW().Get_cNW().GetValue());
-			Assert::AreEqual(1, grid.Get_rW().Get_cW().GetValue());
-			Assert::AreEqual(1, grid.Get_rW().Get_cSW().GetValue());
-			Assert::AreEqual(1, grid.Get_rSW().Get_cNW().GetValue());
-			Assert::AreEqual(1, grid.Get_rSW().Get_cW().GetValue());
-			Assert::AreEqual(1, grid.Get_rSW().Get_cSW().GetValue());
+			Assert::AreEqual(1, grid.GetRegion(0, 0).GetCell(0, 0).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(0, 0).GetCell(1, 0).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(0, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(1, 0).GetCell(0, 0).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(1, 0).GetCell(1, 0).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(1, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(2, 0).GetCell(0, 0).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(2, 0).GetCell(1, 0).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(2, 0).GetCell(2, 0).GetValue());
 
 		}
 
