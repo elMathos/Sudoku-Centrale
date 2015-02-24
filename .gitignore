@@ -48,6 +48,7 @@ Temporary Items
 *.exe
 *.pdb
 *.sdf
+*.opensdf
 *.suo
 *.obj
 *.log
@@ -56,17 +57,16 @@ Temporary Items
 
 
 
+
 # ReSharper
 _Resharper*
+*Resharper.user
 
-*.user
-Sudoku.opensdf
-*/SudokuSolver.dll
-*/SudokuSolver.dll
-*/SudokuSolver.exp
-*/SudokuSolver.lib
-Release/SudokuUnitTest.dll
-Release/SudokuUnitTest.exp
-Release/SudokuUnitTest.lib
+# DLL binaries
+*.dll
+*.exp
+*.lib
+
+
 *.ipch
 *.pch
