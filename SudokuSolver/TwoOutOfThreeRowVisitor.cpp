@@ -23,9 +23,9 @@ bool TwoOutOfThreeRowVisitor::Visit(Grid& ioGrid) const
 		NineHolder FullBottomLine = ioGrid.GetRow(3*i + 2);
 
 		//TODO this does not compile because ValueELim(NineHolder&) is not implemented)
-		ValueEliminator veTop = ValueEliminator(FullTopLine);
-		ValueEliminator veMid = ValueEliminator(FullMiddleLine);
-		ValueEliminator veBot = ValueEliminator(FullBottomLine);
+		ValueEliminator veTop = ValueEliminator();
+		ValueEliminator veMid = ValueEliminator();
+		ValueEliminator veBot = ValueEliminator();
 		//set flags for these three VE
 
 		for (unsigned char digit = 1; digit < 10; digit++)
@@ -34,12 +34,15 @@ bool TwoOutOfThreeRowVisitor::Visit(Grid& ioGrid) const
 			unsigned char absences = 0;
 			//create set of unsigned char AA
 			//TODO NineHolder::IsValuePresent() is not implemented
-			if (!FullTopLine.IsValuePresent(digit)){ rowDigitAbsent = 3 * i; absences++; }
-			else{ //add Column in which the digit in present to the set AA }
-			if (!FullMiddleLine.IsValuePresent(digit)){ rowDigitAbsent = 3 * i + 1; absences++; }
-			else{ //add Column in which the digit in present }
-			if (!FullBottomLine.IsValuePresent(digit)){ rowDigitAbsent = 3 * i + 2; absences++; }
-			else{ //add Column in which the digit in present }
+			if (!FullTopLine.isValuePresent(digit)){ rowDigitAbsent = 3 * i; absences++; }
+			else{ //add Column in which the digit in present to the set AA
+			}
+			if (!FullMiddleLine.isValuePresent(digit)){ rowDigitAbsent = 3 * i + 1; absences++; }
+			else{ //add Column in which the digit in present
+			}
+			if (!FullBottomLine.isValuePresent(digit)){ rowDigitAbsent = 3 * i + 2; absences++; }
+			else{ //add Column in which the digit in present
+			}
 
 			if (absences == 1) 
 			{
@@ -53,7 +56,6 @@ bool TwoOutOfThreeRowVisitor::Visit(Grid& ioGrid) const
 			}
 		}
 	}
-
 
 	return success;
 }

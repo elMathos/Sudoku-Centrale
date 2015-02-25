@@ -195,7 +195,7 @@ NineHolder Grid::GetColumn(unsigned char i)
 		RegionHolder r3 = RegionHolder(_rSW);
 		TripleHolder t1 = r1.RightColumn();
 		TripleHolder t2 = r2.RightColumn();
-		TripleHolder t3 = r3.RightColumn;
+		TripleHolder t3 = r3.RightColumn();
 		return NineHolder(t1, t2, t3);
 	}if (i == 3)
 	{
