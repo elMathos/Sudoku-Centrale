@@ -6,6 +6,7 @@
 #define ExportedByDll __declspec(dllimport)
 #endif
 
+class ValueEliminator;
 #include "Cell.h"
 #include "TripleHolder.h"
 
@@ -15,6 +16,8 @@ public:
 	NineHolder(TripleHolder&, TripleHolder&, TripleHolder&);
 	~NineHolder();
 	Cell& GetCell(unsigned char i);
+	void flagValues(ValueEliminator& v);
+	bool isValuePresent(unsigned char);
 
 private:
 	Cell& _cell1;

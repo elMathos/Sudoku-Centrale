@@ -1,6 +1,13 @@
 #pragma once
 #include "IVisitor.h"
-class OnlySquareVisitor :
+
+#ifdef SUDOKUSOLVER_EXPORTS
+#define ExportedByDll __declspec(dllexport)
+#else
+#define ExportedByDll __declspec(dllimport)
+#endif
+
+class ExportedByDll OnlySquareVisitor :
 	public IVisitor
 {
 public:

@@ -1,5 +1,7 @@
 #pragma once
 #include "RegionHolder.h"
+#include "TripleHolder.h"
+#include "NineHolder.h"
 #include <set>
 using namespace std;
 
@@ -11,6 +13,7 @@ public:
 	set<unsigned char> availableValue();
 	void setFlags(const RegionHolder& region);
 	void setFlags(TripleHolder& tripleHolder);
+	void setFlags(NineHolder& nineHolder);
 
 private:
 	bool _alreadySeen[9];

@@ -9,11 +9,7 @@
 class ValueEliminator;
 #include "Region.h"
 #include "RowHolder.h"
-//#include "ValueEliminator.h"
 #include "ColumnHolder.h"
-#include <set>
-
-using namespace std;
 
 class ExportedByDll RegionHolder
 {
@@ -32,7 +28,7 @@ public:
 	ColumnHolder MiddleColumn() const;
 	ColumnHolder RightColumn();
 	ColumnHolder RightColumn() const;
-	set<unsigned char> flagValues(ValueEliminator& v);
+	void flagValues(ValueEliminator& v);
 	bool isValuePresent(unsigned char);
 
 	//TODO: (also?) Make all accessors as const

@@ -1,4 +1,5 @@
 #include "NineHolder.h"
+#include "ValueEliminator.h"
 
 
 //TODO test NineHolder when inputed 123 456 789
@@ -26,6 +27,20 @@ Cell& NineHolder::GetCell(unsigned char i)
 	if (i == 6) return _cell7;
 	if (i == 7) return _cell8;
 	if (i == 8) return _cell9;
-	//TODO else trhow execption
+	else throw invalid_argument("Required cell index must be between 0 and 8.\n");
 
+}
+
+void NineHolder::flagValues(ValueEliminator& valueEliminator)
+{
+	valueEliminator.setFlags(*this);
+}
+
+bool NineHolder::isValuePresent(unsigned char iTarget)
+{
+	ValueEliminator valueEliminator;
+	flagValues(valueEliminator);
+	set<unsigned char> availableValues = valueEliminator.availableValue();
+
+	return availableValues.find(iTarget) != availableValues.end();
 }

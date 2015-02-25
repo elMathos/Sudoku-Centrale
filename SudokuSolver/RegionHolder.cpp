@@ -69,16 +69,16 @@ ColumnHolder RegionHolder::RightColumn() const
 	return ColumnHolder(_cNE, _cE, _cSE);
 }
 
-set<unsigned char> RegionHolder::flagValues(ValueEliminator& valueEliminator)
+void RegionHolder::flagValues(ValueEliminator& valueEliminator)
 {
 	valueEliminator.setFlags(*this);
-	return valueEliminator.availableValue();
 }
 
 bool RegionHolder::isValuePresent(unsigned char iTarget)
 {
 	ValueEliminator valueEliminator;
-	set<unsigned char> availableValues = flagValues(valueEliminator);
+	flagValues(valueEliminator);
+	set<unsigned char> availableValues = valueEliminator.availableValue();
 	
 	return availableValues.find(iTarget) != availableValues.end(); 
 }
