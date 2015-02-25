@@ -25,7 +25,7 @@ public:
 	~Grid();
 	Region& GetRegion(unsigned char i, unsigned char j);
 	NineHolder GetRow(unsigned char i);
-	//TODO implement GetColumn
+	NineHolder GetColumn(unsigned char i);
 	bool IsFull();
 	bool Accept(const IVisitor& visitor);
 

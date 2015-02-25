@@ -103,9 +103,9 @@ NineHolder Grid::GetRow(unsigned char i)
 		return NineHolder(t1, t2, t3);
 	}if (i == 3)
 	{
-		RegionHolder r1 = RegionHolder(_rNW);
-		RegionHolder r2 = RegionHolder(_rN);
-		RegionHolder r3 = RegionHolder(_rNE);
+		RegionHolder r1 = RegionHolder(_rW);
+		RegionHolder r2 = RegionHolder(_rC);
+		RegionHolder r3 = RegionHolder(_rE);
 		TripleHolder t1 = r1.TopRow();
 		TripleHolder t2 = r2.TopRow();
 		TripleHolder t3 = r3.TopRow();
@@ -161,7 +161,103 @@ NineHolder Grid::GetRow(unsigned char i)
 		return NineHolder(t1, t2, t3);
 	}
 	else {
-		//TODO throw exception if i not between 0 and 8
+		throw invalid_argument("Required row index must be between 0 and 8.\n");
+
+	}
+}
+
+NineHolder Grid::GetColumn(unsigned char i)
+{
+	if (i == 0)
+	{
+		RegionHolder r1 = RegionHolder(_rNW);
+		RegionHolder r2 = RegionHolder(_rW);
+		RegionHolder r3 = RegionHolder(_rSW);
+		TripleHolder t1 = r1.LeftColumn();
+		TripleHolder t2 = r2.LeftColumn();
+		TripleHolder t3 = r3.LeftColumn();
+		return NineHolder(t1, t2, t3);
+	}
+	if (i == 1)
+	{
+		RegionHolder r1 = RegionHolder(_rNW);
+		RegionHolder r2 = RegionHolder(_rW);
+		RegionHolder r3 = RegionHolder(_rSW);
+		TripleHolder t1 = r1.MiddleColumn();
+		TripleHolder t2 = r2.MiddleColumn();
+		TripleHolder t3 = r3.MiddleColumn();
+		return NineHolder(t1, t2, t3);
+	}
+	if (i == 2)
+	{
+		RegionHolder r1 = RegionHolder(_rNW);
+		RegionHolder r2 = RegionHolder(_rW);
+		RegionHolder r3 = RegionHolder(_rSW);
+		TripleHolder t1 = r1.RightColumn();
+		TripleHolder t2 = r2.RightColumn();
+		TripleHolder t3 = r3.RightColumn;
+		return NineHolder(t1, t2, t3);
+	}if (i == 3)
+	{
+		RegionHolder r1 = RegionHolder(_rN);
+		RegionHolder r2 = RegionHolder(_rC);
+		RegionHolder r3 = RegionHolder(_rS);
+		TripleHolder t1 = r1.LeftColumn();
+		TripleHolder t2 = r2.LeftColumn();
+		TripleHolder t3 = r3.LeftColumn();
+		return NineHolder(t1, t2, t3);
+	}
+	if (i == 4)
+	{
+		RegionHolder r1 = RegionHolder(_rN);
+		RegionHolder r2 = RegionHolder(_rC);
+		RegionHolder r3 = RegionHolder(_rS);
+		TripleHolder t1 = r1.MiddleColumn();
+		TripleHolder t2 = r2.MiddleColumn();
+		TripleHolder t3 = r3.MiddleColumn();
+		return NineHolder(t1, t2, t3);
+	}
+	if (i == 5)
+	{
+		RegionHolder r1 = RegionHolder(_rN);
+		RegionHolder r2 = RegionHolder(_rC);
+		RegionHolder r3 = RegionHolder(_rS);
+		TripleHolder t1 = r1.RightColumn();
+		TripleHolder t2 = r2.RightColumn();
+		TripleHolder t3 = r3.RightColumn();
+		return NineHolder(t1, t2, t3);
+	}if (i == 6)
+	{
+		RegionHolder r1 = RegionHolder(_rNE);
+		RegionHolder r2 = RegionHolder(_rE);
+		RegionHolder r3 = RegionHolder(_rSE);
+		TripleHolder t1 = r1.LeftColumn();
+		TripleHolder t2 = r2.LeftColumn();
+		TripleHolder t3 = r3.LeftColumn();
+		return NineHolder(t1, t2, t3);
+	}
+	if (i == 7)
+	{
+		RegionHolder r1 = RegionHolder(_rNE);
+		RegionHolder r2 = RegionHolder(_rE);
+		RegionHolder r3 = RegionHolder(_rSE);
+		TripleHolder t1 = r1.MiddleColumn();
+		TripleHolder t2 = r2.MiddleColumn();
+		TripleHolder t3 = r3.MiddleColumn();
+		return NineHolder(t1, t2, t3);
+	}
+	if (i == 8)
+	{
+		RegionHolder r1 = RegionHolder(_rNE);
+		RegionHolder r2 = RegionHolder(_rE);
+		RegionHolder r3 = RegionHolder(_rSE);
+		TripleHolder t1 = r1.RightColumn();
+		TripleHolder t2 = r2.RightColumn();
+		TripleHolder t3 = r3.RightColumn();
+		return NineHolder(t1, t2, t3);
+	}
+	else {
+		throw invalid_argument("Required row index must be between 0 and 8.\n");
 
 	}
 }
