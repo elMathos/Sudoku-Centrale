@@ -22,6 +22,6 @@ bool OnlySquareVisitor::Visit(Grid& ioGrid) const
 		//check for absentValue1 and absentValue2 in fullColu and fullColv
 		//4 if (abs1 in fullColu, fullColv, same abs2): set value and visited == true
 	}
-	//do the same for 9 columns :)
+	//TODO do the same for 9 columns :)
 	return visited;
 }

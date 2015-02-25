@@ -66,6 +66,9 @@
     <ClInclude Include="NineHolder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TwoOutOfThreeRowVisitor.h">
+      <Filter>Header Files\Strategies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Cell.cpp">
@@ -112,6 +115,9 @@
     </ClCompile>
     <ClCompile Include="NineHolder.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TwoOutOfThreeRowVisitor.cpp">
+      <Filter>Source Files\Strategies</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
