@@ -31,18 +31,28 @@ bool OnlySquareVisitor::Visit(Grid& ioGrid) const
 			// get the two columns corresponding to the two empty cells
 			int firstColumnIndex = -1;
 			int secondColumnIndex = -1;
-			for (int i = 0; i < 9; i++)
+			int firstRegionColIndex = -1;
+			int secondRegionColIndex = -1;
+			for (int j = 0; i < 9; i++)
 			{
 				if (fullRow.GetCell(i).IsEmpty())
 				{
 					if (firstColumnIndex == -1)
-						firstColumnIndex = i;
+					{
+						firstColumnIndex = j;
+						firstRegionColIndex = j / 3;
+					}						
 					else
-						secondColumnIndex = i;
+					{
+						secondColumnIndex = j;
+						secondRegionColIndex = j / 3;
+					}		
 				}
 			}
 			NineHolder firstColumn = ioGrid.GetColumn(firstColumnIndex);
 			NineHolder secondColumn = ioGrid.GetColumn(secondColumnIndex);
+			RegionHolder firstRegion = ioGrid.GetRegion(i/3, firstRegionColIndex);
+			RegionHolder secondRegion = ioGrid.GetRegion(i/3, secondRegionColIndex);
 
 			// check if one of the two missing values already in firstColumn or secondColumn
 			if (firstColumn.isValuePresent(firstValue))
@@ -69,6 +79,35 @@ bool OnlySquareVisitor::Visit(Grid& ioGrid) const
 				fullRow.GetCell(secondColumnIndex) = firstValue;
 				visited = true;
 			}
+
+			// check if one of the two missing values already in firstRegion or secondRegion
+			if (firstRegionColIndex != secondRegionColIndex)
+			{
+				if (firstRegion.isValuePresent(firstValue))
+				{
+					fullRow.GetCell(firstColumnIndex) = secondValue;
+					fullRow.GetCell(secondColumnIndex) = firstValue;
+					visited = true;
+				}
+				else if (firstRegion.isValuePresent(secondValue))
+				{
+					fullRow.GetCell(firstColumnIndex) = firstValue;
+					fullRow.GetCell(secondColumnIndex) = secondValue;
+					visited = true;
+				}
+				else if (secondRegion.isValuePresent(firstValue))
+				{
+					fullRow.GetCell(firstColumnIndex) = firstValue;
+					fullRow.GetCell(secondColumnIndex) = secondValue;
+					visited = true;
+				}
+				else if (secondRegion.isValuePresent(secondValue))
+				{
+					fullRow.GetCell(firstColumnIndex) = secondValue;
+					fullRow.GetCell(secondColumnIndex) = firstValue;
+					visited = true;
+				}
+			}
 		}
 
 	}
@@ -91,18 +130,28 @@ bool OnlySquareVisitor::Visit(Grid& ioGrid) const
 			// get the two rows corresponding to the two empty cells
 			int firstRowIndex = -1;
 			int secondRowIndex = -1;
-			for (int i = 0; i < 9; i++)
+			int firstRegionRowIndex = -1;
+			int secondRegionRowIndex = -1;
+			for (int j = 0; i < 9; i++)
 			{
 				if (fullColumn.GetCell(i).IsEmpty())
 				{
 					if (firstRowIndex == -1)
-						firstRowIndex = i;
+					{
+						firstRowIndex = j;
+						firstRegionRowIndex = j / 3;
+					}						
 					else
-						secondRowIndex = i;
+					{
+						secondRowIndex = j;
+						secondRegionRowIndex = j / 3;
+					}				
 				}
 			}
 			NineHolder firstRow = ioGrid.GetRow(firstRowIndex);
-			NineHolder secondColumn = ioGrid.GetColumn(secondRowIndex);
+			NineHolder secondColumn = ioGrid.GetRow(secondRowIndex);
+			RegionHolder firstRegion = ioGrid.GetRegion(firstRegionRowIndex, i / 3);
+			RegionHolder secondRegion = ioGrid.GetRegion(secondRegionRowIndex, i / 3);
 
 			// check if one of the two missing values already in firstRow or secondRow
 			if (firstRow.isValuePresent(firstValue))
@@ -128,6 +177,35 @@ bool OnlySquareVisitor::Visit(Grid& ioGrid) const
 				fullColumn.GetCell(firstRowIndex) = secondValue;
 				fullColumn.GetCell(secondRowIndex) = firstValue;
 				visited = true;
+			}
+
+			// check if one of the two missing values already in firstRegion or secondRegion
+			if (firstRegionRowIndex != secondRegionRowIndex)
+			{
+				if (firstRegion.isValuePresent(firstValue))
+				{
+					fullColumn.GetCell(firstRowIndex) = secondValue;
+					fullColumn.GetCell(secondRowIndex) = firstValue;
+					visited = true;
+				}
+				else if (firstRegion.isValuePresent(secondValue))
+				{
+					fullColumn.GetCell(firstRowIndex) = firstValue;
+					fullColumn.GetCell(secondRowIndex) = secondValue;
+					visited = true;
+				}
+				else if (secondRegion.isValuePresent(firstValue))
+				{
+					fullColumn.GetCell(firstRowIndex) = firstValue;
+					fullColumn.GetCell(secondRowIndex) = secondValue;
+					visited = true;
+				}
+				else if (secondRegion.isValuePresent(secondValue))
+				{
+					fullColumn.GetCell(firstRowIndex) = secondValue;
+					fullColumn.GetCell(secondRowIndex) = firstValue;
+					visited = true;
+				}
 			}
 		}
 

@@ -7,6 +7,7 @@
 #include "LastCellFinder.h"
 #include "OnlyOneChoiceInRowVisitor.h"
 #include "OnlyOneChoiceInColumnVisitor.h"
+#include "OnlyOneChoiceInRegionVisitor.h"
 #include "OnlySquareVisitor.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -190,7 +191,7 @@ namespace SudokuUnitTest
 			bool filled = grid.Accept(visitor);
 			Assert::IsTrue(filled);
 
-			//First row of grid should have been filled with 1s
+			//First column of grid should have been filled with 1s
 			Assert::AreEqual(1, grid.GetRegion(0, 0).GetCell(0, 0).GetValue());
 			Assert::AreEqual(1, grid.GetRegion(0, 0).GetCell(0, 1).GetValue());
 			Assert::AreEqual(1, grid.GetRegion(0, 0).GetCell(0, 2).GetValue());
@@ -202,16 +203,49 @@ namespace SudokuUnitTest
 			Assert::AreEqual(1, grid.GetRegion(0, 2).GetCell(0, 2).GetValue());
 		}
 
+		TEST_METHOD(OnlyOneChoiceRegion)
+		{
+			vector<string> stringInput = vector<string>(9);
+			/*grid:
+			Regions : 123456-89
+			7th cell should be filled with 7s
+			*/
+			for (int i = 0; i < 9; i++)
+			{
+				stringInput[i] = "123456-89";
+			}
+
+			OnlyOneChoiceInRegionVisitor visitor;
+			Grid grid = Grid(stringInput);
+			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(0, 1).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(0, 2).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(1, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(1, 1).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(1, 2).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(2, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(2, 1).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(2, 2).GetCell(2, 0).GetValue());
+			bool filled = grid.Accept(visitor);
+			Assert::IsTrue(filled);
+
+			//Cells should have been filled with 7s
+			Assert::AreEqual(7, grid.GetRegion(0, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(0, 1).GetCell(2, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(0, 2).GetCell(2, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(1, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(1, 1).GetCell(2, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(1, 2).GetCell(2, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(2, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(2, 1).GetCell(2, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(2, 2).GetCell(2, 0).GetValue());
+		}
 
 		TEST_METHOD(NineHolderForGrid)
 		{
 			vector<string> stringInput = vector<string>(9);
 			/*grid:
-			123456789
-			123456789
-			123456789
-			foo foo foo foo foo foo
-			First row should be filled
+			Regions: 123456789
 			*/
 
 			stringInput[0] = "123123123";
@@ -228,14 +262,41 @@ namespace SudokuUnitTest
 			}
 		}
 
-		TEST_METHOD(OnlySquareNoRegion)
+		TEST_METHOD(NineHolderIsValuePresent)
+		{
+			vector<string> stringInput = vector<string>(9);
+			/*grid:
+			First row: 157------
+			*/
+
+			stringInput[0] = "157123123";
+			stringInput[1] = "---456456";
+			stringInput[2] = "---789789";
+			for (int i = 3; i < 9; i++)
+			{
+				stringInput[i] = "123456789";
+			}
+			Grid grid = Grid(stringInput);
+			NineHolder nh = grid.GetRow(0);
+			Assert::IsTrue(nh.isValuePresent(1));
+			Assert::IsTrue(nh.isValuePresent(5));
+			Assert::IsTrue(nh.isValuePresent(7));
+			Assert::IsFalse(nh.isValuePresent(2));
+			Assert::IsFalse(nh.isValuePresent(3));
+			Assert::IsFalse(nh.isValuePresent(4));
+			Assert::IsFalse(nh.isValuePresent(6));
+			Assert::IsFalse(nh.isValuePresent(8));
+			Assert::IsFalse(nh.isValuePresent(9));
+		}
+
+		TEST_METHOD(OnlySquareOnRowNoRegion)
 		{
 			vector<string> stringInput = vector<string>(9);
 			// grid taken from SudokuDragon tutorial for OnlySquare
 			stringInput[0] = "2619-87--";
 			stringInput[1] = "495176832";
 			stringInput[2] = "873-45--6";
-			stringInput[3] = "12638-4-7";
+			stringInput[3] = "12638-4--";
 			stringInput[4] = "987654321";
 			stringInput[5] = "--4-27689";
 			stringInput[6] = "5--69-873";
@@ -251,5 +312,54 @@ namespace SudokuUnitTest
 			Assert::AreEqual(3, grid.GetRegion(0, 0).GetCell(1, 1).GetValue());
 			Assert::AreEqual(2, grid.GetRegion(0, 2).GetCell(1, 0).GetValue());
 		}
+
+		TEST_METHOD(OnlySquareOnColumnNoRegion)
+		{
+			vector<string> stringInput = vector<string>(9);
+			// grid is the precendent one transposed
+			stringInput[0] = "2976--18-";
+			stringInput[1] = "13428-6--";
+			stringInput[2] = "568-97--3";
+			stringInput[3] = "418973562";
+			stringInput[4] = "963852741";
+			stringInput[5] = "752614389";
+			stringInput[6] = "8--74-356";
+			stringInput[7] = "--6-28479";
+			stringInput[8] = "-75--6821";
+
+			Grid grid = Grid(stringInput);
+			OnlySquareVisitor visitor;
+			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(1, 1).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(2, 0).GetCell(0, 1).GetValue());
+			bool filled = grid.Accept(visitor);
+			Assert::IsTrue(filled);
+			Assert::AreEqual(3, grid.GetRegion(0, 0).GetCell(1, 1).GetValue());
+			Assert::AreEqual(2, grid.GetRegion(2, 0).GetCell(0, 1).GetValue());
+		}
+
+		TEST_METHOD(OnlySquareRegion)
+		{
+			vector<string> stringInput = vector<string>(9);
+			// grid taken from SudokuDragon tutorial for OnlySquare
+			stringInput[0] = "2619-87--";
+			stringInput[1] = "495176832";
+			stringInput[2] = "873-45--6";
+			stringInput[3] = "1-638-4-7";
+			stringInput[4] = "987654321";
+			stringInput[5] = "--4-27689";
+			stringInput[6] = "5--69-873";
+			stringInput[7] = "763518249";
+			stringInput[8] = "--87-2561";
+
+			Grid grid = Grid(stringInput);
+			OnlySquareVisitor visitor;
+			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(1, 1).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(0, 2).GetCell(1, 0).GetValue());
+			bool filled = grid.Accept(visitor);
+			Assert::IsTrue(filled);
+			Assert::AreEqual(3, grid.GetRegion(0, 0).GetCell(1, 1).GetValue());
+			Assert::AreEqual(2, grid.GetRegion(0, 2).GetCell(1, 0).GetValue());
+		}
+
 	};
 }
