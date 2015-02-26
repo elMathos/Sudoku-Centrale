@@ -341,6 +341,60 @@ namespace SudokuUnitTest
 		{
 			vector<string> stringInput = vector<string>(9);
 			// grid taken from SudokuDragon tutorial for OnlySquare
+			stringInput[0] = "-----6--9";
+			stringInput[1] = "--23----1";
+			stringInput[2] = "6-3--1-52";
+			stringInput[3] = "782----5-";
+			stringInput[4] = "---------";
+			stringInput[5] = "-9----726";
+			stringInput[6] = "24-8--6-5";
+			stringInput[7] = "1----48--";
+			stringInput[8] = "8--5-----";
+
+			Grid grid = Grid(stringInput);
+			/*grid.solve();
+			Assert::AreEqual(4, grid.GetRegion(0, 0).GetCell(0, 0).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(0, 0).GetCell(0, 1).GetValue());
+			Assert::AreEqual(8, grid.GetRegion(0, 0).GetCell(0, 2).GetValue());
+			Assert::AreEqual(5, grid.GetRegion(0, 0).GetCell(1, 0).GetValue());
+			Assert::AreEqual(2, grid.GetRegion(0, 0).GetCell(1, 1).GetValue());
+			Assert::AreEqual(6, grid.GetRegion(0, 0).GetCell(1, 2).GetValue());
+			Assert::AreEqual(3, grid.GetRegion(0, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(0, 0).GetCell(2, 1).GetValue());
+			Assert::AreEqual(9, grid.GetRegion(0, 0).GetCell(2, 2).GetValue());
+			Assert::AreEqual(5, grid.GetRegion(0, 1).GetCell(0, 0).GetValue());
+			Assert::AreEqual(8, grid.GetRegion(0, 1).GetCell(2, 1).GetValue());
+			Assert::AreEqual(9, grid.GetRegion(0, 2).GetCell(1, 0).GetValue());
+			Assert::AreEqual(4, grid.GetRegion(0, 2).GetCell(2, 0).GetValue());
+			Assert::AreEqual(9, grid.GetRegion(1, 0).GetCell(1, 0).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(1, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(4, grid.GetRegion(1, 1).GetCell(0, 0).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(1, 1).GetCell(0, 1).GetValue());
+			Assert::AreEqual(6, grid.GetRegion(1, 1).GetCell(0, 2).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(1, 1).GetCell(1, 0).GetValue());
+			Assert::AreEqual(2, grid.GetRegion(1, 1).GetCell(1, 1).GetValue());
+			Assert::AreEqual(5, grid.GetRegion(1, 1).GetCell(1, 2).GetValue());
+			Assert::AreEqual(9, grid.GetRegion(1, 1).GetCell(2, 0).GetValue());
+			Assert::AreEqual(3, grid.GetRegion(1, 1).GetCell(2, 1).GetValue());
+			Assert::AreEqual(8, grid.GetRegion(1, 1).GetCell(2, 2).GetValue());
+			Assert::AreEqual(3, grid.GetRegion(1, 2).GetCell(0, 0).GetValue());
+			Assert::AreEqual(4, grid.GetRegion(1, 1).GetCell(0, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(2, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(3, grid.GetRegion(2, 0).GetCell(2, 1).GetValue());
+			Assert::AreEqual(5, grid.GetRegion(2, 1).GetCell(0, 2).GetValue());
+			Assert::AreEqual(9, grid.GetRegion(2, 1).GetCell(2, 2).GetValue());
+			Assert::AreEqual(9, grid.GetRegion(2, 2).GetCell(0, 2).GetValue());
+			Assert::AreEqual(3, grid.GetRegion(2, 2).GetCell(1, 1).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(2, 2).GetCell(1, 2).GetValue());
+			Assert::AreEqual(2, grid.GetRegion(2, 2).GetCell(2, 0).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(2, 2).GetCell(2, 1).GetValue());
+			Assert::AreEqual(4, grid.GetRegion(2, 2).GetCell(2, 2).GetValue());*/
+		}
+
+		TEST_METHOD(OnlySquareRegion)
+		{
+			vector<string> stringInput = vector<string>(9);
+			// grid taken from SudokuDragon tutorial for OnlySquare
 			stringInput[0] = "2619-87--";
 			stringInput[1] = "495176832";
 			stringInput[2] = "873-45--6";
