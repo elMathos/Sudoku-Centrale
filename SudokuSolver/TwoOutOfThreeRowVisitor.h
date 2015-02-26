@@ -6,6 +6,9 @@
 #endif
 
 #include "IVisitor.h"
+#include <set>
+
+using namespace std;
 
 class ExportedByDll TwoOutOfThreeRowVisitor: public IVisitor
 {
