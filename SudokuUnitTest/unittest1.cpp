@@ -245,7 +245,7 @@ namespace SudokuUnitTest
 		{
 			vector<string> stringInput = vector<string>(9);
 			/*grid:
-			Regions: 123456789
+			3 first rows: 123456789
 			*/
 
 			stringInput[0] = "123123123";
@@ -337,7 +337,7 @@ namespace SudokuUnitTest
 			Assert::AreEqual(2, grid.GetRegion(2, 0).GetCell(0, 1).GetValue());
 		}
 
-		TEST_METHOD(OnlySquareRegion)
+		TEST_METHOD(SolvePart3)
 		{
 			vector<string> stringInput = vector<string>(9);
 			// grid taken from SudokuDragon tutorial for OnlySquare
@@ -352,7 +352,7 @@ namespace SudokuUnitTest
 			stringInput[8] = "8--5-----";
 
 			Grid grid = Grid(stringInput);
-			/*grid.solve();
+			/*grid.Solve();
 			Assert::AreEqual(4, grid.GetRegion(0, 0).GetCell(0, 0).GetValue());
 			Assert::AreEqual(1, grid.GetRegion(0, 0).GetCell(0, 1).GetValue());
 			Assert::AreEqual(8, grid.GetRegion(0, 0).GetCell(0, 2).GetValue());
@@ -389,6 +389,88 @@ namespace SudokuUnitTest
 			Assert::AreEqual(2, grid.GetRegion(2, 2).GetCell(2, 0).GetValue());
 			Assert::AreEqual(1, grid.GetRegion(2, 2).GetCell(2, 1).GetValue());
 			Assert::AreEqual(4, grid.GetRegion(2, 2).GetCell(2, 2).GetValue());*/
+		}
+
+		TEST_METHOD(NineHolderRowConsistent)
+		{
+			vector<string> stringInput = vector<string>(9);
+			/*grid:
+			3 first rows: 123456789
+			Then, not consistent
+			*/
+
+			stringInput[0] = "123123123";
+			stringInput[1] = "456456456";
+			stringInput[2] = "789789789";
+			for (int i = 3; i < 9; i++)
+			{
+				stringInput[i] = "123456789";
+			}
+			Grid grid = Grid(stringInput);
+			NineHolder firstRow = grid.GetRow(0);
+			NineHolder secondRow = grid.GetRow(3);
+			Assert::IsTrue(firstRow.isConsistent());
+			Assert::IsFalse(secondRow.isConsistent());
+		}
+
+		TEST_METHOD(RegionHolderConsistent)
+		{
+			vector<string> stringInput = vector<string>(9);
+			/*grid:
+			3 first regions not consistent
+			Then, 123456789
+			*/
+
+			stringInput[0] = "123123123";
+			stringInput[1] = "456456456";
+			stringInput[2] = "789789789";
+			for (int i = 3; i < 9; i++)
+			{
+				stringInput[i] = "123456789";
+			}
+			Grid grid = Grid(stringInput);
+			RegionHolder firstReg = grid.GetRegion(0,0);
+			RegionHolder secondReg = grid.GetRegion(1,2);
+			Assert::IsFalse(firstReg.isConsistent());
+			Assert::IsTrue(secondReg.isConsistent());
+		}
+
+		TEST_METHOD(GridNotConsistent)
+		{
+			vector<string> stringInput = vector<string>(9);
+			/*grid:
+			3 first regions not consistent
+			Then, 123456789
+			*/
+
+			stringInput[0] = "123123123";
+			stringInput[1] = "456456456";
+			stringInput[2] = "789789789";
+			for (int i = 3; i < 9; i++)
+			{
+				stringInput[i] = "123456789";
+			}
+			Grid grid = Grid(stringInput);
+			Assert::IsFalse(grid.isConsistent());
+		}
+
+		TEST_METHOD(GridConsistent)
+		{
+			vector<string> stringInput = vector<string>(9);
+			// grid correctly filled
+
+			stringInput[0] = "418526379";
+			stringInput[1] = "592347681";
+			stringInput[2] = "673981452";
+			stringInput[3] = "782963154";
+			stringInput[4] = "416725938";
+			stringInput[5] = "395148726";
+			stringInput[6] = "247891635";
+			stringInput[7] = "153264879";
+			stringInput[8] = "869537214";
+
+			Grid grid = Grid(stringInput);
+			Assert::IsTrue(grid.isConsistent());
 		}
 
 		TEST_METHOD(OnlySquareRegion)

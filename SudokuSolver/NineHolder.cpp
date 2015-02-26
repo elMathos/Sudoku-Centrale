@@ -45,3 +45,23 @@ bool NineHolder::isValuePresent(unsigned char iTarget)
 	return availableValues.find(iTarget) == availableValues.end();
 	// if in availableValues then it is absent from the set
 }
+
+bool NineHolder::isConsistent()
+{
+	bool consistent = true;
+	set<unsigned char> alreadySeen;
+	int value = 0;
+	for (int i = 0; i < 9; i++)
+	{
+		value = GetCell(i).GetValue();
+		if (alreadySeen.find(value) != alreadySeen.end())
+		{
+			consistent = false;
+			break;
+		}
+		else
+			alreadySeen.insert(value);			
+	}
+
+	return consistent;
+}

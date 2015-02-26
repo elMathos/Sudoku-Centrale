@@ -103,3 +103,25 @@ RegionHolder::~RegionHolder()
 }
 
 
+bool RegionHolder::isConsistent()
+{
+	bool consistent = true;
+	set<unsigned char> alreadySeen;
+	int value = 0;
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			value = GetCell(i, j).GetValue();
+			if (alreadySeen.find(value) != alreadySeen.end())
+			{
+				consistent = false;
+				break;
+			}
+			else
+				alreadySeen.insert(value);
+		}		
+	}
+
+	return consistent;
+}

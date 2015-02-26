@@ -18,6 +18,7 @@ public:
 	Cell& GetCell(unsigned char i);
 	void flagValues(ValueEliminator& v);
 	bool isValuePresent(unsigned char);
+	bool isConsistent();
 
 private:
 	Cell& _cell1;

@@ -30,6 +30,7 @@ public:
 	ColumnHolder RightColumn() const;
 	void flagValues(ValueEliminator& v);
 	bool isValuePresent(unsigned char);
+	bool isConsistent();
 
 	//TODO: (also?) Make all accessors as const
 	Cell& GetCell(unsigned char, unsigned char);

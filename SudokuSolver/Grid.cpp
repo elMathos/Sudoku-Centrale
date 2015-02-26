@@ -261,3 +261,27 @@ NineHolder Grid::GetColumn(unsigned char i)
 
 	}
 }
+
+bool Grid::isConsistent()
+{
+	bool consistent = true;
+	for (int i = 0; i < 9; i++)
+	{
+		NineHolder row = GetRow(i);
+		consistent &= row.isConsistent();
+
+		NineHolder col = GetColumn(i);
+		consistent &= col.isConsistent();
+	}
+
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			RegionHolder reg = GetRegion(i, j);
+			consistent &= reg.isConsistent();
+		}
+	}
+
+	return consistent;
+}

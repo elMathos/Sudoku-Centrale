@@ -28,6 +28,7 @@ public:
 	NineHolder GetColumn(unsigned char i);
 	bool IsFull();
 	bool Accept(const IVisitor& visitor);
+	bool isConsistent();
 
 private:
 	Region _rNW;
