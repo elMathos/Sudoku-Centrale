@@ -38,5 +38,6 @@ bool TripleHolder::isValuePresent(unsigned char iTarget)
 	flagValues(valueEliminator);
 	set<unsigned char> availableValues = valueEliminator.availableValue();
 
-	return availableValues.find(iTarget) != availableValues.end();
+	return availableValues.find(iTarget) == availableValues.end();
+	// if in availableValues then it is absent from the set
 }

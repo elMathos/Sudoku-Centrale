@@ -207,11 +207,7 @@ namespace SudokuUnitTest
 		{
 			vector<string> stringInput = vector<string>(9);
 			/*grid:
-			123456789
-			123456789
-			123456789
-			foo foo foo foo foo foo
-			First row should be filled
+			Regions: 123456789
 			*/
 
 			stringInput[0] = "123123123";
@@ -226,6 +222,33 @@ namespace SudokuUnitTest
 			for (int i = 0; i < 9; i++){
 				Assert::AreEqual(i + 1, nh.GetCell(i).GetValue());
 			}
+		}
+
+		TEST_METHOD(NineHolderIsValuePresent)
+		{
+			vector<string> stringInput = vector<string>(9);
+			/*grid:
+			First row: 157------
+			*/
+
+			stringInput[0] = "157123123";
+			stringInput[1] = "---456456";
+			stringInput[2] = "---789789";
+			for (int i = 3; i < 9; i++)
+			{
+				stringInput[i] = "123456789";
+			}
+			Grid grid = Grid(stringInput);
+			NineHolder nh = grid.GetRow(0);
+			Assert::IsTrue(nh.isValuePresent(1));
+			Assert::IsTrue(nh.isValuePresent(5));
+			Assert::IsTrue(nh.isValuePresent(7));
+			Assert::IsFalse(nh.isValuePresent(2));
+			Assert::IsFalse(nh.isValuePresent(3));
+			Assert::IsFalse(nh.isValuePresent(4));
+			Assert::IsFalse(nh.isValuePresent(6));
+			Assert::IsFalse(nh.isValuePresent(8));
+			Assert::IsFalse(nh.isValuePresent(9));
 		}
 
 		TEST_METHOD(OnlySquareNoRegion)

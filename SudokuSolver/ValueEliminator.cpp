@@ -37,9 +37,6 @@ set<unsigned char> ValueEliminator::availableValue()
 			valueSet.insert(i + 1);
 	}
 
-	if (valueSet.size() == 0)
-		throw invalid_argument("No available value.\n");
-
 	return valueSet;
 }
 
