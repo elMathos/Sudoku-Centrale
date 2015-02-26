@@ -51,7 +51,7 @@ bool Grid::IsFull(){
 	return isFull;
 }
 
-Region& Grid::GetRegion(unsigned char i, unsigned char j)
+RegionHolder Grid::GetRegion(unsigned char i, unsigned char j)
 {
 	if (i == 0 && j == 0) return _rNW;
 	if (i == 0 && j == 1) return _rN;

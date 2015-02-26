@@ -8,7 +8,7 @@
 
 class IVisitor;
 
-#include "Region.h"
+#include "RegionHolder.h"
 #include "NineHolder.h"
 #include <string>
 #include <vector>
@@ -23,7 +23,7 @@ public:
 	Grid(vector<string>& values);
 	Grid(vector<Region>& regions);
 	~Grid();
-	Region& GetRegion(unsigned char i, unsigned char j);
+	RegionHolder GetRegion(unsigned char i, unsigned char j);
 	NineHolder GetRow(unsigned char i);
 	NineHolder GetColumn(unsigned char i);
 	bool IsFull();
