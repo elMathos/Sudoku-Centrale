@@ -11,7 +11,7 @@ public:
 	ValueEliminator();
 	~ValueEliminator();
 	set<unsigned char> availableValue();
-	void setFlags(const RegionHolder& region);
+	void setFlags(RegionHolder& region);
 	void setFlags(TripleHolder& tripleHolder);
 	void setFlags(NineHolder& nineHolder);
 

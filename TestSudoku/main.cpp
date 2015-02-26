@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
 	Grid grid1 = Grid(values1);
 
 	RegionHolder regHold1 = RegionHolder(grid1.GetRegion(2,2));
-	regHold1.Get_cNW() = 8;
+	regHold1.GetCell(0, 0) = 8;
 	printf("Expected 8, got %i\n", grid1.GetRegion(2,2).GetCell(0,0).GetValue());
 
 	RegionHolder regHold2 = RegionHolder(grid1.GetRegion(0,0));

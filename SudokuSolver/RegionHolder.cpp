@@ -83,6 +83,20 @@ bool RegionHolder::isValuePresent(unsigned char iTarget)
 	return availableValues.find(iTarget) != availableValues.end(); 
 }
 
+Cell& RegionHolder::GetCell(unsigned char i, unsigned char j)
+{
+	if (i == 0 && j == 0) return _cNW;
+	if (i == 0 && j == 1) return _cN;
+	if (i == 0 && j == 2) return _cNE;
+	if (i == 1 && j == 0) return _cW;
+	if (i == 1 && j == 1) return _cC;
+	if (i == 1 && j == 2) return _cE;
+	if (i == 2 && j == 0) return _cSW;
+	if (i == 2 && j == 1) return _cS;
+	if (i == 2 && j == 2) return _cSE;
+	else throw invalid_argument("i and j must be between 0 and 2.\n");
+}
+
 RegionHolder::~RegionHolder()
 {
 }
