@@ -9,6 +9,7 @@
 #include "OnlyOneChoiceInColumnVisitor.h"
 #include "OnlyOneChoiceInRegionVisitor.h"
 #include "OnlySquareVisitor.h"
+#include "TwoOutOfThreeRowVisitor.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -495,6 +496,28 @@ namespace SudokuUnitTest
 			Assert::IsTrue(filled);
 			Assert::AreEqual(3, grid.GetRegion(0, 0).GetCell(1, 1).GetValue());
 			Assert::AreEqual(2, grid.GetRegion(0, 2).GetCell(1, 0).GetValue());
+		}
+
+		TEST_METHOD(TwoOutOfThreeRows)
+		{
+			vector<string> stringInput = vector<string>(9);
+			
+			stringInput[0] = "----6-9--";
+			stringInput[1] = "17----4-8";
+			stringInput[2] = "---81---2";
+			stringInput[3] = "--1------";
+			stringInput[4] = "---------";
+			stringInput[5] = "---------";
+			stringInput[6] = "---------";
+			stringInput[7] = "---------";
+			stringInput[8] = "---------";
+
+			Grid grid = Grid(stringInput);
+			TwoOutOfThreeRowVisitor visitor;
+			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(2, 1).GetValue());
+			bool visited = grid.Accept(visitor);
+			Assert::IsTrue(visited);
+			Assert::AreEqual(1, grid.GetRegion(0, 0).GetCell(2, 1).GetValue());
 		}
 
 	};

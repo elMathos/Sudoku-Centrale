@@ -29,7 +29,10 @@ bool TwoOutOfThreeRowVisitor::Visit(Grid& ioGrid) const
 			ColumnAbsence.insert(0);
 			ColumnAbsence.insert(1);
 			ColumnAbsence.insert(2);
-			if (!FullTopLine.isValuePresent(digit)){ rowDigitAbsent = 3 * i; absences++; }
+			if (!FullTopLine.isValuePresent(digit))
+			{ 
+				rowDigitAbsent = 3 * i; absences++; 
+			}
 			else{ //add Column in which the digit in present to the set ColumnAbsence
 				if (FullTopLine.GetCell(0).GetValue() == digit || FullTopLine.GetCell(1).GetValue() == digit
 					|| FullTopLine.GetCell(2).GetValue() == digit)
@@ -48,7 +51,10 @@ bool TwoOutOfThreeRowVisitor::Visit(Grid& ioGrid) const
 				}
 				
 			}
-			if (!FullMiddleLine.isValuePresent(digit)){ rowDigitAbsent = 3 * i + 1; absences++; }
+			if (!FullMiddleLine.isValuePresent(digit))
+			{ 
+				rowDigitAbsent = 3 * i + 1; absences++;
+			}
 			else{ //add Column in which the digit in present to the set ColumnAbsence
 				if (FullMiddleLine.GetCell(0).GetValue() == digit || FullMiddleLine.GetCell(1).GetValue() == digit
 					|| FullMiddleLine.GetCell(2).GetValue() == digit)
@@ -98,15 +104,12 @@ bool TwoOutOfThreeRowVisitor::Visit(Grid& ioGrid) const
 				NineHolder nh2 = ioGrid.GetColumn(3 * colRegIndex + 1);
 				NineHolder nh3 = ioGrid.GetColumn(3 * colRegIndex + 2);
 				
-
 				set<unsigned char> possiblePlaces;
 				possiblePlaces.insert(0);
 				possiblePlaces.insert(1);
 				possiblePlaces.insert(2);
 
-
-				Region regToFill = ioGrid.GetRegion(rowDigitAbsent / 3, colRegIndex);
-				RegionHolder regHolder = RegionHolder(regToFill);
+				RegionHolder regHolder = RegionHolder(ioGrid.GetRegion(rowDigitAbsent / 3, colRegIndex));
 				if (!regHolder.GetCell(rowDigitAbsent % 3, 0).IsEmpty()
 					|| nh1.isValuePresent(digit) )
 				{
@@ -119,7 +122,7 @@ bool TwoOutOfThreeRowVisitor::Visit(Grid& ioGrid) const
 					possiblePlaces.erase(1);
 				}
 				if (!regHolder.GetCell(rowDigitAbsent % 3, 2).IsEmpty()
-					|| nh2.isValuePresent(digit))
+					|| nh3.isValuePresent(digit))
 				{
 					possiblePlaces.erase(2);
 				}
@@ -127,9 +130,10 @@ bool TwoOutOfThreeRowVisitor::Visit(Grid& ioGrid) const
 				//If it is, set value of corresponding cell to digit	
 				if (possiblePlaces.size() == 1)
 				{
-					set<unsigned char>::iterator iter3 = ColumnAbsence.begin();
+					set<unsigned char>::iterator iter3 = possiblePlaces.begin();
 					int place = *iter3;
-					regHolder.GetCell(rowDigitAbsent % 3, place) = digit;
+					Cell cellToModify = regHolder.GetCell(rowDigitAbsent % 3, place);
+					cellToModify = digit;
 					visited = true;
 				}
 			}
