@@ -33,9 +33,9 @@ bool OnlySquareVisitor::Visit(Grid& ioGrid) const
 			int secondColumnIndex = -1;
 			int firstRegionColIndex = -1;
 			int secondRegionColIndex = -1;
-			for (int j = 0; i < 9; i++)
+			for (int j = 0; j < 9; j++)
 			{
-				if (fullRow.GetCell(i).IsEmpty())
+				if (fullRow.GetCell(j).IsEmpty())
 				{
 					if (firstColumnIndex == -1)
 					{
@@ -82,6 +82,7 @@ bool OnlySquareVisitor::Visit(Grid& ioGrid) const
 
 			// check if one of the two missing values already in firstRegion or secondRegion
 			if (firstRegionColIndex != secondRegionColIndex)
+				// two empty celles are in different regions
 			{
 				if (firstRegion.isValuePresent(firstValue))
 				{
@@ -132,9 +133,9 @@ bool OnlySquareVisitor::Visit(Grid& ioGrid) const
 			int secondRowIndex = -1;
 			int firstRegionRowIndex = -1;
 			int secondRegionRowIndex = -1;
-			for (int j = 0; i < 9; i++)
+			for (int j = 0; j < 9; j++)
 			{
-				if (fullColumn.GetCell(i).IsEmpty())
+				if (fullColumn.GetCell(j).IsEmpty())
 				{
 					if (firstRowIndex == -1)
 					{
@@ -181,6 +182,7 @@ bool OnlySquareVisitor::Visit(Grid& ioGrid) const
 
 			// check if one of the two missing values already in firstRegion or secondRegion
 			if (firstRegionRowIndex != secondRegionRowIndex)
+				// two empty celles are in different regions
 			{
 				if (firstRegion.isValuePresent(firstValue))
 				{
