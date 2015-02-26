@@ -71,23 +71,10 @@ void ValueEliminator::setFlags(TripleHolder& tripleHolder)
 
 void ValueEliminator::setFlags(NineHolder& regionHolder)
 {
-	if (!regionHolder.GetCell(0).IsEmpty())
-		flag(regionHolder.GetCell(0));
-	if (!regionHolder.GetCell(1).IsEmpty())
-		flag(regionHolder.GetCell(1));
-	if (!regionHolder.GetCell(2).IsEmpty())
-		flag(regionHolder.GetCell(2));
-	if (!regionHolder.GetCell(3).IsEmpty())
-		flag(regionHolder.GetCell(3));
-	if (!regionHolder.GetCell(4).IsEmpty())
-		flag(regionHolder.GetCell(4));
-	if (!regionHolder.GetCell(5).IsEmpty())
-		flag(regionHolder.GetCell(5));
-	if (!regionHolder.GetCell(6).IsEmpty())
-		flag(regionHolder.GetCell(6));
-	if (!regionHolder.GetCell(7).IsEmpty())
-		flag(regionHolder.GetCell(7));
-	if (!regionHolder.GetCell(8).IsEmpty())
-		flag(regionHolder.GetCell(8));
+	for (int i = 0; i < 9; i++)
+	{
+		if (!regionHolder.GetCell(i).IsEmpty())
+			flag(regionHolder.GetCell(i));
+	}
 
 }

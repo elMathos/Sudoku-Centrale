@@ -24,9 +24,9 @@ bool OnlySquareVisitor::Visit(Grid& ioGrid) const
 		{
 			// get the two missing values
 			set<unsigned char>::iterator iter = availableValues.begin();
-			int firstValue = *iter; // minus 1 because of offset
+			int firstValue = *iter;
 			iter++;
-			int secondValue = *iter; // minus 1 because of offset
+			int secondValue = *iter;
 
 			// get the two columns corresponding to the two empty cells
 			int firstColumnIndex = -1;
@@ -84,9 +84,9 @@ bool OnlySquareVisitor::Visit(Grid& ioGrid) const
 		{
 			// get the two missing values
 			set<unsigned char>::iterator iter = availableValues.begin();
-			int firstValue = *iter; // minus 1 because of offset
+			int firstValue = *iter;
 			iter++;
-			int secondValue = *iter; // minus 1 because of offset
+			int secondValue = *iter;
 
 			// get the two rows corresponding to the two empty cells
 			int firstRowIndex = -1;

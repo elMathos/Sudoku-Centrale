@@ -6,6 +6,8 @@
 #include "RegionHolder.h"
 #include "LastCellFinder.h"
 #include "OnlyOneChoiceInRowVisitor.h"
+#include "OnlyOneChoiceInColumnVisitor.h"
+#include "OnlySquareVisitor.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -120,9 +122,7 @@ namespace SudokuUnitTest
 		{
 			vector<string> stringInput = vector<string>(9);
 			/*grid:
-			-23456789
-			-23456789
-			etc
+			Rows : -23456789
 			First column should be filled with ones
 			*/
 
@@ -159,6 +159,50 @@ namespace SudokuUnitTest
 			Assert::AreEqual(1, grid.GetRegion(2, 0).GetCell(2, 0).GetValue());
 		}
 
+		TEST_METHOD(OnlyOneChoiceColumn)
+		{
+			vector<string> stringInput = vector<string>(9);
+			/*grid:
+			Columns : -23456789
+			First row should be filled with ones
+			*/
+			stringInput[0] = "---222333";
+			stringInput[1] = "---222333";
+			stringInput[2] = "---222333";
+			stringInput[3] = "444555666";
+			stringInput[4] = "444555666";
+			stringInput[5] = "444555666";
+			stringInput[6] = "777888999";
+			stringInput[7] = "777888999";
+			stringInput[8] = "777888999";
+
+			OnlyOneChoiceInColumnVisitor visitor;
+			Grid grid = Grid(stringInput);
+			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(0, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(0, 1).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(0, 2).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(0, 1).GetCell(0, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(0, 1).GetCell(0, 1).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(0, 1).GetCell(0, 2).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(0, 2).GetCell(0, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(0, 2).GetCell(0, 1).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(0, 2).GetCell(0, 2).GetValue());
+			bool filled = grid.Accept(visitor);
+			Assert::IsTrue(filled);
+
+			//First row of grid should have been filled with 1s
+			Assert::AreEqual(1, grid.GetRegion(0, 0).GetCell(0, 0).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(0, 0).GetCell(0, 1).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(0, 0).GetCell(0, 2).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(0, 1).GetCell(0, 0).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(0, 1).GetCell(0, 1).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(0, 1).GetCell(0, 2).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(0, 2).GetCell(0, 0).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(0, 2).GetCell(0, 1).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(0, 2).GetCell(0, 2).GetValue());
+		}
+
+
 		TEST_METHOD(NineHolderForGrid)
 		{
 			vector<string> stringInput = vector<string>(9);
@@ -182,6 +226,30 @@ namespace SudokuUnitTest
 			for (int i = 0; i < 9; i++){
 				Assert::AreEqual(i + 1, nh.GetCell(i).GetValue());
 			}
+		}
+
+		TEST_METHOD(OnlySquareNoRegion)
+		{
+			vector<string> stringInput = vector<string>(9);
+			// grid taken from SudokuDragon tutorial for OnlySquare
+			stringInput[0] = "2619-87--";
+			stringInput[1] = "495176832";
+			stringInput[2] = "873-45--6";
+			stringInput[3] = "12638-4-7";
+			stringInput[4] = "987654321";
+			stringInput[5] = "--4-27689";
+			stringInput[6] = "5--69-873";
+			stringInput[7] = "763518249";
+			stringInput[8] = "--87-2561";
+
+			Grid grid = Grid(stringInput);
+			OnlySquareVisitor visitor;
+			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(1, 1).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(0, 2).GetCell(1, 0).GetValue());
+			bool filled = grid.Accept(visitor);
+			Assert::IsTrue(filled);
+			Assert::AreEqual(3, grid.GetRegion(0, 0).GetCell(1, 1).GetValue());
+			Assert::AreEqual(2, grid.GetRegion(0, 2).GetCell(1, 0).GetValue());
 		}
 	};
 }

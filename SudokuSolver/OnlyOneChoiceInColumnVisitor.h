@@ -1,7 +1,14 @@
 #pragma once
 #include "IVisitor.h"
 
-class OnlyOneChoiceInColumnVisitor:
+#ifdef SUDOKUSOLVER_EXPORTS
+#define ExportedByDll __declspec(dllexport)
+#else
+#define ExportedByDll __declspec(dllimport)
+#endif
+
+
+class ExportedByDll OnlyOneChoiceInColumnVisitor:
 	public IVisitor
 {
 public:
