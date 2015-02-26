@@ -109,7 +109,7 @@ bool TwoOutOfThreeRowVisitor::Visit(Grid& ioGrid) const
 				possiblePlaces.insert(1);
 				possiblePlaces.insert(2);
 
-				RegionHolder regHolder = RegionHolder(ioGrid.GetRegion(rowDigitAbsent / 3, colRegIndex));
+				RegionHolder regHolder = ioGrid.GetRegion(rowDigitAbsent / 3, colRegIndex);
 				if (!regHolder.GetCell(rowDigitAbsent % 3, 0).IsEmpty()
 					|| nh1.isValuePresent(digit) )
 				{
@@ -132,8 +132,7 @@ bool TwoOutOfThreeRowVisitor::Visit(Grid& ioGrid) const
 				{
 					set<unsigned char>::iterator iter3 = possiblePlaces.begin();
 					int place = *iter3;
-					Cell cellToModify = regHolder.GetCell(rowDigitAbsent % 3, place);
-					cellToModify = digit;
+					regHolder.GetCell(rowDigitAbsent % 3, place) = digit;
 					visited = true;
 				}
 			}
