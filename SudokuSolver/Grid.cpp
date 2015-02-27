@@ -272,14 +272,20 @@ bool Grid::isConsistent()
 
 		NineHolder col = GetColumn(i);
 		consistent &= col.isConsistent();
+
+		if (!consistent)
+			break;
 	}
 
-	for (int i = 0; i < 3; i++)
+	if (consistent)
 	{
-		for (int j = 0; j < 3; j++)
+		for (int i = 0; i < 3; i++)
 		{
-			RegionHolder reg = GetRegion(i, j);
-			consistent &= reg.isConsistent();
+			for (int j = 0; j < 3; j++)
+			{
+				RegionHolder reg = GetRegion(i, j);
+				consistent &= reg.isConsistent();
+			}
 		}
 	}
 

@@ -455,7 +455,7 @@ namespace SudokuUnitTest
 			Assert::IsFalse(grid.isConsistent());
 		}
 
-		TEST_METHOD(GridConsistent)
+		TEST_METHOD(FullGridConsistent)
 		{
 			vector<string> stringInput = vector<string>(9);
 			// grid correctly filled
@@ -469,6 +469,64 @@ namespace SudokuUnitTest
 			stringInput[6] = "247891635";
 			stringInput[7] = "153264879";
 			stringInput[8] = "869537214";
+
+			Grid grid = Grid(stringInput);
+			Assert::IsTrue(grid.isConsistent());
+		}
+
+		TEST_METHOD(FullGridNotConsistent)
+		{
+			vector<string> stringInput = vector<string>(9);
+			// grid not correctly filled (two 4s in region 6)
+
+			stringInput[0] = "418526379";
+			stringInput[1] = "592347681";
+			stringInput[2] = "673981452";
+			stringInput[3] = "782963154";
+			stringInput[4] = "416725938";
+			stringInput[5] = "395148726";
+			stringInput[6] = "247894635";
+			stringInput[7] = "153264879";
+			stringInput[8] = "869537214";
+
+			Grid grid = Grid(stringInput);
+			Assert::IsFalse(grid.isConsistent());
+		}
+
+		TEST_METHOD(HolderConsistentWithEmptyCells)
+		{
+			vector<string> stringInput = vector<string>(9);
+
+			stringInput[0] = "41-5263-9";
+			stringInput[1] = "592347681";
+			stringInput[2] = "673981452";
+			stringInput[3] = "78296-154";
+			stringInput[4] = "416725938";
+			stringInput[5] = "39-148726";
+			stringInput[6] = "247891635";
+			stringInput[7] = "15--64879";
+			stringInput[8] = "-6953-14-";
+
+			Grid grid = Grid(stringInput);
+			NineHolder fullRow = grid.GetRow(0);
+			RegionHolder fullReg = grid.GetRegion(2, 1);
+			Assert::IsTrue(fullRow.isConsistent());
+			Assert::IsTrue(fullReg.isConsistent());
+		}
+
+		TEST_METHOD(GridConsistentWithEmptyCells)
+		{
+			vector<string> stringInput = vector<string>(9);
+
+			stringInput[0] = "41-526379";
+			stringInput[1] = "59-347681";
+			stringInput[2] = "67-981452";
+			stringInput[3] = "7829--154";
+			stringInput[4] = "416-25938";
+			stringInput[5] = "395148726";
+			stringInput[6] = "247-91635";
+			stringInput[7] = "15326--79";
+			stringInput[8] = "86953721-";
 
 			Grid grid = Grid(stringInput);
 			Assert::IsTrue(grid.isConsistent());

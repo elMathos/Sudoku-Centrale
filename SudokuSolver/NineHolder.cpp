@@ -59,8 +59,8 @@ bool NineHolder::isConsistent()
 			consistent = false;
 			break;
 		}
-		else
-			alreadySeen.insert(value);			
+		else if (value != -1)
+				alreadySeen.insert(value);					
 	}
 
 	return consistent;

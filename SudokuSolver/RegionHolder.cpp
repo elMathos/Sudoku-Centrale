@@ -113,12 +113,12 @@ bool RegionHolder::isConsistent()
 		for (int j = 0; j < 3; j++)
 		{
 			value = GetCell(i, j).GetValue();
-			if (alreadySeen.find(value) != alreadySeen.end())
+			if (value != -1 && alreadySeen.find(value) != alreadySeen.end())
 			{
 				consistent = false;
 				break;
 			}
-			else
+			else if (value != -1)
 				alreadySeen.insert(value);
 		}		
 	}
