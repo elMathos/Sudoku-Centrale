@@ -54,7 +54,7 @@ Cell& Region::GetCell(unsigned char i, unsigned char j)
 	else throw invalid_argument("i and j must be between 0 and 2.\n");
 }
 
-bool Region::IsFull()
+bool Region::isFull()
 {
 	bool gridIsEmpty = _cNW.IsEmpty() || _cN.IsEmpty() || _cNE.IsEmpty() || _cW.IsEmpty() || _cC.IsEmpty() || _cE.IsEmpty() || _cSW.IsEmpty() || _cS.IsEmpty() || _cSE.IsEmpty();
 

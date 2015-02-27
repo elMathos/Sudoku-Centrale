@@ -19,7 +19,7 @@ public:
 	Region();
 	~Region();
 	Region& operator=(const Region& r);
-	bool IsFull();
+	bool isFull();
 	Cell& GetCell(unsigned char i, unsigned char j);
 
 

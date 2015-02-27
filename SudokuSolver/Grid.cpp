@@ -1,6 +1,9 @@
 #include "Grid.h"
 #include "IVisitor.h"
 #include "RegionHolder.h"
+#include "OnlyOneChoiceGlobalVisitor.h"
+#include "OnlySquareVisitor.h"
+#include "stdio.h"
 #include <vector>
 #include <string>
 using namespace std;
@@ -42,13 +45,6 @@ Grid::Grid(vector<Region>& regions)
 
 Grid::~Grid()
 {
-}
-
-
-bool Grid::IsFull(){
-	//A grid is full iff its 9 regions are
-	bool isFull = _rNW.IsFull() && _rN.IsFull() && _rNE.IsFull() && _rW.IsFull() && _rC.IsFull() && _rE.IsFull() && _rSW.IsFull() && _rS.IsFull() && _rSE.IsFull();
-	return isFull;
 }
 
 RegionHolder Grid::GetRegion(unsigned char i, unsigned char j)
@@ -295,29 +291,39 @@ bool Grid::isConsistent()
 bool Grid::isFull()
 {
 	bool full = true;
+	// grid fulled if each row is
 	for (int i = 0; i < 9; i++)
 	{
 		NineHolder row = GetRow(i);
 		full &= row.isFull();
 
-		NineHolder col = GetColumn(i);
-		full &= col.isFull();
-
 		if (!full)
 			break;
 	}
 
-	if (full)
-	{
-		for (int i = 0; i < 3; i++)
-		{
-			for (int j = 0; j < 3; j++)
-			{
-				RegionHolder reg = GetRegion(i, j);
-				full &= reg.isFull();
-			}
-		}
-	}
-
 	return full;
+}
+
+//TODO add TwoOutOfThree visitor
+//TODO more complex strategy, with hypothesis (part 4) ?
+void Grid::Solve()
+{
+	OnlyOneChoiceGlobalVisitor onlyOneVis;
+	OnlySquareVisitor onlySquareVis;
+	bool gridHasChanged = true;
+	bool onlyOneChanged = true;
+	bool onlySquareChanged = true;
+	while (gridHasChanged)
+	{
+		onlyOneChanged = Accept(onlyOneVis);
+		onlySquareChanged = Accept(onlySquareVis);
+		gridHasChanged = onlyOneChanged || onlySquareChanged;
+		// if true, the visitors have changed the grid
+		// we can iterate again
+	}
+	// check if the grid is full or not
+	if (isFull())
+		printf("Congratulations, the grid has been solved !\n");
+	else
+		printf("Sorry, we could not solve this grid.\n");
 }

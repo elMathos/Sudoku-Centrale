@@ -601,7 +601,66 @@ namespace SudokuUnitTest
 			Assert::AreEqual(7, grid.GetRegion(2, 2).GetCell(2, 0).GetValue());
 		}
 
-		TEST_METHOD(SolvePart3)
+		TEST_METHOD(SolveEasyGrid)
+		{
+			vector<string> stringInput = vector<string>(9);
+			// one empty cell per region
+
+			stringInput[0] = "418-26379";
+			stringInput[1] = "59234-681";
+			stringInput[2] = "-73981452";
+			stringInput[3] = "-82963154";
+			stringInput[4] = "41672593-";
+			stringInput[5] = "39514-726";
+			stringInput[6] = "24-891635";
+			stringInput[7] = "1532-4879";
+			stringInput[8] = "86953721-";
+
+			Grid grid = Grid(stringInput);
+			grid.Solve();
+			Assert::AreEqual(5, grid.GetRegion(0, 0).GetCell(1, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(0, 1).GetCell(1, 2).GetValue());
+			Assert::AreEqual(6, grid.GetRegion(0, 2).GetCell(0, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(1, 0).GetCell(0, 0).GetValue());
+			Assert::AreEqual(8, grid.GetRegion(1, 1).GetCell(2, 2).GetValue());
+			Assert::AreEqual(8, grid.GetRegion(1, 2).GetCell(1, 2).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(2, 0).GetCell(0, 2).GetValue());
+			Assert::AreEqual(6, grid.GetRegion(2, 1).GetCell(1, 1).GetValue());
+			Assert::AreEqual(4, grid.GetRegion(2, 2).GetCell(2, 2).GetValue());
+		}
+
+		TEST_METHOD(SolveABitLessEasyGrid)
+		{
+			vector<string> stringInput = vector<string>(9);
+			// one empty cell per region
+
+			stringInput[0] = "418-26379";
+			stringInput[1] = "59-34-681";
+			stringInput[2] = "-73981452";
+			stringInput[3] = "-82963154";
+			stringInput[4] = "4167259--";
+			stringInput[5] = "39514-726";
+			stringInput[6] = "24-891635";
+			stringInput[7] = "1532-4879";
+			stringInput[8] = "-6953721-";
+
+			Grid grid = Grid(stringInput);
+			grid.Solve();
+			Assert::AreEqual(5, grid.GetRegion(0, 0).GetCell(1, 0).GetValue());
+			Assert::AreEqual(2, grid.GetRegion(0, 1).GetCell(0, 2).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(0, 1).GetCell(1, 2).GetValue());
+			Assert::AreEqual(6, grid.GetRegion(0, 2).GetCell(0, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(1, 0).GetCell(0, 0).GetValue());
+			Assert::AreEqual(8, grid.GetRegion(1, 1).GetCell(2, 2).GetValue());
+			Assert::AreEqual(3, grid.GetRegion(1, 1).GetCell(2, 1).GetValue());
+			Assert::AreEqual(8, grid.GetRegion(1, 2).GetCell(1, 2).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(2, 0).GetCell(0, 2).GetValue());
+			Assert::AreEqual(6, grid.GetRegion(2, 1).GetCell(1, 1).GetValue());
+			Assert::AreEqual(4, grid.GetRegion(2, 2).GetCell(2, 2).GetValue());
+			Assert::AreEqual(8, grid.GetRegion(2, 2).GetCell(0, 0).GetValue());
+		}
+
+		TEST_METHOD(SolveGridHardPart3)
 		{
 			vector<string> stringInput = vector<string>(9);
 			// grid taken from SudokuDragon tutorial for OnlySquare

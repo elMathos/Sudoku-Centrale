@@ -26,10 +26,10 @@ public:
 	RegionHolder GetRegion(unsigned char i, unsigned char j);
 	NineHolder GetRow(unsigned char i);
 	NineHolder GetColumn(unsigned char i);
-	bool IsFull();
 	bool Accept(const IVisitor& visitor);
 	bool isConsistent();
 	bool isFull();
+	void Solve();
 
 private:
 	Region _rNW;
