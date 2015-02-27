@@ -10,6 +10,7 @@
 #include "OnlyOneChoiceInRegionVisitor.h"
 #include "OnlySquareVisitor.h"
 #include "TwoOutOfThreeRowVisitor.h"
+#include "OnlyOneChoiceGlobalVisitor.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -560,6 +561,44 @@ namespace SudokuUnitTest
 
 			Grid grid = Grid(stringInput);
 			Assert::IsFalse(grid.isFull());
+		}
+
+		TEST_METHOD(OnlyOneChoiceGlobal)
+		{
+			vector<string> stringInput = vector<string>(9);
+			/*grid:
+			Regions : 123456-89
+			7th cell should be filled with 7s
+			*/
+			for (int i = 0; i < 9; i++)
+			{
+				stringInput[i] = "123456-89";
+			}
+
+			OnlyOneChoiceGlobalVisitor visitor;
+			Grid grid = Grid(stringInput);
+			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(0, 1).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(0, 2).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(1, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(1, 1).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(1, 2).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(2, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(2, 1).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(2, 2).GetCell(2, 0).GetValue());
+			bool filled = grid.Accept(visitor);
+			Assert::IsTrue(filled);
+
+			//Cells should have been filled with 7s
+			Assert::AreEqual(7, grid.GetRegion(0, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(0, 1).GetCell(2, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(0, 2).GetCell(2, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(1, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(1, 1).GetCell(2, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(1, 2).GetCell(2, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(2, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(2, 1).GetCell(2, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(2, 2).GetCell(2, 0).GetValue());
 		}
 
 		TEST_METHOD(SolvePart3)
