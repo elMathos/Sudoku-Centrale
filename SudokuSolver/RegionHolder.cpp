@@ -125,3 +125,21 @@ bool RegionHolder::isConsistent()
 
 	return consistent;
 }
+
+bool RegionHolder::isFull()
+{
+	bool full = true;
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			if (GetCell(i, j).IsEmpty())
+			{
+				full = false;
+				break;
+			}
+		}
+	}
+
+	return full;
+}

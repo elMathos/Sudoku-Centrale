@@ -31,6 +31,7 @@ public:
 	void flagValues(ValueEliminator& v);
 	bool isValuePresent(unsigned char);
 	bool isConsistent();
+	bool isFull();
 
 	//TODO: (also?) Make all accessors as const
 	Cell& GetCell(unsigned char, unsigned char);

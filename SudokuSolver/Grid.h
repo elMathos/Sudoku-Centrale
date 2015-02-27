@@ -29,6 +29,7 @@ public:
 	bool IsFull();
 	bool Accept(const IVisitor& visitor);
 	bool isConsistent();
+	bool isFull();
 
 private:
 	Region _rNW;

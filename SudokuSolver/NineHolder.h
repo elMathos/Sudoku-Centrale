@@ -19,6 +19,7 @@ public:
 	void flagValues(ValueEliminator& v);
 	bool isValuePresent(unsigned char);
 	bool isConsistent();
+	bool isFull();
 
 private:
 	Cell& _cell1;

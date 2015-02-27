@@ -291,3 +291,33 @@ bool Grid::isConsistent()
 
 	return consistent;
 }
+
+bool Grid::isFull()
+{
+	bool full = true;
+	for (int i = 0; i < 9; i++)
+	{
+		NineHolder row = GetRow(i);
+		full &= row.isFull();
+
+		NineHolder col = GetColumn(i);
+		full &= col.isFull();
+
+		if (!full)
+			break;
+	}
+
+	if (full)
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			for (int j = 0; j < 3; j++)
+			{
+				RegionHolder reg = GetRegion(i, j);
+				full &= reg.isFull();
+			}
+		}
+	}
+
+	return full;
+}

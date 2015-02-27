@@ -65,3 +65,18 @@ bool NineHolder::isConsistent()
 
 	return consistent;
 }
+
+bool NineHolder::isFull()
+{
+	bool full = true;
+	for (int i = 0; i < 9; i++)
+	{
+		if (GetCell(i).IsEmpty())
+		{
+			full = false;
+			break;
+		}
+	}
+
+	return full;
+}
