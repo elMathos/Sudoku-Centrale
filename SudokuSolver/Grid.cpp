@@ -3,6 +3,9 @@
 #include "RegionHolder.h"
 #include "OnlyOneChoiceGlobalVisitor.h"
 #include "OnlySquareVisitor.h"
+#include "TwoOutOfThreeColumnVisitor.h"
+#include "TwoOutOfThreeRowVisitor.h"
+
 #include "stdio.h"
 #include <vector>
 #include <string>
@@ -260,32 +263,25 @@ NineHolder Grid::GetColumn(unsigned char i)
 
 bool Grid::isConsistent()
 {
-	bool consistent = true;
 	for (int i = 0; i < 9; i++)
 	{
 		NineHolder row = GetRow(i);
-		consistent &= row.isConsistent();
+		if (!row.isConsistent()) return false;
 
 		NineHolder col = GetColumn(i);
-		consistent &= col.isConsistent();
+		if (!col.isConsistent()) return false;
 
-		if (!consistent)
-			break;
 	}
 
-	if (consistent)
+	for (int i = 0; i < 3; i++)
 	{
-		for (int i = 0; i < 3; i++)
+		for (int j = 0; j < 3; j++)
 		{
-			for (int j = 0; j < 3; j++)
-			{
-				RegionHolder reg = GetRegion(i, j);
-				consistent &= reg.isConsistent();
-			}
+			RegionHolder reg = GetRegion(i, j);
+			if (!reg.isConsistent()) return false;
 		}
 	}
-
-	return consistent;
+	return true;
 }
 
 bool Grid::isFull()
@@ -305,7 +301,7 @@ bool Grid::isFull()
 }
 
 //TODO add TwoOutOfThree visitor
-//TODO more complex strategy, with hypothesis (part 4) ?
+//TODO more complex strategy, with hypothesis (part 4) ? yes yes yes
 void Grid::Solve()
 {
 	OnlyOneChoiceGlobalVisitor onlyOneVis;
