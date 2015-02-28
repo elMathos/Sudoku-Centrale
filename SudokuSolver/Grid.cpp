@@ -301,7 +301,7 @@ bool Grid::isFull()
 }
 
 //TODO add TwoOutOfThree visitor
-//TODO more complex strategy, with hypothesis (part 4) ? yes yes yes
+//TODO more complex strategy, with hypothesis (part 4)
 void Grid::Solve()
 {
 	OnlyOneChoiceGlobalVisitor onlyOneVis;
