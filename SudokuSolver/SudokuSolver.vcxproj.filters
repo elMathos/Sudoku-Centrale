@@ -75,6 +75,9 @@
     <ClInclude Include="TwoOutOfThreeColumnVisitor.h">
       <Filter>Header Files\Strategies</Filter>
     </ClInclude>
+    <ClInclude Include="RowColumnRegionVisitor.h">
+      <Filter>Header Files\Strategies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Cell.cpp">
@@ -129,6 +132,9 @@
       <Filter>Source Files\Strategies</Filter>
     </ClCompile>
     <ClCompile Include="TwoOutOfThreeColumnVisitor.cpp">
+      <Filter>Source Files\Strategies</Filter>
+    </ClCompile>
+    <ClCompile Include="RowColumnRegionVisitor.cpp">
       <Filter>Source Files\Strategies</Filter>
     </ClCompile>
   </ItemGroup>

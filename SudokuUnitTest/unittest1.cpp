@@ -12,6 +12,7 @@
 #include "TwoOutOfThreeRowVisitor.h"
 #include "TwoOutOfThreeColumnVisitor.h"
 #include "OnlyOneChoiceGlobalVisitor.h"
+#include "RowColumnRegionVisitor.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -449,6 +450,29 @@ namespace SudokuUnitTest
 			Assert::AreEqual(4, grid.GetRegion(0, 1).GetCell(2, 0).GetValue());
 		}
 
+
+		TEST_METHOD(RowColumnRegionVis)
+		{
+			vector<string> stringInput = vector<string>(9);
+			//grid taken from http://www.sudokudragon.com/tutorialgentle2.htm
+			stringInput[0] = "38-6-5-1-";
+			stringInput[1] = "-96-7-345"; //I added the 7 here
+			stringInput[2] = "---1--6--";
+			stringInput[3] = "5-8-26-9-";
+			stringInput[4] = "---587---";
+			stringInput[5] = "-1-93-8-5";
+			stringInput[6] = "--1--4---";
+			stringInput[7] = "754---96-";
+			stringInput[8] = "-8-7-2-51";
+
+			Grid grid = Grid(stringInput);
+			RowColumnRegionVisitor visitor;
+			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(1, 1).GetValue());
+			bool visited = grid.Accept(visitor);
+			Assert::IsTrue(visited);
+			Assert::AreEqual(4, grid.GetRegion(0, 0).GetCell(1, 1).GetValue());
+		}
+
 		TEST_METHOD(NineHolderRowConsistent)
 		{
 			vector<string> stringInput = vector<string>(9);
@@ -800,6 +824,5 @@ namespace SudokuUnitTest
 			Assert::IsTrue(grid.isFull());
 			Assert::IsTrue(grid.isConsistent());
 		}
-
 	};
 }

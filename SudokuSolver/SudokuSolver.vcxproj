@@ -89,6 +89,7 @@
     <ClInclude Include="OnlySquareVisitor.h" />
     <ClInclude Include="Region.h" />
     <ClInclude Include="RegionHolder.h" />
+    <ClInclude Include="RowColumnRegionVisitor.h" />
     <ClInclude Include="RowHolder.h" />
     <ClInclude Include="TripleHolder.h" />
     <ClInclude Include="TwoOutOfThreeColumnVisitor.h" />
@@ -109,6 +110,7 @@
     <ClCompile Include="OnlySquareVisitor.cpp" />
     <ClCompile Include="Region.cpp" />
     <ClCompile Include="RegionHolder.cpp" />
+    <ClCompile Include="RowColumnRegionVisitor.cpp" />
     <ClCompile Include="RowHolder.cpp" />
     <ClCompile Include="TripleHolder.cpp" />
     <ClCompile Include="TwoOutOfThreeColumnVisitor.cpp" />
