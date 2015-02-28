@@ -150,7 +150,7 @@ bool OnlySquareVisitor::Visit(Grid& ioGrid) const
 				}
 			}
 			NineHolder firstRow = ioGrid.GetRow(firstRowIndex);
-			NineHolder secondColumn = ioGrid.GetRow(secondRowIndex);
+			NineHolder secondRow = ioGrid.GetRow(secondRowIndex);
 			RegionHolder firstRegion = ioGrid.GetRegion(firstRegionRowIndex, i / 3);
 			RegionHolder secondRegion = ioGrid.GetRegion(secondRegionRowIndex, i / 3);
 
@@ -167,13 +167,13 @@ bool OnlySquareVisitor::Visit(Grid& ioGrid) const
 				fullColumn.GetCell(secondRowIndex) = secondValue;
 				visited = true;
 			}
-			else if (secondColumn.isValuePresent(firstValue))
+			else if (secondRow.isValuePresent(firstValue))
 			{
 				fullColumn.GetCell(firstRowIndex) = firstValue;
 				fullColumn.GetCell(secondRowIndex) = secondValue;
 				visited = true;
 			}
-			else if (secondColumn.isValuePresent(secondValue))
+			else if (secondRow.isValuePresent(secondValue))
 			{
 				fullColumn.GetCell(firstRowIndex) = secondValue;
 				fullColumn.GetCell(secondRowIndex) = firstValue;
