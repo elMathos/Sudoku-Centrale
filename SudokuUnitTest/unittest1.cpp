@@ -340,6 +340,37 @@ namespace SudokuUnitTest
 			Assert::AreEqual(2, grid.GetRegion(2, 0).GetCell(0, 1).GetValue());
 		}
 
+
+		TEST_METHOD(OnlySquareOnRow2)
+		{
+			vector<string> stringInput = vector<string>(9);
+			// grid taken from SudoKuDragon: http://www.sudokudragon.com/tutorialgentle2.htm
+			stringInput[0] = "38-6-5-1-";
+			stringInput[1] = "-96---345";
+			stringInput[2] = "---1--6--";
+			stringInput[3] = "5-8-26-9-";
+			stringInput[4] = "---587---";
+			stringInput[5] = "-1-93-8-5";
+			stringInput[6] = "--1--4---";
+			stringInput[7] = "754---96-";
+			stringInput[8] = "-8-7-2-51";
+
+			Grid grid = Grid(stringInput);
+
+			OnlySquareVisitor visitor;
+			Assert::AreEqual(-1, grid.GetRegion(1, 0).GetCell(1, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(1, 2).GetCell(1, 2).GetValue());
+			bool filled = grid.Accept(visitor);
+			Assert::IsTrue(filled);
+			Assert::AreEqual(1, grid.GetRegion(1, 0).GetCell(1, 0).GetValue());
+			Assert::AreEqual(4, grid.GetRegion(1, 2).GetCell(1, 2).GetValue());
+		}
+
+
+		
+
+
+
 		TEST_METHOD(OnlySquareRegion)
 		{
 			vector<string> stringInput = vector<string>(9);
@@ -693,10 +724,10 @@ namespace SudokuUnitTest
 		}
 
 
-		TEST_METHOD(SolveHardGridPart3)
+		TEST_METHOD(SolveMediumGridPart3)
 		{
 			vector<string> stringInput = vector<string>(9);
-			// grid taken from SudokuDragon tutorial for OnlySquare
+			// grid taken from assignment
 			stringInput[0] = "-----6--9";
 			stringInput[1] = "--23----1";
 			stringInput[2] = "6-3--1-52";
@@ -708,8 +739,10 @@ namespace SudokuUnitTest
 			stringInput[8] = "8--5-----";
 
 			Grid grid = Grid(stringInput);
-			/*grid.Solve();
-			Assert::AreEqual(4, grid.GetRegion(0, 0).GetCell(0, 0).GetValue());
+			grid.Solve();
+			int test = 2;
+			Assert::IsTrue(grid.isFull());
+			/*Assert::AreEqual(4, grid.GetRegion(0, 0).GetCell(0, 0).GetValue());
 			Assert::AreEqual(1, grid.GetRegion(0, 0).GetCell(0, 1).GetValue());
 			Assert::AreEqual(8, grid.GetRegion(0, 0).GetCell(0, 2).GetValue());
 			Assert::AreEqual(5, grid.GetRegion(0, 0).GetCell(1, 0).GetValue());
@@ -745,6 +778,27 @@ namespace SudokuUnitTest
 			Assert::AreEqual(2, grid.GetRegion(2, 2).GetCell(2, 0).GetValue());
 			Assert::AreEqual(1, grid.GetRegion(2, 2).GetCell(2, 1).GetValue());
 			Assert::AreEqual(4, grid.GetRegion(2, 2).GetCell(2, 2).GetValue());*/
+		}
+
+
+		TEST_METHOD(SolveMediumGridPart3_corrected)
+		{
+			vector<string> stringInput = vector<string>(9);
+			//grid taken from http://www.sudokudragon.com/tutorialgentle2.htm
+			stringInput[0] = "38-6-5-1-";
+			stringInput[1] = "-96---345";
+			stringInput[2] = "---1--6--";
+			stringInput[3] = "5-8-26-9-";
+			stringInput[4] = "---587---";
+			stringInput[5] = "-1-93-8-5";
+			stringInput[6] = "--1--4---";
+			stringInput[7] = "754---96-";
+			stringInput[8] = "-8-7-2-51";
+
+			Grid grid = Grid(stringInput);
+			grid.Solve();
+			Assert::IsTrue(grid.isFull());
+			Assert::IsTrue(grid.isConsistent());
 		}
 
 	};
