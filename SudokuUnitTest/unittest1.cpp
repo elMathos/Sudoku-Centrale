@@ -10,6 +10,7 @@
 #include "OnlyOneChoiceInRegionVisitor.h"
 #include "OnlySquareVisitor.h"
 #include "TwoOutOfThreeRowVisitor.h"
+#include "TwoOutOfThreeColumnVisitor.h"
 #include "OnlyOneChoiceGlobalVisitor.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -383,6 +384,38 @@ namespace SudokuUnitTest
 			bool visited = grid.Accept(visitor);
 			Assert::IsTrue(visited);
 			Assert::AreEqual(1, grid.GetRegion(0, 0).GetCell(2, 1).GetValue());
+		}
+
+		TEST_METHOD(TwoOutOfThreeColumns)
+		{
+			vector<string> stringInput = vector<string>(9);
+			/*Grid:
+			4--------
+			---5-----
+			---Y-----    Y must be filled with a 4
+			----4----
+			---------
+			---------
+			---------
+			-----4---
+			---------
+			*/
+			stringInput[0] = "4--------";
+			stringInput[1] = "---5-----";
+			stringInput[2] = "---------";
+			stringInput[3] = "---------";
+			stringInput[4] = "-4-------";
+			stringInput[5] = "---------";
+			stringInput[6] = "---------";
+			stringInput[7] = "-----4---";
+			stringInput[8] = "---------";
+
+			Grid grid = Grid(stringInput);
+			TwoOutOfThreeColumnVisitor visitor;
+			Assert::AreEqual(-1, grid.GetRegion(0, 1).GetCell(2, 0).GetValue());
+			bool visited = grid.Accept(visitor);
+			Assert::IsTrue(visited);
+			Assert::AreEqual(4, grid.GetRegion(0, 1).GetCell(2, 0).GetValue());
 		}
 
 		TEST_METHOD(NineHolderRowConsistent)
