@@ -5,6 +5,7 @@
 #include "OnlySquareVisitor.h"
 #include "TwoOutOfThreeColumnVisitor.h"
 #include "TwoOutOfThreeRowVisitor.h"
+#include "RowColumnRegionVisitor.h"
 
 #include "stdio.h"
 #include <vector>
@@ -308,11 +309,13 @@ void Grid::Solve()
 	OnlySquareVisitor onlySquareVis;
 	TwoOutOfThreeColumnVisitor twoOutOfThreeColVis;
 	TwoOutOfThreeRowVisitor twoOutOfThreeRowVis;
+	RowColumnRegionVisitor rowColRegVis;
 	bool gridHasChanged = true;
 	bool onlyOneChanged = true;
 	bool onlySquareChanged = true;
 	bool twoOutOfThreeColChanged = true;
 	bool twoOutOfThreeRowChanged = true;
+	bool rowColRegChanged = true;
 
 	while (gridHasChanged)
 	{
@@ -320,9 +323,10 @@ void Grid::Solve()
 		onlySquareChanged = Accept(onlySquareVis);
 		twoOutOfThreeColChanged = Accept(twoOutOfThreeColVis);
 		twoOutOfThreeRowChanged = Accept(twoOutOfThreeRowVis);
+		rowColRegChanged = Accept(rowColRegVis);
 
 		gridHasChanged = onlyOneChanged || onlySquareChanged || twoOutOfThreeColChanged 
-			|| twoOutOfThreeRowChanged;
+			|| twoOutOfThreeRowChanged || rowColRegChanged;
 		// if true, at least one visitor has changed the grid
 		// we can iterate again
 	}
