@@ -256,7 +256,7 @@ NineHolder Grid::GetColumn(unsigned char i)
 		return NineHolder(t1, t2, t3);
 	}
 	else {
-		throw invalid_argument("Required row index must be between 0 and 8.\n");
+		throw invalid_argument("Required column index must be between 0 and 8.\n");
 
 	}
 }
@@ -306,15 +306,24 @@ void Grid::Solve()
 {
 	OnlyOneChoiceGlobalVisitor onlyOneVis;
 	OnlySquareVisitor onlySquareVis;
+	TwoOutOfThreeColumnVisitor twoOutOfThreeColVis;
+	TwoOutOfThreeRowVisitor twoOutOfThreeRowVis;
 	bool gridHasChanged = true;
 	bool onlyOneChanged = true;
 	bool onlySquareChanged = true;
+	bool twoOutOfThreeColChanged = true;
+	bool twoOutOfThreeRowChanged = true;
+
 	while (gridHasChanged)
 	{
 		onlyOneChanged = Accept(onlyOneVis);
 		onlySquareChanged = Accept(onlySquareVis);
-		gridHasChanged = onlyOneChanged || onlySquareChanged;
-		// if true, the visitors have changed the grid
+		twoOutOfThreeColChanged = Accept(twoOutOfThreeColVis);
+		twoOutOfThreeRowChanged = Accept(twoOutOfThreeRowVis);
+
+		gridHasChanged = onlyOneChanged || onlySquareChanged || twoOutOfThreeColChanged 
+			|| twoOutOfThreeRowChanged;
+		// if true, at least one visitor has changed the grid
 		// we can iterate again
 	}
 	// check if the grid is full or not
@@ -322,4 +331,5 @@ void Grid::Solve()
 		printf("Congratulations, the grid has been solved !\n");
 	else
 		printf("Sorry, we could not solve this grid.\n");
+	//TODO: possibly make this method return a bool rather than printing?
 }
