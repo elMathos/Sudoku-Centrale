@@ -435,7 +435,7 @@ namespace SudokuUnitTest
 			}
 			Grid grid = Grid(stringInput);
 			NineHolder firstRow = grid.GetRow(0);
-			NineHolder secondRow = grid.GetRow(3);
+			NineHolder secondRow = grid.GetRow(3); //TODO 2nd is not 3 if 1st is 0
 			Assert::IsTrue(firstRow.isConsistent());
 			Assert::IsFalse(secondRow.isConsistent());
 		}
@@ -558,7 +558,7 @@ namespace SudokuUnitTest
 			Assert::IsTrue(grid.isConsistent());
 		}
 
-		TEST_METHOD(FullGrid)
+		TEST_METHOD(GridIsFull1)
 		{
 			vector<string> stringInput = vector<string>(9);
 			// grid fully filled
@@ -577,7 +577,7 @@ namespace SudokuUnitTest
 			Assert::IsTrue(grid.isFull());
 		}
 
-		TEST_METHOD(NotFullGrid)
+		TEST_METHOD(GridIsFull2)
 		{
 			vector<string> stringInput = vector<string>(9);
 			// grid not fully filled
@@ -634,7 +634,7 @@ namespace SudokuUnitTest
 			Assert::AreEqual(7, grid.GetRegion(2, 2).GetCell(2, 0).GetValue());
 		}
 
-		TEST_METHOD(SolveEasyGrid)
+		TEST_METHOD(SolveEasyGrid1)
 		{
 			vector<string> stringInput = vector<string>(9);
 			// one empty cell per region
@@ -662,10 +662,9 @@ namespace SudokuUnitTest
 			Assert::AreEqual(4, grid.GetRegion(2, 2).GetCell(2, 2).GetValue());
 		}
 
-		TEST_METHOD(SolveABitLessEasyGrid)
+		TEST_METHOD(SolveEasyGrid2)
 		{
 			vector<string> stringInput = vector<string>(9);
-			// one empty cell per region
 
 			stringInput[0] = "418-26379";
 			stringInput[1] = "59-34-681";
@@ -693,7 +692,8 @@ namespace SudokuUnitTest
 			Assert::AreEqual(8, grid.GetRegion(2, 2).GetCell(0, 0).GetValue());
 		}
 
-		TEST_METHOD(SolveGridHardPart3)
+
+		TEST_METHOD(SolveHardGridPart3)
 		{
 			vector<string> stringInput = vector<string>(9);
 			// grid taken from SudokuDragon tutorial for OnlySquare
