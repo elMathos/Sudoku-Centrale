@@ -36,8 +36,6 @@ bool RowColumnRegionVisitor::Visit(Grid& ioGrid) const
 					{
 						NineHolder fullCol = ioGrid.GetColumn(3 * jReg + jCell);
 						NineHolder fullRow = ioGrid.GetRow(3 * iReg + iCell);
-						//Get the intersection of possible values for these 3 holders:
-						//noooooo AvailableValues does not exist for holders :((((
 						int possibleValues = 9;
 						int valueToSet = 0;
 						for (unsigned char digit = 1; digit < 10; digit++)

@@ -301,7 +301,6 @@ bool Grid::isFull()
 	return full;
 }
 
-//TODO add TwoOutOfThree visitor
 //TODO more complex strategy, with hypothesis (part 4)
 void Grid::Solve()
 {
@@ -335,5 +334,6 @@ void Grid::Solve()
 		printf("Congratulations, the grid has been solved !\n");
 	else
 		printf("Sorry, we could not solve this grid.\n");
-	//TODO: possibly make this method return a bool rather than printing?
+	//[elmathos]TODO: possibly make this method return a bool rather than printing?
+	//In contradiction with the assignment but much more logical to me
 }

@@ -2,7 +2,6 @@
 #include "ValueEliminator.h"
 
 
-//TODO test NineHolder when inputed 123 456 789
 NineHolder::NineHolder(TripleHolder& t1, TripleHolder& t2, TripleHolder& t3) : _cell1(t1.Cell1()), _cell2(t1.Cell2()),
 _cell3(t1.Cell3()), _cell4(t2.Cell1()), _cell5(t2.Cell2()),
 _cell6(t2.Cell3()), _cell7(t3.Cell1()), _cell8(t3.Cell2()),

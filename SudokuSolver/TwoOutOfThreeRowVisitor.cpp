@@ -14,6 +14,8 @@ TwoOutOfThreeRowVisitor::~TwoOutOfThreeRowVisitor()
 {
 }
 
+
+//This method is quite similar to TwoOutOfThreeColumnVisitor::Visit(). Make sure to change both when editting.
 bool TwoOutOfThreeRowVisitor::Visit(Grid& ioGrid) const
 {
 	bool visited = false;
@@ -107,7 +109,7 @@ bool TwoOutOfThreeRowVisitor::Visit(Grid& ioGrid) const
 				//Get 3 nineholder (column) on the 3 corresponding columns (3colRegIndex, .., 3colRegIndex+2)
 				set<unsigned char>::iterator iter = columnAbsence.begin();
 				int colRegIndex = *iter;
-				//TODO: Loop
+				//We could have a loop here but I think it is more readable this way.
 				NineHolder nh1 = ioGrid.GetColumn(3 * colRegIndex);
 				NineHolder nh2 = ioGrid.GetColumn(3 * colRegIndex + 1);
 				NineHolder nh3 = ioGrid.GetColumn(3 * colRegIndex + 2);
