@@ -30,6 +30,7 @@ public:
 	bool isConsistent();
 	bool isFull();
 	void Solve();
+	void HypSolve();
 
 private:
 	Region _rNW;

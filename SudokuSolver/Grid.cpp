@@ -337,3 +337,66 @@ void Grid::Solve()
 	//[elmathos]TODO: possibly make this method return a bool rather than printing?
 	//In contradiction with the assignment but much more logical to me
 }
+
+
+void Grid::HypSolve()
+{
+	Solve();
+	if (!isFull())
+	{
+		//find cell with minimal number of possible choices
+		int best_i = 0;
+		int best_j = 0;
+		int best_values = 9;
+		for (int i = 0; i < 8; i++)
+		{
+			for (int j = 0; j < 8; j++)
+			{
+				RegionHolder regHold = GetRegion(i / 3, j / 3);
+				if (regHold.GetCell(i % 3, j % 3).IsEmpty())
+				{
+					NineHolder fullRow = GetRow(i);
+					NineHolder fullCol = GetColumn(j);
+					int possibleValues = 9;
+					for (unsigned char digit = 1; digit < 10; digit++)
+					{
+						if (regHold.isValuePresent(digit) || fullCol.isValuePresent(digit)
+							|| fullRow.isValuePresent(digit))
+						{
+							possibleValues--;
+						}
+					}
+					if (possibleValues < best_values)
+					{
+						best_values = possibleValues;
+						best_i = i;
+						best_j = j;
+					}
+				}
+			}
+		}
+		//retrieve availables values for cell best_i, best_j:
+		RegionHolder regHold = GetRegion(best_i / 3, best_j / 3);
+		NineHolder fullRow = GetRow(best_i);
+		NineHolder fullCol = GetColumn(best_j);
+		set<unsigned char> possibleValueSet;
+		for (unsigned char dig = 1; dig < 10; dig++) {
+			if (!(regHold.isValuePresent(dig) || fullCol.isValuePresent(dig)
+				|| fullRow.isValuePresent(dig))){
+				possibleValueSet.insert(dig);
+			}
+		}
+		//making assumption
+		set<unsigned char>::iterator pHypothesisValue = possibleValueSet.begin();
+		regHold.GetCell(best_i % 3, best_j % 3) = *pHypothesisValue;
+		try
+		{
+			HypSolve();
+		}
+		catch (...) //todo bad practice
+		{
+			possibleValueSet.erase(pHypothesisValue);
+		}
+
+	}
+}
