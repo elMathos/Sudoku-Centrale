@@ -31,7 +31,7 @@ bool RowColumnRegionVisitor::Visit(Grid& ioGrid) const
 			{
 				for (int jCell = 0; jCell < 3; jCell++)
 				{
-					//TODO: This CAN be speeded up by instantiating the 18 nineholders once anf for all before the loop (to be stored in 2 sets)
+					//TODO: This CAN be speeded up by instantiating the 18 nineholders once and for all before the loop (to be stored in 2 sets)
 					if (regHold.GetCell(iCell, jCell).IsEmpty())
 					{
 						NineHolder fullCol = ioGrid.GetColumn(3 * jReg + jCell);

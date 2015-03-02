@@ -38,7 +38,7 @@ bool TwoOutOfThreeRowVisitor::Visit(Grid& ioGrid) const
 				rowDigitAbsent = 3 * i; 
 				absences++; 
 			}
-			else{ //delete Column in which the digit in present from the set columnAbsence
+			else{ //delete Column in which the digit is present from the set columnAbsence
 				if (FullTopLine.GetCell(0).GetValue() == digit || FullTopLine.GetCell(1).GetValue() == digit
 					|| FullTopLine.GetCell(2).GetValue() == digit)
 				{
@@ -61,7 +61,7 @@ bool TwoOutOfThreeRowVisitor::Visit(Grid& ioGrid) const
 				rowDigitAbsent = 3 * i + 1; 
 				absences++;
 			}
-			else{ //add Column in which the digit in present to the set columnAbsence
+			else{ //add Column in which the digit is present to the set columnAbsence
 				if (FullMiddleLine.GetCell(0).GetValue() == digit || FullMiddleLine.GetCell(1).GetValue() == digit
 					|| FullMiddleLine.GetCell(2).GetValue() == digit)
 				{
@@ -83,7 +83,7 @@ bool TwoOutOfThreeRowVisitor::Visit(Grid& ioGrid) const
 				rowDigitAbsent = 3 * i + 2; 
 				absences++; 
 			}
-			else{ //erase Column in which the digit in present from the set columnAbsence
+			else{ //erase Column in which the digit is present from the set columnAbsence
 				if (FullBottomLine.GetCell(0).GetValue() == digit || FullBottomLine.GetCell(1).GetValue() == digit
 					|| FullBottomLine.GetCell(2).GetValue() == digit)
 				{

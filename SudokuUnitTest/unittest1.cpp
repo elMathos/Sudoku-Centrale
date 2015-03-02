@@ -882,8 +882,6 @@ namespace SudokuUnitTest
 			Grid grid = Grid(stringInput);
 			grid.Solve();
 			grid.HypSolve();
-			int test = 2;
-			Assert::IsFalse(true);
 			Assert::IsFalse(grid.isFull()); //grid too complicated without hypothesis
 			Assert::IsTrue(grid.isConsistent());
 		}
