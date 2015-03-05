@@ -389,7 +389,7 @@ void Grid::Solve()
 		int best_i = indices[0];
 		int best_j = indices[1];
 		//retrieve availables values for cell best_i, best_j:
-		set<unsigned char> possibleValues = getPossibleValues();
+		set<unsigned char> possibleValues = getPossibleValues(best_i, best_j);
 		//loop on all possible hypothesis
 
 		set<unsigned char>::iterator pPossibleValue;
