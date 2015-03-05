@@ -301,43 +301,6 @@ bool Grid::isFull()
 	return full;
 }
 
-//TODO more complex strategy, with hypothesis (part 4)
-void Grid::SolveWithEasyStrategies()
-{
-	OnlyOneChoiceGlobalVisitor onlyOneVis;
-	OnlySquareVisitor onlySquareVis;
-	TwoOutOfThreeColumnVisitor twoOutOfThreeColVis;
-	TwoOutOfThreeRowVisitor twoOutOfThreeRowVis;
-	RowColumnRegionVisitor rowColRegVis;
-	bool gridHasChanged = true;
-	bool onlyOneChanged = true;
-	bool onlySquareChanged = true;
-	bool twoOutOfThreeColChanged = true;
-	bool twoOutOfThreeRowChanged = true;
-	bool rowColRegChanged = true;
-
-	while (gridHasChanged)
-	{
-		onlyOneChanged = Accept(onlyOneVis);
-		onlySquareChanged = Accept(onlySquareVis);
-		twoOutOfThreeColChanged = Accept(twoOutOfThreeColVis);
-		twoOutOfThreeRowChanged = Accept(twoOutOfThreeRowVis);
-		rowColRegChanged = Accept(rowColRegVis);
-
-		gridHasChanged = onlyOneChanged || onlySquareChanged || twoOutOfThreeColChanged 
-			|| twoOutOfThreeRowChanged || rowColRegChanged;
-		// if true, at least one visitor has changed the grid
-		// we can iterate again
-	}
-	// check if the grid is full or not
-	if (isFull())
-		printf("Congratulations, the grid has been solved !\n");
-	else
-		printf("Sorry, we could not solve this grid.\n");
-	//[elmathos]TODO: possibly make this method return a bool rather than printing?
-	//In contradiction with the assignment but much more logical to me
-}
-
 set<unsigned char> Grid::getPossibleValues(unsigned char rowIdx, unsigned char colIdx)
 {
 	set<unsigned char> possibleValuesSet;
@@ -382,75 +345,74 @@ vector<unsigned char> Grid::getIndicesCellWithLessChoices()
 	return bestIndices;
 }
 
-//void Grid::Solve()
-//{
-//	Solve();
-//	if (!isFull())
-//	{
-//		//find cell with minimal number of possible choices
-//		int best_i = 0;
-//		int best_j = 0;
-//		int best_values = 9;
-//		for (int i = 0; i < 8; i++)
-//		{
-//			for (int j = 0; j < 8; j++)
-//			{
-//				RegionHolder regHold = GetRegion(i / 3, j / 3);
-//				if (regHold.GetCell(i % 3, j % 3).IsEmpty())
-//				{
-//					NineHolder fullRow = GetRow(i);
-//					NineHolder fullCol = GetColumn(j);
-//					int possibleValues = 9;
-//					for (unsigned char digit = 1; digit < 10; digit++)
-//					{
-//						if (regHold.isValuePresent(digit) || fullCol.isValuePresent(digit)
-//							|| fullRow.isValuePresent(digit))
-//						{
-//							possibleValues--;
-//						}
-//					}
-//					if (possibleValues < best_values)
-//					{
-//						best_values = possibleValues;
-//						best_i = i;
-//						best_j = j;
-//					}
-//				}
-//			}
-//		}
-//		//retrieve availables values for cell best_i, best_j:
-//		RegionHolder regHold = GetRegion(best_i / 3, best_j / 3);
-//		NineHolder fullRow = GetRow(best_i);
-//		NineHolder fullCol = GetColumn(best_j);
-//		set<unsigned char> possibleValueSet;
-//		for (unsigned char dig = 1; dig < 10; dig++) {
-//			if (!(regHold.isValuePresent(dig) || fullCol.isValuePresent(dig)
-//				|| fullRow.isValuePresent(dig))){
-//				possibleValueSet.insert(dig);
-//			}
-//		}
-//		//making assumption
-//		set<unsigned char>::iterator pHypothesisValue = possibleValueSet.begin();
-//		regHold.GetCell(best_i % 3, best_j % 3) = *pHypothesisValue;
-//		//try to solve without hypothesis
-//		Solve();
-//		if (!isConsistent())
-//		{
-//		
-//		}
-//		else {
-//			if (isFull()) { return; }
-//			else
-//			{
-//				try{ HypSolve(); }
-//				catch (...) //todo bad practice
-//				{
-//					possibleValueSet.erase(pHypothesisValue);
-//				}
-//			}
-//		}
-//
-//		
-//
-//	}
-//}
+void Grid::SolveWithEasyStrategies()
+{
+	OnlyOneChoiceGlobalVisitor onlyOneVis;
+	OnlySquareVisitor onlySquareVis;
+	TwoOutOfThreeColumnVisitor twoOutOfThreeColVis;
+	TwoOutOfThreeRowVisitor twoOutOfThreeRowVis;
+	RowColumnRegionVisitor rowColRegVis;
+	bool gridHasChanged = true;
+	bool onlyOneChanged = true;
+	bool onlySquareChanged = true;
+	bool twoOutOfThreeColChanged = true;
+	bool twoOutOfThreeRowChanged = true;
+	bool rowColRegChanged = true;
+
+	while (gridHasChanged)
+	{
+		onlyOneChanged = Accept(onlyOneVis);
+		onlySquareChanged = Accept(onlySquareVis);
+		twoOutOfThreeColChanged = Accept(twoOutOfThreeColVis);
+		twoOutOfThreeRowChanged = Accept(twoOutOfThreeRowVis);
+		rowColRegChanged = Accept(rowColRegVis);
+
+		gridHasChanged = onlyOneChanged || onlySquareChanged || twoOutOfThreeColChanged
+			|| twoOutOfThreeRowChanged || rowColRegChanged;
+		// if true, at least one visitor has changed the grid
+		// we can iterate again
+	}
+}
+
+void Grid::Solve()
+{
+	SolveWithEasyStrategies();
+	if (!isConsistent())
+	{
+		throw invalid_argument("Grid not consistent"); //TODO create our own Inconsistency exception
+	}
+	if (!isFull())
+	{
+		//find cell with minimal number of possible choices
+		vector<unsigned char> indices = getIndicesCellWithLessChoices();
+		//this is always of size 2
+		int best_i = indices[0];
+		int best_j = indices[1];
+		//retrieve availables values for cell best_i, best_j:
+		set<unsigned char> possibleValues = getPossibleValues();
+		//loop on all possible hypothesis
+
+		set<unsigned char>::iterator pPossibleValue;
+		for (pPossibleValue = possibleValues.begin(); pPossibleValue != possibleValues.end(); ++pPossibleValue)
+		{
+			try
+			{
+				unsigned char hyp = *pPossibleValue;
+				//TODO clone grid
+				Grid clone = *this;
+				//making assumption on clone
+				clone.GetRegion(best_i / 3, best_j / 3).GetCell(best_i % 3, best_j % 3) = hyp;
+				clone.Solve();
+
+				//If we arrive here, no exception has been thrown,
+				//we have a full and consistent grid, so we copy the result back to grid
+				*this = clone;
+				return;
+			}
+			catch (const invalid_argument& e)
+			{
+				//do nothing, just continue iteration. but the this = *clone has been skipped
+			}
+		}
+	}
+}
