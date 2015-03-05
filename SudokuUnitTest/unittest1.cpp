@@ -827,6 +827,52 @@ namespace SudokuUnitTest
 			Assert::IsTrue(grid.isConsistent());
 		}
 
+		TEST_METHOD(GetPossibleValuesForACell)
+		{
+			vector<string> stringInput = vector<string>(9);
+			stringInput[0] = "8-5-3-4-6";
+			stringInput[1] = "---9---3-";
+			stringInput[2] = "-3-------";
+			stringInput[3] = "6---5---9";
+			stringInput[4] = "-1-3-8-4-";
+			stringInput[5] = "9---7---1";
+			stringInput[6] = "-------7-";
+			stringInput[7] = "-2---9---";
+			stringInput[8] = "3-8-2-5-4";
+
+			Grid grid = Grid(stringInput);
+			set<unsigned char> possibleVal = grid.getPossibleValues(0, 4);
+			int nbPossVal = possibleVal.size();
+			set<unsigned char>::iterator iter = possibleVal.begin();
+			int firstValue = *iter;
+			iter++;
+			int secondValue = *iter;
+			Assert::AreEqual(2, nbPossVal);
+			Assert::AreEqual(6, firstValue);
+			Assert::AreEqual(7,secondValue);
+		}
+
+		TEST_METHOD(GetIndicesCellWithLessChoices)
+		{
+			vector<string> stringInput = vector<string>(9);
+			stringInput[0] = "8-5-3-4-6";
+			stringInput[1] = "---9---3-";
+			stringInput[2] = "-3-------";
+			stringInput[3] = "6---5---9";
+			stringInput[4] = "-1-3-8-4-";
+			stringInput[5] = "9---7---1";
+			stringInput[6] = "-------7-";
+			stringInput[7] = "-2---9---";
+			stringInput[8] = "3-8-2-5-4";
+
+			Grid grid = Grid(stringInput);
+			vector<unsigned char> bestIndices = grid.getIndicesCellWithLessChoices();
+			int rowIdx = bestIndices[0];
+			int colIdx = bestIndices[1];
+			Assert::AreEqual(0, rowIdx);
+			Assert::AreEqual(4, colIdx);
+		}
+
 		TEST_METHOD(SolveDiabolicalGridPart4_1)
 		{
 			vector<string> stringInput = vector<string>(9);

@@ -338,76 +338,119 @@ void Grid::SolveWithEasyStrategies()
 	//In contradiction with the assignment but much more logical to me
 }
 
-
-void Grid::Solve()
+set<unsigned char> Grid::getPossibleValues(unsigned char rowIdx, unsigned char colIdx)
 {
-	Solve();
-	if (!isFull())
-	{
-		//find cell with minimal number of possible choices
-		int best_i = 0;
-		int best_j = 0;
-		int best_values = 9;
-		for (int i = 0; i < 8; i++)
-		{
-			for (int j = 0; j < 8; j++)
-			{
-				RegionHolder regHold = GetRegion(i / 3, j / 3);
-				if (regHold.GetCell(i % 3, j % 3).IsEmpty())
-				{
-					NineHolder fullRow = GetRow(i);
-					NineHolder fullCol = GetColumn(j);
-					int possibleValues = 9;
-					for (unsigned char digit = 1; digit < 10; digit++)
-					{
-						if (regHold.isValuePresent(digit) || fullCol.isValuePresent(digit)
-							|| fullRow.isValuePresent(digit))
-						{
-							possibleValues--;
-						}
-					}
-					if (possibleValues < best_values)
-					{
-						best_values = possibleValues;
-						best_i = i;
-						best_j = j;
-					}
-				}
-			}
-		}
-		//retrieve availables values for cell best_i, best_j:
-		RegionHolder regHold = GetRegion(best_i / 3, best_j / 3);
-		NineHolder fullRow = GetRow(best_i);
-		NineHolder fullCol = GetColumn(best_j);
-		set<unsigned char> possibleValueSet;
-		for (unsigned char dig = 1; dig < 10; dig++) {
-			if (!(regHold.isValuePresent(dig) || fullCol.isValuePresent(dig)
-				|| fullRow.isValuePresent(dig))){
-				possibleValueSet.insert(dig);
-			}
-		}
-		//making assumption
-		set<unsigned char>::iterator pHypothesisValue = possibleValueSet.begin();
-		regHold.GetCell(best_i % 3, best_j % 3) = *pHypothesisValue;
-		//try to solve without hypothesis
-		Solve();
-		if (!isConsistent())
-		{
-		
-		}
-		else {
-			if (isFull()) { return; }
-			else
-			{
-				try{ HypSolve(); }
-				catch (...) //todo bad practice
-				{
-					possibleValueSet.erase(pHypothesisValue);
-				}
-			}
-		}
-
-		
-
+	set<unsigned char> possibleValuesSet;
+	RegionHolder regHold = GetRegion(rowIdx / 3, colIdx / 3);
+	NineHolder fullRow = GetRow(rowIdx);
+	NineHolder fullCol = GetColumn(colIdx);
+	for (unsigned char dig = 1; dig < 10; dig++) {
+		if (!(regHold.isValuePresent(dig) || fullCol.isValuePresent(dig)
+			|| fullRow.isValuePresent(dig)))
+			possibleValuesSet.insert(dig);
 	}
+
+	return possibleValuesSet;
 }
+
+vector<unsigned char> Grid::getIndicesCellWithLessChoices()
+{
+	vector<unsigned char> bestIndices = vector<unsigned char>(2);
+	int bestValues = 9;
+	for (int i = 0; i < 8; i++)
+	{
+		for (int j = 0; j < 8; j++)
+		{
+			RegionHolder regHold = GetRegion(i / 3, j / 3);
+			if (regHold.GetCell(i % 3, j % 3).IsEmpty())
+			{
+				NineHolder fullRow = GetRow(i);
+				NineHolder fullCol = GetColumn(j);
+				set<unsigned char> possibleValues = getPossibleValues(i, j);
+				int nbPossibleValues = possibleValues.size();
+				
+				if (nbPossibleValues < bestValues)
+				{
+					bestValues = nbPossibleValues;
+					bestIndices[0] = i;
+					bestIndices[1] = j;
+				}
+			}
+		}
+	}
+
+	return bestIndices;
+}
+
+//void Grid::Solve()
+//{
+//	Solve();
+//	if (!isFull())
+//	{
+//		//find cell with minimal number of possible choices
+//		int best_i = 0;
+//		int best_j = 0;
+//		int best_values = 9;
+//		for (int i = 0; i < 8; i++)
+//		{
+//			for (int j = 0; j < 8; j++)
+//			{
+//				RegionHolder regHold = GetRegion(i / 3, j / 3);
+//				if (regHold.GetCell(i % 3, j % 3).IsEmpty())
+//				{
+//					NineHolder fullRow = GetRow(i);
+//					NineHolder fullCol = GetColumn(j);
+//					int possibleValues = 9;
+//					for (unsigned char digit = 1; digit < 10; digit++)
+//					{
+//						if (regHold.isValuePresent(digit) || fullCol.isValuePresent(digit)
+//							|| fullRow.isValuePresent(digit))
+//						{
+//							possibleValues--;
+//						}
+//					}
+//					if (possibleValues < best_values)
+//					{
+//						best_values = possibleValues;
+//						best_i = i;
+//						best_j = j;
+//					}
+//				}
+//			}
+//		}
+//		//retrieve availables values for cell best_i, best_j:
+//		RegionHolder regHold = GetRegion(best_i / 3, best_j / 3);
+//		NineHolder fullRow = GetRow(best_i);
+//		NineHolder fullCol = GetColumn(best_j);
+//		set<unsigned char> possibleValueSet;
+//		for (unsigned char dig = 1; dig < 10; dig++) {
+//			if (!(regHold.isValuePresent(dig) || fullCol.isValuePresent(dig)
+//				|| fullRow.isValuePresent(dig))){
+//				possibleValueSet.insert(dig);
+//			}
+//		}
+//		//making assumption
+//		set<unsigned char>::iterator pHypothesisValue = possibleValueSet.begin();
+//		regHold.GetCell(best_i % 3, best_j % 3) = *pHypothesisValue;
+//		//try to solve without hypothesis
+//		Solve();
+//		if (!isConsistent())
+//		{
+//		
+//		}
+//		else {
+//			if (isFull()) { return; }
+//			else
+//			{
+//				try{ HypSolve(); }
+//				catch (...) //todo bad practice
+//				{
+//					possibleValueSet.erase(pHypothesisValue);
+//				}
+//			}
+//		}
+//
+//		
+//
+//	}
+//}

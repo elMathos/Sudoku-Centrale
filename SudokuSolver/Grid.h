@@ -12,6 +12,7 @@ class IVisitor;
 #include "NineHolder.h"
 #include <string>
 #include <vector>
+#include <set>
 
 using namespace std;
 
@@ -29,6 +30,8 @@ public:
 	bool Accept(const IVisitor& visitor);
 	bool isConsistent();
 	bool isFull();
+	set<unsigned char> getPossibleValues(unsigned char rowIdx, unsigned char colIdx);
+	vector<unsigned char> getIndicesCellWithLessChoices();
 	void SolveWithEasyStrategies();
 	void Solve();
 
