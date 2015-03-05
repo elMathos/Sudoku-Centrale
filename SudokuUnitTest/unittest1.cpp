@@ -744,7 +744,7 @@ namespace SudokuUnitTest
 			stringInput[8] = "86953721-";
 
 			Grid grid = Grid(stringInput);
-			grid.Solve();
+			grid.SolveWithEasyStrategies();
 			Assert::AreEqual(5, grid.GetRegion(0, 0).GetCell(1, 0).GetValue());
 			Assert::AreEqual(7, grid.GetRegion(0, 1).GetCell(1, 2).GetValue());
 			Assert::AreEqual(6, grid.GetRegion(0, 2).GetCell(0, 0).GetValue());
@@ -771,7 +771,7 @@ namespace SudokuUnitTest
 			stringInput[8] = "-6953721-";
 
 			Grid grid = Grid(stringInput);
-			grid.Solve();
+			grid.SolveWithEasyStrategies();
 			Assert::AreEqual(5, grid.GetRegion(0, 0).GetCell(1, 0).GetValue());
 			Assert::AreEqual(2, grid.GetRegion(0, 1).GetCell(0, 2).GetValue());
 			Assert::AreEqual(7, grid.GetRegion(0, 1).GetCell(1, 2).GetValue());
@@ -802,7 +802,7 @@ namespace SudokuUnitTest
 			stringInput[8] = "8--5-----";
 
 			Grid grid = Grid(stringInput);
-			grid.Solve();
+			grid.SolveWithEasyStrategies();
 			Assert::IsTrue(grid.isFull());
 			Assert::IsTrue(grid.isConsistent());
 			//TODO : One of the following assert fails. Either correct it, either delete them and consider isConsistent and isFull are enough.
@@ -860,7 +860,7 @@ namespace SudokuUnitTest
 			stringInput[8] = "-8-7-2-51";
 
 			Grid grid = Grid(stringInput);
-			grid.Solve();
+			grid.SolveWithEasyStrategies();
 			Assert::IsTrue(grid.isFull());
 			Assert::IsTrue(grid.isConsistent());
 		}
@@ -868,7 +868,7 @@ namespace SudokuUnitTest
 		TEST_METHOD(SolveDiabolicalGridPart4_1)
 		{
 			vector<string> stringInput = vector<string>(9);
-			//grid taken from http://www.sudokudragon.com/tutorialgentle2.htm
+			//TODO TAKEN FROM OPTION grid taken from http://www.sudokudragon.com/tutorialgentle2.htm
 			stringInput[0] = "8-5-3-4-6";
 			stringInput[1] = "---9---3-";
 			stringInput[2] = "-3-------";
@@ -880,10 +880,11 @@ namespace SudokuUnitTest
 			stringInput[8] = "3-8-2-5-4";
 
 			Grid grid = Grid(stringInput);
-			grid.Solve();
-			grid.HypSolve();
+			grid.SolveWithEasyStrategies();
 			Assert::IsFalse(grid.isFull()); //grid too complicated without hypothesis
 			Assert::IsTrue(grid.isConsistent());
+			//grid.Solve();
+			//TODO assert full consistent
 		}
 	};
 }

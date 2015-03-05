@@ -302,7 +302,7 @@ bool Grid::isFull()
 }
 
 //TODO more complex strategy, with hypothesis (part 4)
-void Grid::Solve()
+void Grid::SolveWithEasyStrategies()
 {
 	OnlyOneChoiceGlobalVisitor onlyOneVis;
 	OnlySquareVisitor onlySquareVis;
@@ -339,7 +339,7 @@ void Grid::Solve()
 }
 
 
-void Grid::HypSolve()
+void Grid::Solve()
 {
 	Solve();
 	if (!isFull())
@@ -389,14 +389,25 @@ void Grid::HypSolve()
 		//making assumption
 		set<unsigned char>::iterator pHypothesisValue = possibleValueSet.begin();
 		regHold.GetCell(best_i % 3, best_j % 3) = *pHypothesisValue;
-		try
+		//try to solve without hypothesis
+		Solve();
+		if (!isConsistent())
 		{
-			HypSolve();
+		
 		}
-		catch (...) //todo bad practice
-		{
-			possibleValueSet.erase(pHypothesisValue);
+		else {
+			if (isFull()) { return; }
+			else
+			{
+				try{ HypSolve(); }
+				catch (...) //todo bad practice
+				{
+					possibleValueSet.erase(pHypothesisValue);
+				}
+			}
 		}
+
+		
 
 	}
 }

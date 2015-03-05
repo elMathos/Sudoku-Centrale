@@ -29,8 +29,8 @@ public:
 	bool Accept(const IVisitor& visitor);
 	bool isConsistent();
 	bool isFull();
+	void SolveWithEasyStrategies();
 	void Solve();
-	void HypSolve();
 
 private:
 	Region _rNW;
