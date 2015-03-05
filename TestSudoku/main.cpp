@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
 
 	vector<string> values1 = vector<string>(9);
 	values1[0] = "1234-6789";
-	for (int i = 1; i < 9; i++)
+	for (unsigned char i = 1; i < 9; i++)
 	{
 			values1[i] = "123456789";
 	}

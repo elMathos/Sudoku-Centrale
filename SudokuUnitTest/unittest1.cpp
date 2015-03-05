@@ -108,7 +108,7 @@ namespace SudokuUnitTest
 		{
 			vector<string> stringInput = vector<string>(9);
 			stringInput[0] = "1234-6789";
-			for (int i = 1; i < 9; i++)
+			for (unsigned char i = 1; i < 9; i++)
 			{
 				stringInput[i] = "123456789";
 			}
@@ -129,7 +129,7 @@ namespace SudokuUnitTest
 		{
 			vector<string> stringInput = vector<string>(9);
 			stringInput[0] = "1234-6789";
-			for (int i = 1; i < 9; i++)
+			for (unsigned char i = 1; i < 9; i++)
 			{
 				stringInput[i] = "123456789";
 			}
@@ -158,7 +158,7 @@ namespace SudokuUnitTest
 			stringInput[0] = "-23------";
 			stringInput[1] = "456------";
 			stringInput[2] = "789------";
-			for (int i = 3; i < 9; i++)
+			for (unsigned char i = 3; i < 9; i++)
 			{
 				stringInput[i] = "---------"; 			//we don't care about the rest
 
@@ -180,7 +180,7 @@ namespace SudokuUnitTest
 			First column should be filled with ones
 			*/
 
-			for (int i = 0; i < 3; i++)
+			for (unsigned char i = 0; i < 3; i++)
 			{
 				stringInput[0+3*i] = "-23-23-23";
 				stringInput[1+3*i] = "456456456";
@@ -263,7 +263,7 @@ namespace SudokuUnitTest
 			Regions : 123456-89
 			7th cells should be filled with 7s
 			*/
-			for (int i = 0; i < 9; i++)
+			for (unsigned char i = 0; i < 9; i++)
 			{
 				stringInput[i] = "123456-89";
 			}
@@ -304,13 +304,13 @@ namespace SudokuUnitTest
 			stringInput[0] = "123123123";
 			stringInput[1] = "456456456";
 			stringInput[2] = "789789789";
-			for (int i = 3; i < 9; i++)
+			for (unsigned char i = 3; i < 9; i++)
 			{
 				stringInput[i] = "123456789";
 			}
 			Grid grid = Grid(stringInput);
 			NineHolder nh = grid.GetRow(0);
-			for (int i = 0; i < 9; i++){
+			for (unsigned char i = 0; i < 9; i++){
 				Assert::AreEqual(i + 1, nh.GetCell(i).GetValue());
 			}
 		}
@@ -325,7 +325,7 @@ namespace SudokuUnitTest
 			stringInput[0] = "157123123";
 			stringInput[1] = "---456456";
 			stringInput[2] = "---789789";
-			for (int i = 3; i < 9; i++)
+			for (unsigned char i = 3; i < 9; i++)
 			{
 				stringInput[i] = "123456789";
 			}
@@ -528,7 +528,7 @@ namespace SudokuUnitTest
 			stringInput[0] = "123123123";
 			stringInput[1] = "456456456";
 			stringInput[2] = "789789789";
-			for (int i = 3; i < 9; i++)
+			for (unsigned char i = 3; i < 9; i++)
 			{
 				stringInput[i] = "123456789";
 			}
@@ -550,7 +550,7 @@ namespace SudokuUnitTest
 			stringInput[0] = "123123123";
 			stringInput[1] = "456456456";
 			stringInput[2] = "789789789";
-			for (int i = 3; i < 9; i++)
+			for (unsigned char i = 3; i < 9; i++)
 			{
 				stringInput[i] = "123456789";
 			}
@@ -572,7 +572,7 @@ namespace SudokuUnitTest
 			stringInput[0] = "123123123";
 			stringInput[1] = "456456456";
 			stringInput[2] = "789789789";
-			for (int i = 3; i < 9; i++)
+			for (unsigned char i = 3; i < 9; i++)
 			{
 				stringInput[i] = "123456789";
 			}
@@ -697,7 +697,7 @@ namespace SudokuUnitTest
 			Regions : 123456-89
 			7th cell should be filled with 7s
 			*/
-			for (int i = 0; i < 9; i++)
+			for (unsigned char i = 0; i < 9; i++)
 			{
 				stringInput[i] = "123456-89";
 			}
@@ -876,7 +876,7 @@ namespace SudokuUnitTest
 		TEST_METHOD(SolveDiabolicalGridPart4_1)
 		{
 			vector<string> stringInput = vector<string>(9);
-			//TODO TAKEN FROM OPTION grid taken from http://www.sudokudragon.com/tutorialgentle2.htm
+			//own grid such that easy strategies do not work, but ok with hypothesis
 			stringInput[0] = "8-5-3-4-6";
 			stringInput[1] = "---9---3-";
 			stringInput[2] = "-3-------";
