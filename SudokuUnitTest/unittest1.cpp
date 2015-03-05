@@ -894,11 +894,9 @@ namespace SudokuUnitTest
 			grid.Solve();
 			Assert::IsTrue(grid.isFull());
 			Assert::IsTrue(grid.isConsistent());
-			//TODO assert full consistent
 		}
 
 
-		//TODO state that this grid is not solvable
 		TEST_METHOD(SolveDiabolicalGridPart4)
 		{
 			vector<string> stringInput = vector<string>(9);
@@ -917,10 +915,10 @@ namespace SudokuUnitTest
 			grid.SolveWithEasyStrategies();
 			Assert::IsFalse(grid.isFull()); //grid too complicated without hypothesis
 			Assert::IsTrue(grid.isConsistent());
-			grid.Solve();
-			Assert::IsTrue(grid.isConsistent());
-			Assert::IsTrue(grid.isFull());
-			//TODO assert full consistent
+			//grid.Solve();
+			//This grid is in fact NOT solvable, even with assumptions.
+			//Assert::IsTrue(grid.isConsistent());
+			//Assert::IsTrue(grid.isFull());
 		}
 	};
 }

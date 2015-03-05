@@ -6,6 +6,7 @@
 #include "TwoOutOfThreeColumnVisitor.h"
 #include "TwoOutOfThreeRowVisitor.h"
 #include "RowColumnRegionVisitor.h"
+#include "inconsistency_exception.h"
 
 #include "stdio.h"
 #include <vector>
@@ -379,7 +380,7 @@ void Grid::Solve()
 	SolveWithEasyStrategies();
 	if (!isConsistent())
 	{
-		throw invalid_argument("Grid not consistent"); //TODO create our own Inconsistency exception
+		throw inconsistency_exception();
 	}
 	if (!isFull())
 	{
@@ -398,18 +399,28 @@ void Grid::Solve()
 			try
 			{
 				unsigned char hyp = *pPossibleValue;
-				//TODO clone grid
 				Grid clone = *this;
 				//making assumption on clone
 				clone.GetRegion(best_i / 3, best_j / 3).GetCell(best_i % 3, best_j % 3) = hyp;
-				clone.Solve();
+				try
+				{
+					clone.Solve();
+				}
+				catch (const invalid_argument& e)
+				{
+					// it may happen that, because the grid has become inconsistent, one of the simple strategies tries to access
+					//a row of invalid index. As it only happens when the grid is inconsistent, throw an inconsistency_exception
+					//which will be caughted by the next catch block
+					throw inconsistency_exception();
+				}
 
 				//If we arrive here, no exception has been thrown,
 				//we have a full and consistent grid, so we copy the result back to grid
 				*this = clone;
 				return;
 			}
-			catch (const invalid_argument& e)
+			
+			catch (const inconsistency_exception& e)
 			{
 				//do nothing, just continue iteration. but the this = *clone has been skipped
 			}

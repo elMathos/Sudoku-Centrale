@@ -79,6 +79,7 @@
     <ClInclude Include="Cell.h" />
     <ClInclude Include="ColumnHolder.h" />
     <ClInclude Include="Grid.h" />
+    <ClInclude Include="inconsistency_exception.h" />
     <ClInclude Include="IVisitor.h" />
     <ClInclude Include="LastCellFinder.h" />
     <ClInclude Include="NineHolder.h" />
@@ -100,6 +101,7 @@
     <ClCompile Include="Cell.cpp" />
     <ClCompile Include="ColumnHolder.cpp" />
     <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="inconsistency_exception.cpp" />
     <ClCompile Include="IVisitor.cpp" />
     <ClCompile Include="LastCellFinder.cpp" />
     <ClCompile Include="NineHolder.cpp" />
