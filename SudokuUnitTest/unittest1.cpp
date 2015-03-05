@@ -21,7 +21,6 @@ namespace SudokuUnitTest
 	TEST_CLASS(UnitTest1)
 	{
 	public:
-		//TODO rename tests explicitly
 		TEST_METHOD(CellValue1)
 		{
 			Cell cell = Cell(2);
@@ -535,9 +534,9 @@ namespace SudokuUnitTest
 			}
 			Grid grid = Grid(stringInput);
 			NineHolder firstRow = grid.GetRow(0);
-			NineHolder secondRow = grid.GetRow(3); //TODO 2nd is not 3 if 1st is 0
+			NineHolder fourthRow = grid.GetRow(3);
 			Assert::IsTrue(firstRow.isConsistent());
-			Assert::IsFalse(secondRow.isConsistent());
+			Assert::IsFalse(fourthRow.isConsistent());
 		}
 
 		TEST_METHOD(RegionHolderConsistent)
@@ -805,43 +804,6 @@ namespace SudokuUnitTest
 			grid.SolveWithEasyStrategies();
 			Assert::IsTrue(grid.isFull());
 			Assert::IsTrue(grid.isConsistent());
-			//TODO : One of the following assert fails. Either correct it, either delete them and consider isConsistent and isFull are enough.
-			/*Assert::AreEqual(4, grid.GetRegion(0, 0).GetCell(0, 0).GetValue());
-			Assert::AreEqual(1, grid.GetRegion(0, 0).GetCell(0, 1).GetValue());
-			Assert::AreEqual(8, grid.GetRegion(0, 0).GetCell(0, 2).GetValue());
-			Assert::AreEqual(5, grid.GetRegion(0, 0).GetCell(1, 0).GetValue());
-			Assert::AreEqual(2, grid.GetRegion(0, 0).GetCell(1, 1).GetValue());
-			Assert::AreEqual(6, grid.GetRegion(0, 0).GetCell(1, 2).GetValue());
-			Assert::AreEqual(3, grid.GetRegion(0, 0).GetCell(2, 0).GetValue());
-			Assert::AreEqual(7, grid.GetRegion(0, 0).GetCell(2, 1).GetValue());
-			Assert::AreEqual(9, grid.GetRegion(0, 0).GetCell(2, 2).GetValue());
-			Assert::AreEqual(5, grid.GetRegion(0, 1).GetCell(0, 0).GetValue());
-			Assert::AreEqual(8, grid.GetRegion(0, 1).GetCell(2, 1).GetValue());
-			Assert::AreEqual(9, grid.GetRegion(0, 2).GetCell(1, 0).GetValue());
-			Assert::AreEqual(4, grid.GetRegion(0, 2).GetCell(2, 0).GetValue());
-			Assert::AreEqual(9, grid.GetRegion(1, 0).GetCell(1, 0).GetValue());
-			Assert::AreEqual(1, grid.GetRegion(1, 0).GetCell(2, 0).GetValue());
-			Assert::AreEqual(4, grid.GetRegion(1, 1).GetCell(0, 0).GetValue());
-			Assert::AreEqual(1, grid.GetRegion(1, 1).GetCell(0, 1).GetValue());
-			Assert::AreEqual(6, grid.GetRegion(1, 1).GetCell(0, 2).GetValue());
-			Assert::AreEqual(7, grid.GetRegion(1, 1).GetCell(1, 0).GetValue());
-			Assert::AreEqual(2, grid.GetRegion(1, 1).GetCell(1, 1).GetValue());
-			Assert::AreEqual(5, grid.GetRegion(1, 1).GetCell(1, 2).GetValue());
-			Assert::AreEqual(9, grid.GetRegion(1, 1).GetCell(2, 0).GetValue());
-			Assert::AreEqual(3, grid.GetRegion(1, 1).GetCell(2, 1).GetValue());
-			Assert::AreEqual(8, grid.GetRegion(1, 1).GetCell(2, 2).GetValue());
-			Assert::AreEqual(3, grid.GetRegion(1, 2).GetCell(0, 0).GetValue());
-			Assert::AreEqual(4, grid.GetRegion(1, 1).GetCell(0, 0).GetValue());
-			Assert::AreEqual(7, grid.GetRegion(2, 0).GetCell(2, 0).GetValue());
-			Assert::AreEqual(3, grid.GetRegion(2, 0).GetCell(2, 1).GetValue());
-			Assert::AreEqual(5, grid.GetRegion(2, 1).GetCell(0, 2).GetValue());
-			Assert::AreEqual(9, grid.GetRegion(2, 1).GetCell(2, 2).GetValue());
-			Assert::AreEqual(9, grid.GetRegion(2, 2).GetCell(0, 2).GetValue());
-			Assert::AreEqual(3, grid.GetRegion(2, 2).GetCell(1, 1).GetValue());
-			Assert::AreEqual(7, grid.GetRegion(2, 2).GetCell(1, 2).GetValue());
-			Assert::AreEqual(2, grid.GetRegion(2, 2).GetCell(2, 0).GetValue());
-			Assert::AreEqual(1, grid.GetRegion(2, 2).GetCell(2, 1).GetValue());
-			Assert::AreEqual(4, grid.GetRegion(2, 2).GetCell(2, 2).GetValue());*/
 		}
 
 
