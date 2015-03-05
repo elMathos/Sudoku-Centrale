@@ -9,7 +9,6 @@
 #include "Cell.h"
 #include <string>
 #include <vector>
-#include <memory>
 using namespace std;
 
 class ExportedByDll Region
