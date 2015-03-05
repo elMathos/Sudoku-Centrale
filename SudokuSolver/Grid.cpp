@@ -365,6 +365,7 @@ void Grid::Solve()
 				//If we arrive here, no exception has been thrown,
 				//we have a full and consistent grid, so we copy the result back to grid
 				*this = clone;
+				return;
 			}
 			catch (const invalid_argument& e)
 			{
