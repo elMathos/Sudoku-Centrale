@@ -7,8 +7,7 @@
 #define ExportedByDll __declspec(dllimport)
 #endif
 
-
-class ExportedByDll OnlyOneChoiceInRegionVisitor:
+class ExportedByDll OnlyOneChoiceInRegionVisitor :
 	public IVisitor
 {
 public:

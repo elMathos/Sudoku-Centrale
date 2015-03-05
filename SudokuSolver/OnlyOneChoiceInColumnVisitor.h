@@ -7,8 +7,7 @@
 #define ExportedByDll __declspec(dllimport)
 #endif
 
-
-class ExportedByDll OnlyOneChoiceInColumnVisitor:
+class ExportedByDll OnlyOneChoiceInColumnVisitor :
 	public IVisitor
 {
 public:

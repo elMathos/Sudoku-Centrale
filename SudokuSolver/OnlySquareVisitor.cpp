@@ -157,7 +157,6 @@ bool OnlySquareVisitor::Visit(Grid& ioGrid) const
 			NineHolder secondRow = ioGrid.GetRow(secondRowIndex);
 			RegionHolder firstRegion = ioGrid.GetRegion(firstRegionRowIndex, i / 3);
 			RegionHolder secondRegion = ioGrid.GetRegion(secondRegionRowIndex, i / 3);
-
 			// check if one of the two missing values already in firstRow or secondRow
 			if (firstRow.isValuePresent(firstValue))
 			{
@@ -220,7 +219,5 @@ bool OnlySquareVisitor::Visit(Grid& ioGrid) const
 		}
 
 	}
-
-
 	return visited;
 }
