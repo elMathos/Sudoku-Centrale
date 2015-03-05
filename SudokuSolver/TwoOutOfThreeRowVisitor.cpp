@@ -101,7 +101,7 @@ bool TwoOutOfThreeRowVisitor::Visit(Grid& ioGrid) const
 				}
 			}
 
-			if (absences == 1) //we've been twice in the else, rowAbsence has one element exactly
+			if (absences == 1 && columnAbsence.size() == 1) //we've been twice in the else, columnAbsence has one element exactly
 			{
 				//the digit is absent of exactly one row out of three
 				//it is absent of row rowDigitAbsent

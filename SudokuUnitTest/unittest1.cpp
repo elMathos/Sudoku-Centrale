@@ -891,7 +891,35 @@ namespace SudokuUnitTest
 			grid.SolveWithEasyStrategies();
 			Assert::IsFalse(grid.isFull()); //grid too complicated without hypothesis
 			Assert::IsTrue(grid.isConsistent());
-			//grid.Solve();
+			grid.Solve();
+			Assert::IsTrue(grid.isFull());
+			Assert::IsTrue(grid.isConsistent());
+			//TODO assert full consistent
+		}
+
+
+		//TODO state that this grid is not solvable
+		TEST_METHOD(SolveDiabolicalGridPart4)
+		{
+			vector<string> stringInput = vector<string>(9);
+			//Grid taken from subject
+			stringInput[0] = "-54--16--";
+			stringInput[1] = "-7--9-5--";
+			stringInput[2] = "---3--2--";
+			stringInput[3] = "---------";
+			stringInput[4] = "36---84--";
+			stringInput[5] = "1-46---3-";
+			stringInput[6] = "-8--36--5";
+			stringInput[7] = "9-----2--";
+			stringInput[8] = "--6--14--";
+
+			Grid grid = Grid(stringInput);
+			grid.SolveWithEasyStrategies();
+			Assert::IsFalse(grid.isFull()); //grid too complicated without hypothesis
+			Assert::IsTrue(grid.isConsistent());
+			grid.Solve();
+			Assert::IsTrue(grid.isConsistent());
+			Assert::IsTrue(grid.isFull());
 			//TODO assert full consistent
 		}
 	};
