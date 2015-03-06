@@ -2,10 +2,9 @@
 #include "ValueEliminator.h"
 
 
-//TODO do we need accessors or public Cells ?
-RegionHolder::RegionHolder(Region& reg) : _cNW(reg.Get_cNW()), _cN(reg.Get_cN()), _cNE(reg.Get_cNE()),
-_cW(reg.Get_cW()), _cC(reg.Get_cC()), _cE(reg.Get_cE()),
-_cSW(reg.Get_cSW()), _cS(reg.Get_cS()), _cSE(reg.Get_cSE())
+RegionHolder::RegionHolder(Region& reg) : _cNW(reg.GetCell(0, 0)), _cN(reg.GetCell(0, 1)), _cNE(reg.GetCell(0, 2)),
+_cW(reg.GetCell(1, 0)), _cC(reg.GetCell(1, 1)), _cE(reg.GetCell(1, 2)),
+_cSW(reg.GetCell(2, 0)), _cS(reg.GetCell(2, 1)), _cSE(reg.GetCell(2, 2))
 {
 }
 
@@ -69,18 +68,33 @@ ColumnHolder RegionHolder::RightColumn() const
 	return ColumnHolder(_cNE, _cE, _cSE);
 }
 
-set<unsigned char> RegionHolder::flagValues(ValueEliminator& valueEliminator)
+void RegionHolder::flagValues(ValueEliminator& valueEliminator)
 {
 	valueEliminator.setFlags(*this);
-	return valueEliminator.availableValue();
 }
 
 bool RegionHolder::isValuePresent(unsigned char iTarget)
 {
 	ValueEliminator valueEliminator;
-	set<unsigned char> availableValues = flagValues(valueEliminator);
+	flagValues(valueEliminator);
+	set<unsigned char> availableValues = valueEliminator.availableValue();
 	
-	return availableValues.find(iTarget) != availableValues.end(); 
+	return availableValues.find(iTarget) == availableValues.end();
+	// if in availableValues then it is absent from the set
+}
+
+Cell& RegionHolder::GetCell(unsigned char i, unsigned char j)
+{
+	if (i == 0 && j == 0) return _cNW;
+	if (i == 0 && j == 1) return _cN;
+	if (i == 0 && j == 2) return _cNE;
+	if (i == 1 && j == 0) return _cW;
+	if (i == 1 && j == 1) return _cC;
+	if (i == 1 && j == 2) return _cE;
+	if (i == 2 && j == 0) return _cSW;
+	if (i == 2 && j == 1) return _cS;
+	if (i == 2 && j == 2) return _cSE;
+	else throw invalid_argument("i and j must be between 0 and 2.\n");
 }
 
 RegionHolder::~RegionHolder()
@@ -88,3 +102,43 @@ RegionHolder::~RegionHolder()
 }
 
 
+bool RegionHolder::isConsistent()
+{
+	bool consistent = true;
+	set<unsigned char> alreadySeen;
+	int value = 0;
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			value = GetCell(i, j).GetValue();
+			if (value != -1 && alreadySeen.find(value) != alreadySeen.end())
+			{
+				consistent = false;
+				break;
+			}
+			else if (value != -1)
+				alreadySeen.insert(value);
+		}		
+	}
+
+	return consistent;
+}
+
+bool RegionHolder::isFull()
+{
+	bool full = true;
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			if (GetCell(i, j).IsEmpty())
+			{
+				full = false;
+				break;
+			}
+		}
+	}
+
+	return full;
+}

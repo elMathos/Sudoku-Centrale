@@ -1,18 +1,18 @@
 #pragma once
-#include "IVisitor.h"
-
 #ifdef SUDOKUSOLVER_EXPORTS
 #define ExportedByDll __declspec(dllexport)
 #else
 #define ExportedByDll __declspec(dllimport)
 #endif
 
-class ExportedByDll OnlySquareVisitor :
+#include "IVisitor.h"
+
+class ExportedByDll TwoOutOfThreeColumnVisitor :
 	public IVisitor
 {
 public:
-	OnlySquareVisitor();
-	~OnlySquareVisitor();
+	TwoOutOfThreeColumnVisitor();
+	~TwoOutOfThreeColumnVisitor();
 	bool Visit(Grid& ioGrid) const;
 };
 

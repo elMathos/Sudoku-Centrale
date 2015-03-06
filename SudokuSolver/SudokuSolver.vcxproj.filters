@@ -42,9 +42,6 @@
     <ClInclude Include="RegionHolder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LastCellFinder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="IVisitor.h">
       <Filter>Header Files\Strategies</Filter>
     </ClInclude>
@@ -62,6 +59,27 @@
     </ClInclude>
     <ClInclude Include="OnlySquareVisitor.h">
       <Filter>Header Files\Strategies</Filter>
+    </ClInclude>
+    <ClInclude Include="NineHolder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TwoOutOfThreeRowVisitor.h">
+      <Filter>Header Files\Strategies</Filter>
+    </ClInclude>
+    <ClInclude Include="LastCellFinder.h">
+      <Filter>Header Files\Strategies</Filter>
+    </ClInclude>
+    <ClInclude Include="OnlyOneChoiceGlobalVisitor.h">
+      <Filter>Header Files\Strategies</Filter>
+    </ClInclude>
+    <ClInclude Include="TwoOutOfThreeColumnVisitor.h">
+      <Filter>Header Files\Strategies</Filter>
+    </ClInclude>
+    <ClInclude Include="RowColumnRegionVisitor.h">
+      <Filter>Header Files\Strategies</Filter>
+    </ClInclude>
+    <ClInclude Include="inconsistency_exception.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -86,9 +104,6 @@
     <ClCompile Include="RegionHolder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LastCellFinder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="IVisitor.cpp">
       <Filter>Source Files\Strategies</Filter>
     </ClCompile>
@@ -106,6 +121,27 @@
     </ClCompile>
     <ClCompile Include="OnlySquareVisitor.cpp">
       <Filter>Source Files\Strategies</Filter>
+    </ClCompile>
+    <ClCompile Include="NineHolder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TwoOutOfThreeRowVisitor.cpp">
+      <Filter>Source Files\Strategies</Filter>
+    </ClCompile>
+    <ClCompile Include="LastCellFinder.cpp">
+      <Filter>Source Files\Strategies</Filter>
+    </ClCompile>
+    <ClCompile Include="OnlyOneChoiceGlobalVisitor.cpp">
+      <Filter>Source Files\Strategies</Filter>
+    </ClCompile>
+    <ClCompile Include="TwoOutOfThreeColumnVisitor.cpp">
+      <Filter>Source Files\Strategies</Filter>
+    </ClCompile>
+    <ClCompile Include="RowColumnRegionVisitor.cpp">
+      <Filter>Source Files\Strategies</Filter>
+    </ClCompile>
+    <ClCompile Include="inconsistency_exception.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

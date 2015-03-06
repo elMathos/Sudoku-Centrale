@@ -95,7 +95,7 @@ bool LastCellFinder::fill()
 				}
 				if (_t2.Cell2().IsEmpty())
 				{
-					_t2.Cell2() = i+1;
+ 					_t2.Cell2() = i+1;
 				}
 				if (_t2.Cell3().IsEmpty())
 				{

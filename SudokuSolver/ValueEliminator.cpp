@@ -33,37 +33,25 @@ set<unsigned char> ValueEliminator::availableValue()
 	set<unsigned char> valueSet;
 	for (int i = 0; i < 9; i++)
 	{
-		if (!_alreadySeen[i])
-			valueSet.insert(i+1);
+		if (!_alreadySeen[i]) valueSet.insert(i + 1);
 	}
-
-	if (valueSet.size() == 0)
-		throw invalid_argument("No available value.\n");
 
 	return valueSet;
 }
 
-void ValueEliminator::setFlags(const RegionHolder& regionHolder)
+//TODO argument must be const ?
+void ValueEliminator::setFlags(RegionHolder& regionHolder)
 {
-	if (! regionHolder.Get_cNW().IsEmpty())
-		flag(regionHolder.Get_cNW());
-	if (!regionHolder.Get_cN().IsEmpty())
-		flag(regionHolder.Get_cN());
-	if (!regionHolder.Get_cNE().IsEmpty())
-		flag(regionHolder.Get_cNE());
-	if (!regionHolder.Get_cW().IsEmpty())
-		flag(regionHolder.Get_cW());
-	if (!regionHolder.Get_cC().IsEmpty())
-		flag(regionHolder.Get_cC());
-	if (!regionHolder.Get_cE().IsEmpty())
-		flag(regionHolder.Get_cE());
-	if (!regionHolder.Get_cSW().IsEmpty())
-		flag(regionHolder.Get_cSW());
-	if (!regionHolder.Get_cS().IsEmpty())
-		flag(regionHolder.Get_cS());
-	if (!regionHolder.Get_cSE().IsEmpty())
-		flag(regionHolder.Get_cSE());
-
+	for (unsigned char i = 0; i < 3; i++)
+	{
+		for (unsigned char j = 0; j < 3; j++)
+		{
+			if (!regionHolder.GetCell(i, j).IsEmpty())
+			{
+				flag(regionHolder.GetCell(i, j));
+			}
+		}
+	}
 }
 
 void ValueEliminator::setFlags(TripleHolder& tripleHolder)
@@ -74,5 +62,15 @@ void ValueEliminator::setFlags(TripleHolder& tripleHolder)
 		flag(tripleHolder.Cell2());
 	if (!tripleHolder.Cell3().IsEmpty())
 		flag(tripleHolder.Cell3());
+
+}
+
+void ValueEliminator::setFlags(NineHolder& regionHolder)
+{
+	for (int i = 0; i < 9; i++)
+	{
+		if (!regionHolder.GetCell(i).IsEmpty())
+			flag(regionHolder.GetCell(i));
+	}
 
 }

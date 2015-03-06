@@ -6,24 +6,30 @@
 #define ExportedByDll __declspec(dllimport)
 #endif
 
-//forward declarations
 class ValueEliminator;
 #include "Cell.h"
+#include "TripleHolder.h"
 
-class ExportedByDll TripleHolder
+class ExportedByDll NineHolder
 {
 public:
-	TripleHolder(Cell& cell1, Cell& cell2, Cell& cell3 );
-	~TripleHolder();
-	Cell& Cell1();
-	Cell& Cell2();
-	Cell& Cell3();
+	NineHolder(TripleHolder&, TripleHolder&, TripleHolder&);
+	~NineHolder();
+	Cell& GetCell(unsigned char i);
 	void flagValues(ValueEliminator& v);
 	bool isValuePresent(unsigned char);
+	bool isConsistent();
+	bool isFull();
 
-protected:
+private:
 	Cell& _cell1;
 	Cell& _cell2;
 	Cell& _cell3;
+	Cell& _cell4;
+	Cell& _cell5;
+	Cell& _cell6;
+	Cell& _cell7;
+	Cell& _cell8;
+	Cell& _cell9;
 };
 

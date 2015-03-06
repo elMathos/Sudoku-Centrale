@@ -8,10 +8,11 @@
 
 class IVisitor;
 
-#include "Region.h"
+#include "RegionHolder.h"
+#include "NineHolder.h"
 #include <string>
 #include <vector>
-#include <memory>
+#include <set>
 
 using namespace std;
 
@@ -23,17 +24,16 @@ public:
 	Grid(vector<string>& values);
 	Grid(vector<Region>& regions);
 	~Grid();
-	bool IsFull();
-	Region& Get_rNW();
-	Region& Get_rN();
-	Region& Get_rNE();
-	Region& Get_rW();
-	Region& Get_rC();
-	Region& Get_rE();
-	Region& Get_rSW();
-	Region& Get_rS();
-	Region& Get_rSE();
+	RegionHolder GetRegion(unsigned char i, unsigned char j);
+	NineHolder GetRow(unsigned char i);
+	NineHolder GetColumn(unsigned char i);
 	bool Accept(const IVisitor& visitor);
+	bool isConsistent();
+	bool isFull();
+	set<unsigned char> getPossibleValues(unsigned char rowIdx, unsigned char colIdx);
+	vector<unsigned char> getIndicesCellWithLessChoices();
+	void SolveWithEasyStrategies();
+	void Solve();
 
 private:
 	Region _rNW;
@@ -46,4 +46,3 @@ private:
 	Region _rS;
 	Region _rSE;
 };
-

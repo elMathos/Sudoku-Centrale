@@ -7,12 +7,13 @@
 #define ExportedByDll __declspec(dllimport)
 #endif
 
-class ExportedByDll OnlySquareVisitor :
+class ExportedByDll OnlyOneChoiceGlobalVisitor :
 	public IVisitor
 {
 public:
-	OnlySquareVisitor();
-	~OnlySquareVisitor();
+	OnlyOneChoiceGlobalVisitor();
+	~OnlyOneChoiceGlobalVisitor();
+
 	bool Visit(Grid& ioGrid) const;
 };
 

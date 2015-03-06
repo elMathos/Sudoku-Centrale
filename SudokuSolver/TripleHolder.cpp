@@ -27,16 +27,17 @@ Cell& TripleHolder::Cell3()
 	return _cell3;
 }
 
-set<unsigned char> TripleHolder::flagValues(ValueEliminator& valueEliminator)
+void TripleHolder::flagValues(ValueEliminator& valueEliminator)
 {
 	valueEliminator.setFlags(*this);
-	return valueEliminator.availableValue();
 }
 
 bool TripleHolder::isValuePresent(unsigned char iTarget)
 {
 	ValueEliminator valueEliminator;
-	set<unsigned char> availableValues = flagValues(valueEliminator);
+	flagValues(valueEliminator);
+	set<unsigned char> availableValues = valueEliminator.availableValue();
 
-	return availableValues.find(iTarget) != availableValues.end();
+	return availableValues.find(iTarget) == availableValues.end();
+	// if in availableValues then it is absent from the set
 }

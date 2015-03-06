@@ -14,7 +14,7 @@ int Cell::GetValue()
 
 Cell::Cell(int value)
 {
-	if (value < 0 || value > 9)
+	if (value < 1 || value > 9)
 	{
 		throw invalid_argument("Incorrect input value for Cell.\n");
 	}
@@ -45,7 +45,6 @@ bool Cell::IsEmpty() const
 	return _value==-1;
 }
 
-//Bad practice
 Cell& Cell::operator=(unsigned char iValue)
 {
 	_value = iValue;

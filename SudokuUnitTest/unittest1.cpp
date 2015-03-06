@@ -7,6 +7,12 @@
 #include "LastCellFinder.h"
 #include "OnlyOneChoiceInRowVisitor.h"
 #include "OnlyOneChoiceInColumnVisitor.h"
+#include "OnlyOneChoiceInRegionVisitor.h"
+#include "OnlySquareVisitor.h"
+#include "TwoOutOfThreeRowVisitor.h"
+#include "TwoOutOfThreeColumnVisitor.h"
+#include "OnlyOneChoiceGlobalVisitor.h"
+#include "RowColumnRegionVisitor.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -15,77 +21,129 @@ namespace SudokuUnitTest
 	TEST_CLASS(UnitTest1)
 	{
 	public:
-		//TODO rename tests explicitly
 		TEST_METHOD(CellValue1)
 		{
 			Cell cell = Cell(2);
 			Assert::AreEqual(cell.GetValue(), 2);
 		}
+
 		TEST_METHOD(EmptyCell)
 		{
 			Cell cell = Cell();
 			Assert::AreEqual(cell.GetValue(), -1);
 		}
 
-		TEST_METHOD(RegionStringConstructor)
+		TEST_METHOD(WrongInputCell1)
+		{
+			bool thrown = false;
+			try{ Cell cell = Cell(10); }
+			catch (invalid_argument& e){
+				thrown = true;
+			}
+			Assert::IsTrue(thrown);
+		}
+
+		TEST_METHOD(WrongInputCell2)
+		{
+			bool thrown = false;
+			try{ Cell cell = Cell(0); }
+			catch (invalid_argument& e){
+				thrown = true;
+			}
+			Assert::IsTrue(thrown);
+		}
+
+		TEST_METHOD(RegionStringConstructor1)
 		{
 			Region myRegion1 = Region("1-3456789");
 
-			Assert::AreEqual(1, myRegion1.Get_cNW().GetValue());
-			Assert::AreEqual(-1, myRegion1.Get_cN().GetValue());
-			Assert::AreEqual(3, myRegion1.Get_cNE().GetValue());
-			Assert::AreEqual(4, myRegion1.Get_cW().GetValue());
-			Assert::AreEqual(5, myRegion1.Get_cC().GetValue());
-			Assert::AreEqual(6, myRegion1.Get_cE().GetValue());
-			Assert::AreEqual(7, myRegion1.Get_cSW().GetValue());
-			Assert::AreEqual(8, myRegion1.Get_cS().GetValue());
-			Assert::AreEqual(9, myRegion1.Get_cSE().GetValue());
+			Assert::AreEqual(1, myRegion1.GetCell(0, 0).GetValue());
+			Assert::AreEqual(-1, myRegion1.GetCell(0, 1).GetValue());
+			Assert::AreEqual(3, myRegion1.GetCell(0, 2).GetValue());
+			Assert::AreEqual(4, myRegion1.GetCell(1, 0).GetValue());
+			Assert::AreEqual(5, myRegion1.GetCell(1, 1).GetValue());
+			Assert::AreEqual(6, myRegion1.GetCell(1, 2).GetValue());
+			Assert::AreEqual(7, myRegion1.GetCell(2, 0).GetValue());
+			Assert::AreEqual(8, myRegion1.GetCell(2, 1).GetValue());
+			Assert::AreEqual(9, myRegion1.GetCell(2, 2).GetValue());
+		}
+
+		TEST_METHOD(RegionStringConstructor2)
+		{
+			bool thrown = false;
+			try{
+				Region myRegion1 = Region("1-345678a"); // a is not a valid character
+			}
+			catch (invalid_argument& e){
+				thrown = true;
+			}
+			Assert::IsTrue(thrown);
+		}
+
+		TEST_METHOD(RegionStringConstructor3)
+		{
+			bool thrown = false;
+			try{
+				Region myRegion1 = Region("1-34567890"); //input string is too long
+			}
+			catch (invalid_argument& e){
+				thrown = true;
+			}
+			Assert::IsTrue(thrown);
+		}
+
+		TEST_METHOD(RegionStringConstructor4)
+		{
+			bool thrown = false;
+			try{
+				Region myRegion1 = Region("12345678"); //input string is too short
+			}
+			catch (invalid_argument& e){
+				thrown = true;
+			}
+			Assert::IsTrue(thrown);
 		}
 
 		TEST_METHOD(LastCellFinderWithHolderAccessors)
 		{
 			vector<string> stringInput = vector<string>(9);
 			stringInput[0] = "1234-6789";
-			for (int i = 1; i < 9; i++)
+			for (unsigned char i = 1; i < 9; i++)
 			{
 				stringInput[i] = "123456789";
 			}
-
 			Grid grid1 = Grid(stringInput);
-
-			RegionHolder regHold = RegionHolder(grid1.Get_rNW());
-
+			RegionHolder regHold = RegionHolder(grid1.GetRegion(0, 0));
 			RowHolder topRow1 = regHold.TopRow();
 			RowHolder middleRow1 = regHold.MiddleRow();
 			RowHolder bottomRow1 = regHold.BottomRow();
 
 			LastCellFinder last = LastCellFinder(topRow1, middleRow1, bottomRow1);
-			Assert::AreEqual(-1 , grid1.Get_rNW().Get_cC().GetValue());
-			last.fill();
-			Assert::AreEqual(5, grid1.Get_rNW().Get_cC().GetValue());
+			Assert::AreEqual(-1 , grid1.GetRegion(0, 0).GetCell(1, 1).GetValue());
+			bool visited = last.fill();
+			Assert::IsTrue(visited);
+			Assert::AreEqual(5, grid1.GetRegion(0, 0).GetCell(1, 1).GetValue());
 		}
 
 		TEST_METHOD(LastCellFinderWithHolderCells)
 		{
-
-
 			vector<string> stringInput = vector<string>(9);
 			stringInput[0] = "1234-6789";
-			for (int i = 1; i < 9; i++)
+			for (unsigned char i = 1; i < 9; i++)
 			{
 				stringInput[i] = "123456789";
 			}
-
 			Grid grid1 = Grid(stringInput);
-			//Here's the different part
-			TripleHolder topRow1 = TripleHolder(grid1.Get_rNW().Get_cNW(), grid1.Get_rNW().Get_cN(), grid1.Get_rNW().Get_cNE());
-			TripleHolder middleRow1 = TripleHolder(grid1.Get_rNW().Get_cW(), grid1.Get_rNW().Get_cC(), grid1.Get_rNW().Get_cE());
-			TripleHolder bottomRow1 = TripleHolder(grid1.Get_rNW().Get_cSW(), grid1.Get_rNW().Get_cS(), grid1.Get_rNW().Get_cSE());
+			//Here's the different part compared to LastCellFinderWithHolderAccessors
+			TripleHolder topRow1 = TripleHolder(grid1.GetRegion(0, 0).GetCell(0, 0), grid1.GetRegion(0, 0).GetCell(0, 1), grid1.GetRegion(0, 0).GetCell(0, 2));
+			TripleHolder middleRow1 = TripleHolder(grid1.GetRegion(0, 0).GetCell(1, 0), grid1.GetRegion(0, 0).GetCell(1, 1), grid1.GetRegion(0, 0).GetCell(1, 2));
+			TripleHolder bottomRow1 = TripleHolder(grid1.GetRegion(0, 0).GetCell(2, 0), grid1.GetRegion(0, 0).GetCell(2, 1), grid1.GetRegion(0, 0).GetCell(2, 2));
 
 			LastCellFinder lastCF = LastCellFinder(topRow1, middleRow1, bottomRow1);
-			Assert::AreEqual(-1, grid1.Get_rNW().Get_cC().GetValue());
-			lastCF.fill();
-			Assert::AreEqual(5, grid1.Get_rNW().Get_cC().GetValue());
+			Assert::AreEqual(-1, grid1.GetRegion(0, 0).GetCell(1, 1).GetValue());
+			bool visited = lastCF.fill();
+			Assert::IsTrue(visited);
+			Assert::AreEqual(5, grid1.GetRegion(0, 0).GetCell(1, 1).GetValue());
 		}
 
 		TEST_METHOD(OnlyOneChoiceRow1)
@@ -93,39 +151,36 @@ namespace SudokuUnitTest
 			vector<string> stringInput = vector<string>(9);
 		    /*grid:
 			-23456789
-			123456789
+			---------
 			etc
-			First row should be filled
+			First cell should be filled with a 1 by OnlyOneChoiceInRowVisitor
 			*/
-
-			stringInput[0] = "-23123123";
-			stringInput[1] = "456456456";
-			stringInput[2] = "789789789";
-			for (int i = 3; i < 9; i++)
+			stringInput[0] = "-23------";
+			stringInput[1] = "456------";
+			stringInput[2] = "789------";
+			for (unsigned char i = 3; i < 9; i++)
 			{
-				stringInput[i] = "123456789";
+				stringInput[i] = "---------"; 			//we don't care about the rest
+
 			}
+			Grid grid = Grid(stringInput);
+			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(0, 0).GetValue());
 
 			OnlyOneChoiceInRowVisitor visitor = OnlyOneChoiceInRowVisitor();
-			Grid grid = Grid(stringInput);
-			Assert::AreEqual(-1, grid.Get_rNW().Get_cNW().GetValue());
-			bool filled = grid.Accept(visitor);
-			//First cell of grid should have been filled with a 1
-			Assert::IsTrue(filled);
-			Assert::AreEqual(1, grid.Get_rNW().Get_cNW().GetValue());
+			bool visited = grid.Accept(visitor);
+			Assert::IsTrue(visited);
+			Assert::AreEqual(1, grid.GetRegion(0, 0).GetCell(0, 0).GetValue());
 		}
 
 		TEST_METHOD(OnlyOneChoiceRow2)
 		{
 			vector<string> stringInput = vector<string>(9);
 			/*grid:
-			-23456789
-			-23456789
-			etc
+			Rows : -23456789
 			First column should be filled with ones
 			*/
 
-			for (int i = 0; i < 3; i++)
+			for (unsigned char i = 0; i < 3; i++)
 			{
 				stringInput[0+3*i] = "-23-23-23";
 				stringInput[1+3*i] = "456456456";
@@ -134,111 +189,736 @@ namespace SudokuUnitTest
 
 			OnlyOneChoiceInRowVisitor visitor = OnlyOneChoiceInRowVisitor();
 			Grid grid = Grid(stringInput);
-			Assert::AreEqual(-1, grid.Get_rNW().Get_cNW().GetValue());
-			Assert::AreEqual(-1, grid.Get_rNW().Get_cW().GetValue());
-			Assert::AreEqual(-1, grid.Get_rNW().Get_cSW().GetValue());
-			Assert::AreEqual(-1, grid.Get_rW().Get_cNW().GetValue());
-			Assert::AreEqual(-1, grid.Get_rW().Get_cW().GetValue());
-			Assert::AreEqual(-1, grid.Get_rW().Get_cSW().GetValue());
-			Assert::AreEqual(-1, grid.Get_rSW().Get_cNW().GetValue());
-			Assert::AreEqual(-1, grid.Get_rSW().Get_cW().GetValue());
-			Assert::AreEqual(-1, grid.Get_rSW().Get_cSW().GetValue());
-			bool filled = grid.Accept(visitor);
-			Assert::IsTrue(filled);
+			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(0, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(1, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(1, 0).GetCell(0, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(1, 0).GetCell(1, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(1, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(2, 0).GetCell(0, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(2, 0).GetCell(1, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(2, 0).GetCell(2, 0).GetValue());
+			bool visited = grid.Accept(visitor);
+			Assert::IsTrue(visited);
 
 			//First column of grid should have been filled with 1s
-			Assert::AreEqual(1, grid.Get_rNW().Get_cNW().GetValue());
-			Assert::AreEqual(1, grid.Get_rNW().Get_cW().GetValue());
-			Assert::AreEqual(1, grid.Get_rNW().Get_cSW().GetValue());
-			Assert::AreEqual(1, grid.Get_rW().Get_cNW().GetValue());
-			Assert::AreEqual(1, grid.Get_rW().Get_cW().GetValue());
-			Assert::AreEqual(1, grid.Get_rW().Get_cSW().GetValue());
-			Assert::AreEqual(1, grid.Get_rSW().Get_cNW().GetValue());
-			Assert::AreEqual(1, grid.Get_rSW().Get_cW().GetValue());
-			Assert::AreEqual(1, grid.Get_rSW().Get_cSW().GetValue());
+			Assert::AreEqual(1, grid.GetRegion(0, 0).GetCell(0, 0).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(0, 0).GetCell(1, 0).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(0, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(1, 0).GetCell(0, 0).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(1, 0).GetCell(1, 0).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(1, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(2, 0).GetCell(0, 0).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(2, 0).GetCell(1, 0).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(2, 0).GetCell(2, 0).GetValue());
 		}
 
-		TEST_METHOD(OnlyOneChoiceColumn1)
+		TEST_METHOD(OnlyOneChoiceColumn)
 		{
 			vector<string> stringInput = vector<string>(9);
 			/*grid:
-			-11111111
-			222222222
-			333333333
-			etc
-			999999999
-			First row should be filled
+			Columns : -23456789
+			First row should be filled with ones
 			*/
+			stringInput[0] = "---222333";
+			stringInput[1] = "---222333";
+			stringInput[2] = "---222333";
+			stringInput[3] = "444555666";
+			stringInput[4] = "444555666";
+			stringInput[5] = "444555666";
+			stringInput[6] = "777888999";
+			stringInput[7] = "777888999";
+			stringInput[8] = "777888999";
 
-			stringInput[0] = "-11222333";
-			stringInput[1] = "111222333";
-			stringInput[2] = "111222333";
+			OnlyOneChoiceInColumnVisitor visitor;
+			Grid grid = Grid(stringInput);
+			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(0, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(0, 1).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(0, 2).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(0, 1).GetCell(0, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(0, 1).GetCell(0, 1).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(0, 1).GetCell(0, 2).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(0, 2).GetCell(0, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(0, 2).GetCell(0, 1).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(0, 2).GetCell(0, 2).GetValue());
+			bool visited = grid.Accept(visitor);
+			Assert::IsTrue(visited);
 
-			for (int i = 3; i < 6; i++)
+			//First column of grid should have been filled with 1s
+			Assert::AreEqual(1, grid.GetRegion(0, 0).GetCell(0, 0).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(0, 0).GetCell(0, 1).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(0, 0).GetCell(0, 2).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(0, 1).GetCell(0, 0).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(0, 1).GetCell(0, 1).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(0, 1).GetCell(0, 2).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(0, 2).GetCell(0, 0).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(0, 2).GetCell(0, 1).GetValue());
+			Assert::AreEqual(1, grid.GetRegion(0, 2).GetCell(0, 2).GetValue());
+		}
+
+		TEST_METHOD(OnlyOneChoiceRegion)
+		{
+			vector<string> stringInput = vector<string>(9);
+			/*grid:
+			Regions : 123456-89
+			7th cells should be filled with 7s
+			*/
+			for (unsigned char i = 0; i < 9; i++)
 			{
-				stringInput[i] = "444555666";
-				stringInput[i + 3] = "777888999";
+				stringInput[i] = "123456-89";
 			}
 
-			Assert::AreEqual(1, 1);
-			//Here we vist the grid column by column
-			OnlyOneChoiceInColumnVisitor visitor = OnlyOneChoiceInColumnVisitor();
+			OnlyOneChoiceInRegionVisitor visitor;
 			Grid grid = Grid(stringInput);
+			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(0, 1).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(0, 2).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(1, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(1, 1).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(1, 2).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(2, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(2, 1).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(2, 2).GetCell(2, 0).GetValue());
+			bool visited = grid.Accept(visitor);
+			Assert::IsTrue(visited);
 
-
-			Assert::AreEqual(-1, grid.Get_rNW().Get_cNW().GetValue());
-			bool filled = grid.Accept(visitor);
-			//First cell of grid should have been filled with a 1
-			Assert::IsTrue(filled);
-			Assert::AreEqual(1, grid.Get_rNW().Get_cNW().GetValue());
+			//Cells should have been filled with 7s
+			Assert::AreEqual(7, grid.GetRegion(0, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(0, 1).GetCell(2, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(0, 2).GetCell(2, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(1, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(1, 1).GetCell(2, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(1, 2).GetCell(2, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(2, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(2, 1).GetCell(2, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(2, 2).GetCell(2, 0).GetValue());
 		}
 
-		TEST_METHOD(OnlyOneChoiceColumn2)
+		TEST_METHOD(NineHolderForGrid)
 		{
 			vector<string> stringInput = vector<string>(9);
 			/*grid:
+			3 first rows: 123456789
+			*/
+
+			stringInput[0] = "123123123";
+			stringInput[1] = "456456456";
+			stringInput[2] = "789789789";
+			for (unsigned char i = 3; i < 9; i++)
+			{
+				stringInput[i] = "123456789";
+			}
+			Grid grid = Grid(stringInput);
+			NineHolder nh = grid.GetRow(0);
+			for (unsigned char i = 0; i < 9; i++){
+				Assert::AreEqual(i + 1, nh.GetCell(i).GetValue());
+			}
+		}
+
+		TEST_METHOD(NineHolderIsValuePresent)
+		{
+			vector<string> stringInput = vector<string>(9);
+			/*grid:
+			First row: 157------
+			*/
+
+			stringInput[0] = "157123123";
+			stringInput[1] = "---456456";
+			stringInput[2] = "---789789";
+			for (unsigned char i = 3; i < 9; i++)
+			{
+				stringInput[i] = "123456789";
+			}
+			Grid grid = Grid(stringInput);
+			NineHolder nh = grid.GetRow(0);
+			Assert::IsTrue(nh.isValuePresent(1));
+			Assert::IsTrue(nh.isValuePresent(5));
+			Assert::IsTrue(nh.isValuePresent(7));
+			Assert::IsFalse(nh.isValuePresent(2));
+			Assert::IsFalse(nh.isValuePresent(3));
+			Assert::IsFalse(nh.isValuePresent(4));
+			Assert::IsFalse(nh.isValuePresent(6));
+			Assert::IsFalse(nh.isValuePresent(8));
+			Assert::IsFalse(nh.isValuePresent(9));
+		}
+
+		TEST_METHOD(OnlySquareOnRowNoRegion)
+		{
+			vector<string> stringInput = vector<string>(9);
+			// grid taken from SudokuDragon tutorial for OnlySquare
+			stringInput[0] = "2619-87--";
+			stringInput[1] = "495176832";
+			stringInput[2] = "873-45--6";
+			stringInput[3] = "12638-4--";
+			stringInput[4] = "987654321";
+			stringInput[5] = "--4-27689";
+			stringInput[6] = "5--69-873";
+			stringInput[7] = "763518249";
+			stringInput[8] = "--87-2561";
+
+			Grid grid = Grid(stringInput);
+			OnlySquareVisitor visitor;
+			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(1, 1).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(0, 2).GetCell(1, 0).GetValue());
+			bool visited = grid.Accept(visitor);
+			Assert::IsTrue(visited);
+			Assert::AreEqual(3, grid.GetRegion(0, 0).GetCell(1, 1).GetValue());
+			Assert::AreEqual(2, grid.GetRegion(0, 2).GetCell(1, 0).GetValue());
+		}
+
+		TEST_METHOD(OnlySquareOnColumnNoRegion)
+		{
+			vector<string> stringInput = vector<string>(9);
+			// grid is the previous one transposed
+			stringInput[0] = "2976--18-";
+			stringInput[1] = "13428-6--";
+			stringInput[2] = "568-97--3";
+			stringInput[3] = "418973562";
+			stringInput[4] = "963852741";
+			stringInput[5] = "752614389";
+			stringInput[6] = "8--74-356";
+			stringInput[7] = "--6-28479";
+			stringInput[8] = "-75--6821";
+
+			Grid grid = Grid(stringInput);
+			OnlySquareVisitor visitor;
+			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(1, 1).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(2, 0).GetCell(0, 1).GetValue());
+			bool visited = grid.Accept(visitor);
+			Assert::IsTrue(visited);
+			Assert::AreEqual(3, grid.GetRegion(0, 0).GetCell(1, 1).GetValue());
+			Assert::AreEqual(2, grid.GetRegion(2, 0).GetCell(0, 1).GetValue());
+		}
+
+
+		TEST_METHOD(OnlySquareOnRow2)
+		{
+			vector<string> stringInput = vector<string>(9);
+			// grid taken from SudokuDragon: http://www.sudokudragon.com/tutorialgentle2.htm
+			stringInput[0] = "38-6-5-1-";
+			stringInput[1] = "-96---345";
+			stringInput[2] = "---1--6--";
+			stringInput[3] = "5-8-26-9-";
+			stringInput[4] = "---587---";
+			stringInput[5] = "-1-93-8-5";
+			stringInput[6] = "--1--4---";
+			stringInput[7] = "754---96-";
+			stringInput[8] = "-8-7-2-51";
+
+			Grid grid = Grid(stringInput);
+			OnlySquareVisitor visitor;
+			Assert::AreEqual(-1, grid.GetRegion(1, 0).GetCell(1, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(1, 2).GetCell(1, 2).GetValue());
+			bool visited = grid.Accept(visitor);
+			Assert::IsTrue(visited);
+			Assert::AreEqual(1, grid.GetRegion(1, 0).GetCell(1, 0).GetValue());
+			Assert::AreEqual(4, grid.GetRegion(1, 2).GetCell(1, 2).GetValue());
+		}
+
+
+		TEST_METHOD(OnlySquareRegion)
+		{
+			vector<string> stringInput = vector<string>(9);
+			// grid taken from SudokuDragon tutorial for OnlySquare
+			stringInput[0] = "2619-87--";
+			stringInput[1] = "495176832";
+			stringInput[2] = "873-45--6";
+			stringInput[3] = "1-638-4-7";
+			stringInput[4] = "987654321";
+			stringInput[5] = "--4-27689";
+			stringInput[6] = "5--69-873";
+			stringInput[7] = "763518249";
+			stringInput[8] = "--87-2561";
+
+			Grid grid = Grid(stringInput);
+			OnlySquareVisitor visitor;
+			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(1, 1).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(0, 2).GetCell(1, 0).GetValue());
+			bool visited = grid.Accept(visitor);
+			Assert::IsTrue(visited);
+			Assert::AreEqual(3, grid.GetRegion(0, 0).GetCell(1, 1).GetValue());
+			Assert::AreEqual(2, grid.GetRegion(0, 2).GetCell(1, 0).GetValue());
+		}
+
+		TEST_METHOD(TwoOutOfThreeRows)
+		{
+			vector<string> stringInput = vector<string>(9);
+			
+			stringInput[0] = "----6-9--";
+			stringInput[1] = "17----4-8";
+			stringInput[2] = "---81---2";
+			stringInput[3] = "--1------";
+			stringInput[4] = "---------";
+			stringInput[5] = "---------";
+			stringInput[6] = "---------";
+			stringInput[7] = "---------";
+			stringInput[8] = "---------";
+
+			Grid grid = Grid(stringInput);
+			TwoOutOfThreeRowVisitor visitor;
+			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(2, 1).GetValue());
+			bool visited = grid.Accept(visitor);
+			Assert::IsTrue(visited);
+			Assert::AreEqual(1, grid.GetRegion(0, 0).GetCell(2, 1).GetValue());
+		}
+
+		TEST_METHOD(TwoOutOfThreeColumns)
+		{
+			vector<string> stringInput = vector<string>(9);
+			/*Grid:
+			4--------
+			---5-----
+			---Y-----    Y must be filled with a 4
+			----4----
 			---------
-			888888888
-			777777777
-			etc
-			...
-			111111111
-			First row should be filled
+			---------
+			---------
+			-----4---
+			---------
 			*/
+			stringInput[0] = "4--------";
+			stringInput[1] = "---5-----";
+			stringInput[2] = "---------";
+			stringInput[3] = "---------";
+			stringInput[4] = "-4-------";
+			stringInput[5] = "---------";
+			stringInput[6] = "---------";
+			stringInput[7] = "-----4---";
+			stringInput[8] = "---------";
 
-			for (int i = 3; i < 9; i++)
-			{
-				stringInput[3*i] = "---888777";
-				stringInput[3 * i+1] = "666555444";
-				stringInput[3 * i + 1] = "333222111";
-			}
-
-			OnlyOneChoiceInColumnVisitor visitor = OnlyOneChoiceInColumnVisitor();
 			Grid grid = Grid(stringInput);
-			Assert::AreEqual(-1, grid.Get_rNW().Get_cNW().GetValue());
-			Assert::AreEqual(-1, grid.Get_rNW().Get_cN().GetValue());
-			Assert::AreEqual(-1, grid.Get_rNW().Get_cNE().GetValue());		
-			Assert::AreEqual(-1, grid.Get_rN().Get_cNW().GetValue());
-			Assert::AreEqual(-1, grid.Get_rN().Get_cN().GetValue());
-			Assert::AreEqual(-1, grid.Get_rN().Get_cNE().GetValue());			
-			Assert::AreEqual(-1, grid.Get_rNE().Get_cNW().GetValue());
-			Assert::AreEqual(-1, grid.Get_rNE().Get_cN().GetValue());
-			Assert::AreEqual(-1, grid.Get_rNE().Get_cNE().GetValue());
-
-
-			bool filled = grid.Accept(visitor);
-			//First row of grid should have been filled with 9
-			Assert::IsTrue(filled);
-			Assert::AreEqual(9, grid.Get_rNW().Get_cNW().GetValue());
-			Assert::AreEqual(9, grid.Get_rNW().Get_cN().GetValue());
-			Assert::AreEqual(9, grid.Get_rNW().Get_cNE().GetValue());
-			Assert::AreEqual(9, grid.Get_rN().Get_cNW().GetValue());
-			Assert::AreEqual(9, grid.Get_rN().Get_cN().GetValue());
-			Assert::AreEqual(9, grid.Get_rN().Get_cNE().GetValue());
-			Assert::AreEqual(9, grid.Get_rNE().Get_cNW().GetValue());
-			Assert::AreEqual(9, grid.Get_rNE().Get_cN().GetValue());
-			Assert::AreEqual(9, grid.Get_rNE().Get_cNE().GetValue());
+			TwoOutOfThreeColumnVisitor visitor;
+			Assert::AreEqual(-1, grid.GetRegion(0, 1).GetCell(2, 0).GetValue());
+			bool visited = grid.Accept(visitor);
+			Assert::IsTrue(visited);
+			Assert::AreEqual(4, grid.GetRegion(0, 1).GetCell(2, 0).GetValue());
 		}
 
+
+		TEST_METHOD(RowColumnRegionVis)
+		{
+			vector<string> stringInput = vector<string>(9);
+			//grid taken from http://www.sudokudragon.com/tutorialgentle2.htm
+			stringInput[0] = "38-6-5-1-";
+			stringInput[1] = "-96-7-345"; //I added the 7 here
+			stringInput[2] = "---1--6--";
+			stringInput[3] = "5-8-26-9-";
+			stringInput[4] = "---587---";
+			stringInput[5] = "-1-93-8-5";
+			stringInput[6] = "--1--4---";
+			stringInput[7] = "754---96-";
+			stringInput[8] = "-8-7-2-51";
+
+			Grid grid = Grid(stringInput);
+			RowColumnRegionVisitor visitor;
+			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(1, 1).GetValue());
+			bool visited = grid.Accept(visitor);
+			Assert::IsTrue(visited);
+			Assert::AreEqual(4, grid.GetRegion(0, 0).GetCell(1, 1).GetValue());
+		}
+
+		TEST_METHOD(NineHolderRowConsistent)
+		{
+			vector<string> stringInput = vector<string>(9);
+			/*grid:
+			3 first rows: 123456789
+			Then, not consistent
+			*/
+
+			stringInput[0] = "123123123";
+			stringInput[1] = "456456456";
+			stringInput[2] = "789789789";
+			for (unsigned char i = 3; i < 9; i++)
+			{
+				stringInput[i] = "123456789";
+			}
+			Grid grid = Grid(stringInput);
+			NineHolder firstRow = grid.GetRow(0);
+			NineHolder fourthRow = grid.GetRow(3);
+			Assert::IsTrue(firstRow.isConsistent());
+			Assert::IsFalse(fourthRow.isConsistent());
+		}
+
+		TEST_METHOD(RegionHolderConsistent)
+		{
+			vector<string> stringInput = vector<string>(9);
+			/*grid:
+			3 first regions not consistent
+			Then, 123456789
+			*/
+
+			stringInput[0] = "123123123";
+			stringInput[1] = "456456456";
+			stringInput[2] = "789789789";
+			for (unsigned char i = 3; i < 9; i++)
+			{
+				stringInput[i] = "123456789";
+			}
+			Grid grid = Grid(stringInput);
+			RegionHolder firstReg = grid.GetRegion(0, 0);
+			RegionHolder secondReg = grid.GetRegion(1, 2);
+			Assert::IsFalse(firstReg.isConsistent());
+			Assert::IsTrue(secondReg.isConsistent());
+		}
+
+		TEST_METHOD(GridNotConsistent)
+		{
+			vector<string> stringInput = vector<string>(9);
+			/*grid:
+			3 first regions not consistent
+			Then, 123456789
+			*/
+
+			stringInput[0] = "123123123";
+			stringInput[1] = "456456456";
+			stringInput[2] = "789789789";
+			for (unsigned char i = 3; i < 9; i++)
+			{
+				stringInput[i] = "123456789";
+			}
+			Grid grid = Grid(stringInput);
+			Assert::IsFalse(grid.isConsistent());
+		}
+
+		TEST_METHOD(FullGridConsistent)
+		{
+			vector<string> stringInput = vector<string>(9);
+			// grid correctly filled
+			stringInput[0] = "418526379";
+			stringInput[1] = "592347681";
+			stringInput[2] = "673981452";
+			stringInput[3] = "782963154";
+			stringInput[4] = "416725938";
+			stringInput[5] = "395148726";
+			stringInput[6] = "247891635";
+			stringInput[7] = "153264879";
+			stringInput[8] = "869537214";
+
+			Grid grid = Grid(stringInput);
+			Assert::IsTrue(grid.isConsistent());
+		}
+
+		TEST_METHOD(FullGridNotConsistent)
+		{
+			vector<string> stringInput = vector<string>(9);
+			// grid not correctly filled (two 4s in region 6)
+			stringInput[0] = "418526379";
+			stringInput[1] = "592347681";
+			stringInput[2] = "673981452";
+			stringInput[3] = "782963154";
+			stringInput[4] = "416725938";
+			stringInput[5] = "395148726";
+			stringInput[6] = "247894635";
+			stringInput[7] = "153264879";
+			stringInput[8] = "869537214";
+
+			Grid grid = Grid(stringInput);
+			Assert::IsFalse(grid.isConsistent());
+		}
+
+		TEST_METHOD(HolderConsistentWithEmptyCells)
+		{
+			vector<string> stringInput = vector<string>(9);
+			stringInput[0] = "41-5263-9";
+			stringInput[1] = "592347681";
+			stringInput[2] = "673981452";
+			stringInput[3] = "78296-154";
+			stringInput[4] = "416725938";
+			stringInput[5] = "39-148726";
+			stringInput[6] = "247891635";
+			stringInput[7] = "15--64879";
+			stringInput[8] = "-6953-14-";
+
+			Grid grid = Grid(stringInput);
+			NineHolder fullRow = grid.GetRow(0);
+			RegionHolder fullReg = grid.GetRegion(2, 1);
+			Assert::IsTrue(fullRow.isConsistent());
+			Assert::IsTrue(fullReg.isConsistent());
+		}
+
+		TEST_METHOD(GridConsistentWithEmptyCells)
+		{
+			vector<string> stringInput = vector<string>(9);
+			stringInput[0] = "41-526379";
+			stringInput[1] = "59-347681";
+			stringInput[2] = "67-981452";
+			stringInput[3] = "7829--154";
+			stringInput[4] = "416-25938";
+			stringInput[5] = "395148726";
+			stringInput[6] = "247-91635";
+			stringInput[7] = "15326--79";
+			stringInput[8] = "86953721-";
+
+			Grid grid = Grid(stringInput);
+			Assert::IsTrue(grid.isConsistent());
+		}
+
+		TEST_METHOD(GridIsFull1)
+		{
+			vector<string> stringInput = vector<string>(9);
+			// grid fully filled
+
+			stringInput[0] = "418526379";
+			stringInput[1] = "592347681";
+			stringInput[2] = "673981452";
+			stringInput[3] = "782963154";
+			stringInput[4] = "416725938";
+			stringInput[5] = "395148726";
+			stringInput[6] = "247891635";
+			stringInput[7] = "153264879";
+			stringInput[8] = "869537214";
+
+			Grid grid = Grid(stringInput);
+			Assert::IsTrue(grid.isFull());
+		}
+
+		TEST_METHOD(GridIsFull2)
+		{
+			vector<string> stringInput = vector<string>(9);
+			// grid not fully filled
+			stringInput[0] = "418526379";
+			stringInput[1] = "592347681";
+			stringInput[2] = "673981452";
+			stringInput[3] = "782963154";
+			stringInput[4] = "416725938";
+			stringInput[5] = "395148726";
+			stringInput[6] = "247891635";
+			stringInput[7] = "153264879";
+			stringInput[8] = "86953721-";
+
+			Grid grid = Grid(stringInput);
+			Assert::IsFalse(grid.isFull());
+		}
+
+		TEST_METHOD(OnlyOneChoiceGlobal)
+		{
+			vector<string> stringInput = vector<string>(9);
+			/*grid:
+			Regions : 123456-89
+			7th cell should be filled with 7s
+			*/
+			for (unsigned char i = 0; i < 9; i++)
+			{
+				stringInput[i] = "123456-89";
+			}
+
+			OnlyOneChoiceGlobalVisitor visitor;
+			Grid grid = Grid(stringInput);
+			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(0, 1).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(0, 2).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(1, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(1, 1).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(1, 2).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(2, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(2, 1).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.GetRegion(2, 2).GetCell(2, 0).GetValue());
+			bool visited = grid.Accept(visitor);
+			Assert::IsTrue(visited);
+
+			//Cells should have been filled with 7s
+			Assert::AreEqual(7, grid.GetRegion(0, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(0, 1).GetCell(2, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(0, 2).GetCell(2, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(1, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(1, 1).GetCell(2, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(1, 2).GetCell(2, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(2, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(2, 1).GetCell(2, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(2, 2).GetCell(2, 0).GetValue());
+		}
+
+		TEST_METHOD(SolveEasyGrid1)
+		{
+			vector<string> stringInput = vector<string>(9);
+			// one empty cell per region
+			stringInput[0] = "418-26379";
+			stringInput[1] = "59234-681";
+			stringInput[2] = "-73981452";
+			stringInput[3] = "-82963154";
+			stringInput[4] = "41672593-";
+			stringInput[5] = "39514-726";
+			stringInput[6] = "24-891635";
+			stringInput[7] = "1532-4879";
+			stringInput[8] = "86953721-";
+
+			Grid grid = Grid(stringInput);
+			grid.SolveWithEasyStrategies();
+			Assert::AreEqual(5, grid.GetRegion(0, 0).GetCell(1, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(0, 1).GetCell(1, 2).GetValue());
+			Assert::AreEqual(6, grid.GetRegion(0, 2).GetCell(0, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(1, 0).GetCell(0, 0).GetValue());
+			Assert::AreEqual(8, grid.GetRegion(1, 1).GetCell(2, 2).GetValue());
+			Assert::AreEqual(8, grid.GetRegion(1, 2).GetCell(1, 2).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(2, 0).GetCell(0, 2).GetValue());
+			Assert::AreEqual(6, grid.GetRegion(2, 1).GetCell(1, 1).GetValue());
+			Assert::AreEqual(4, grid.GetRegion(2, 2).GetCell(2, 2).GetValue());
+		}
+
+		TEST_METHOD(SolveEasyGrid2)
+		{
+			vector<string> stringInput = vector<string>(9);
+
+			stringInput[0] = "418-26379";
+			stringInput[1] = "59-34-681";
+			stringInput[2] = "-73981452";
+			stringInput[3] = "-82963154";
+			stringInput[4] = "4167259--";
+			stringInput[5] = "39514-726";
+			stringInput[6] = "24-891635";
+			stringInput[7] = "1532-4879";
+			stringInput[8] = "-6953721-";
+
+			Grid grid = Grid(stringInput);
+			grid.SolveWithEasyStrategies();
+			Assert::AreEqual(5, grid.GetRegion(0, 0).GetCell(1, 0).GetValue());
+			Assert::AreEqual(2, grid.GetRegion(0, 1).GetCell(0, 2).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(0, 1).GetCell(1, 2).GetValue());
+			Assert::AreEqual(6, grid.GetRegion(0, 2).GetCell(0, 0).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(1, 0).GetCell(0, 0).GetValue());
+			Assert::AreEqual(8, grid.GetRegion(1, 1).GetCell(2, 2).GetValue());
+			Assert::AreEqual(3, grid.GetRegion(1, 1).GetCell(2, 1).GetValue());
+			Assert::AreEqual(8, grid.GetRegion(1, 2).GetCell(1, 2).GetValue());
+			Assert::AreEqual(7, grid.GetRegion(2, 0).GetCell(0, 2).GetValue());
+			Assert::AreEqual(6, grid.GetRegion(2, 1).GetCell(1, 1).GetValue());
+			Assert::AreEqual(4, grid.GetRegion(2, 2).GetCell(2, 2).GetValue());
+			Assert::AreEqual(8, grid.GetRegion(2, 2).GetCell(0, 0).GetValue());
+		}
+
+
+		TEST_METHOD(SolveMediumGridPart3)
+		{
+			vector<string> stringInput = vector<string>(9);
+			// grid taken from assignment
+			stringInput[0] = "-----6--9";
+			stringInput[1] = "--23----1";
+			stringInput[2] = "6-3--1-52";
+			stringInput[3] = "782----5-";
+			stringInput[4] = "---------";
+			stringInput[5] = "-9----726";
+			stringInput[6] = "24-8--6-5";
+			stringInput[7] = "1----48--";
+			stringInput[8] = "8--5-----";
+
+			Grid grid = Grid(stringInput);
+			grid.SolveWithEasyStrategies();
+			Assert::IsTrue(grid.isFull());
+			Assert::IsTrue(grid.isConsistent());
+		}
+
+
+		TEST_METHOD(SolveMediumGridPart3_corrected)
+		{
+			vector<string> stringInput = vector<string>(9);
+			//grid taken from http://www.sudokudragon.com/tutorialgentle2.htm
+			stringInput[0] = "38-6-5-1-";
+			stringInput[1] = "-96---345";
+			stringInput[2] = "---1--6--";
+			stringInput[3] = "5-8-26-9-";
+			stringInput[4] = "---587---";
+			stringInput[5] = "-1-93-8-5";
+			stringInput[6] = "--1--4---";
+			stringInput[7] = "754---96-";
+			stringInput[8] = "-8-7-2-51";
+
+			Grid grid = Grid(stringInput);
+			grid.SolveWithEasyStrategies();
+			Assert::IsTrue(grid.isFull());
+			Assert::IsTrue(grid.isConsistent());
+		}
+
+		TEST_METHOD(GetPossibleValuesForACell)
+		{
+			vector<string> stringInput = vector<string>(9);
+			stringInput[0] = "8-5-3-4-6";
+			stringInput[1] = "---9---3-";
+			stringInput[2] = "-3-------";
+			stringInput[3] = "6---5---9";
+			stringInput[4] = "-1-3-8-4-";
+			stringInput[5] = "9---7---1";
+			stringInput[6] = "-------7-";
+			stringInput[7] = "-2---9---";
+			stringInput[8] = "3-8-2-5-4";
+
+			Grid grid = Grid(stringInput);
+			set<unsigned char> possibleVal = grid.getPossibleValues(0, 4);
+			int nbPossVal = possibleVal.size();
+			set<unsigned char>::iterator iter = possibleVal.begin();
+			int firstValue = *iter;
+			iter++;
+			int secondValue = *iter;
+			Assert::AreEqual(2, nbPossVal);
+			Assert::AreEqual(6, firstValue);
+			Assert::AreEqual(7,secondValue);
+		}
+
+		TEST_METHOD(GetIndicesCellWithLessChoices)
+		{
+			vector<string> stringInput = vector<string>(9);
+			stringInput[0] = "8-5-3-4-6";
+			stringInput[1] = "---9---3-";
+			stringInput[2] = "-3-------";
+			stringInput[3] = "6---5---9";
+			stringInput[4] = "-1-3-8-4-";
+			stringInput[5] = "9---7---1";
+			stringInput[6] = "-------7-";
+			stringInput[7] = "-2---9---";
+			stringInput[8] = "3-8-2-5-4";
+
+			Grid grid = Grid(stringInput);
+			vector<unsigned char> bestIndices = grid.getIndicesCellWithLessChoices();
+			int rowIdx = bestIndices[0];
+			int colIdx = bestIndices[1];
+			Assert::AreEqual(0, rowIdx);
+			Assert::AreEqual(4, colIdx);
+		}
+
+		TEST_METHOD(SolveDiabolicalGridPart4_1)
+		{
+			vector<string> stringInput = vector<string>(9);
+			//own grid such that easy strategies do not work, but ok with hypothesis
+			stringInput[0] = "8-5-3-4-6";
+			stringInput[1] = "---9---3-";
+			stringInput[2] = "-3-------";
+			stringInput[3] = "6---5---9";
+			stringInput[4] = "-1-3-8-4-";
+			stringInput[5] = "9---7---1";
+			stringInput[6] = "-------7-";
+			stringInput[7] = "-2---9---";
+			stringInput[8] = "3-8-2-5-4";
+
+			Grid grid = Grid(stringInput);
+			grid.SolveWithEasyStrategies();
+			Assert::IsFalse(grid.isFull()); //grid too complicated without hypothesis
+			Assert::IsTrue(grid.isConsistent());
+			grid.Solve();
+			Assert::IsTrue(grid.isFull());
+			Assert::IsTrue(grid.isConsistent());
+		}
+
+
+		TEST_METHOD(SolveDiabolicalGridPart4)
+		{
+			vector<string> stringInput = vector<string>(9);
+			//Grid taken from subject
+			stringInput[0] = "-54--16--";
+			stringInput[1] = "-7--9-5--";
+			stringInput[2] = "---3--2--";
+			stringInput[3] = "---------";
+			stringInput[4] = "36---84--";
+			stringInput[5] = "1-46---3-";
+			stringInput[6] = "-8--36--5";
+			stringInput[7] = "9-----2--";
+			stringInput[8] = "--6--14--";
+
+			Grid grid = Grid(stringInput);
+			grid.SolveWithEasyStrategies();
+			Assert::IsFalse(grid.isFull()); //grid too complicated without hypothesis
+			Assert::IsTrue(grid.isConsistent());
+			//grid.Solve();
+			//This grid is in fact NOT solvable, even with assumptions.
+			//Assert::IsTrue(grid.isConsistent());
+			//Assert::IsTrue(grid.isFull());
+		}
 	};
 }

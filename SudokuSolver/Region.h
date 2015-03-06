@@ -9,7 +9,6 @@
 #include "Cell.h"
 #include <string>
 #include <vector>
-#include <memory>
 using namespace std;
 
 class ExportedByDll Region
@@ -19,16 +18,9 @@ public:
 	Region();
 	~Region();
 	Region& operator=(const Region& r);
-	bool IsFull();
-	Cell& Get_cNW();
-	Cell& Get_cN();
-	Cell& Get_cNE();
-	Cell& Get_cW();
-	Cell& Get_cC();
-	Cell& Get_cE();
-	Cell& Get_cSW();
-	Cell& Get_cS();
-	Cell& Get_cSE();
+	bool isFull();
+	Cell& GetCell(unsigned char i, unsigned char j);
+
 
 private:
 	Cell _cNW;

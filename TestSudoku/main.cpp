@@ -2,75 +2,71 @@
 #include "Grid.h"
 #include "RegionHolder.h"
 #include "LastCellFinder.h"
-#include "stdio.h"
 #include <stdexcept>
 #include <string.h>
+#include <iostream>
 
 using namespace std;
 
 int main(int argc, char *argv[])
 {
-	//Testing branching
 	Cell myCell1 =  Cell();
-	printf("Expected -1, got %i\n", myCell1.GetValue());
+	cout << "Cell value: expected -1, got " << myCell1.GetValue() << "\n";
 
 	Cell myCell2 =  Cell(9);
-	printf("Expected 9, got %i\n", myCell2.GetValue());
+	cout << "Cell value: expected 9, got " << myCell2.GetValue() << "\n";
 
 	try{
 		Cell myCell3 =  Cell(-1);
 	}
 	catch (const invalid_argument& e){
-		printf(e.what());
+		cout << e.what();
 	}
 
 	try{
-		Cell* myCell4 = new Cell(10);
+		Cell myCell4 = Cell(10);
 	}
 	catch (const invalid_argument& e){
-		printf(e.what());
+		cout << e.what();
 	}
 
 	try{
 		Region myRegion1 = Region("1-3456789");
-		printf("Expected 1, got %i\n", myRegion1.Get_cNW().GetValue());
-		printf("Expected -1, got %i\n", myRegion1.Get_cN().GetValue());
+		cout << "Expected 1, got " << myRegion1.GetCell(0, 0).GetValue() << "\n";
+		cout << "Expected -1, got  " << myRegion1.GetCell(0, 1).GetValue() << "\n";
 	}
 	catch (const invalid_argument& e){
-		printf(e.what());
+		cout << e.what();
 	}
 
 	try{
 		Region myRegion1 =  Region("1------a-");
 	}
 	catch (const invalid_argument& e){
-		printf(e.what());
+		cout << e.what();
 	}
 
 	vector<string> values1 = vector<string>(9);
 	values1[0] = "1234-6789";
-	for (int i = 1; i < 9; i++)
+	for (unsigned char i = 1; i < 9; i++)
 	{
 			values1[i] = "123456789";
 	}
 
 	Grid grid1 = Grid(values1);
+	RegionHolder regHold1 = RegionHolder(grid1.GetRegion(2,2));
+	regHold1.GetCell(0, 0) = 8;
+	cout << "Expected 8, got " << grid1.GetRegion(2, 2).GetCell(0, 0).GetValue() << "\n";
 
-	RegionHolder regHold1 = RegionHolder(grid1.Get_rSE());
-	regHold1.Get_cNW() = 8;
-	printf("Expected 8, got %i\n", grid1.Get_rSE().Get_cNW().GetValue());
-
-	RegionHolder regHold2 = RegionHolder(grid1.Get_rNW());
+	RegionHolder regHold2 = RegionHolder(grid1.GetRegion(0,0));
 	RowHolder topRow1 = regHold2.TopRow();
 	RowHolder middleRow1 = regHold2.MiddleRow();
 	RowHolder bottomRow1 = regHold2.BottomRow();
 
 	LastCellFinder last1 = LastCellFinder(topRow1, middleRow1, bottomRow1);
-	printf("Expected -1, got %i\n", grid1.Get_rNW().Get_cC().GetValue());
+	cout << "Expected -1, got " << grid1.GetRegion(0, 0).GetCell(1, 1).GetValue() << "\n";
 	last1.fill();
-	printf("Expected 5, got %i\n", grid1.Get_rNW().Get_cC().GetValue());
-
-
+	cout << "Expected 5, got " << grid1.GetRegion(0, 0).GetCell(1, 1).GetValue() << "\n";
 
 	return 0;
 }
