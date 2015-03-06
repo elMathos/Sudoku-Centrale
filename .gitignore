@@ -70,3 +70,7 @@ _Resharper*
 
 *.ipch
 *.pch
+*.aux
+*.pdf
+*.gz
+*.vsp
