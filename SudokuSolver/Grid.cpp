@@ -75,9 +75,9 @@ NineHolder Grid::getRow(unsigned char i)
 {
 	if (i == 0)
 	{
-		RegionHolder r1 = RegionHolder(_rNW);
-		RegionHolder r2 = RegionHolder(_rN);
-		RegionHolder r3 = RegionHolder(_rNE);
+		RegionHolder r1(_rNW);
+		RegionHolder r2(_rN);
+		RegionHolder r3(_rNE);
 		TripleHolder t1 = r1.TopRow();
 		TripleHolder t2 = r2.TopRow();
 		TripleHolder t3 = r3.TopRow();
@@ -85,9 +85,9 @@ NineHolder Grid::getRow(unsigned char i)
 	}
 	if (i == 1)
 	{
-		RegionHolder r1 = RegionHolder(_rNW);
-		RegionHolder r2 = RegionHolder(_rN);
-		RegionHolder r3 = RegionHolder(_rNE);
+		RegionHolder r1(_rNW);
+		RegionHolder r2(_rN);
+		RegionHolder r3(_rNE);
 		TripleHolder t1 = r1.MiddleRow();
 		TripleHolder t2 = r2.MiddleRow();
 		TripleHolder t3 = r3.MiddleRow();
@@ -95,18 +95,18 @@ NineHolder Grid::getRow(unsigned char i)
 	}
 	if (i == 2)
 	{
-		RegionHolder r1 = RegionHolder(_rNW);
-		RegionHolder r2 = RegionHolder(_rN);
-		RegionHolder r3 = RegionHolder(_rNE);
+		RegionHolder r1(_rNW);
+		RegionHolder r2(_rN);
+		RegionHolder r3(_rNE);
 		TripleHolder t1 = r1.BottomRow();
 		TripleHolder t2 = r2.BottomRow();
 		TripleHolder t3 = r3.BottomRow();
 		return NineHolder(t1, t2, t3);
 	}if (i == 3)
 	{
-		RegionHolder r1 = RegionHolder(_rW);
-		RegionHolder r2 = RegionHolder(_rC);
-		RegionHolder r3 = RegionHolder(_rE);
+		RegionHolder r1(_rW);
+		RegionHolder r2(_rC);
+		RegionHolder r3(_rE);
 		TripleHolder t1 = r1.TopRow();
 		TripleHolder t2 = r2.TopRow();
 		TripleHolder t3 = r3.TopRow();
@@ -114,9 +114,9 @@ NineHolder Grid::getRow(unsigned char i)
 	}
 	if (i == 4)
 	{
-		RegionHolder r1 = RegionHolder(_rW);
-		RegionHolder r2 = RegionHolder(_rC);
-		RegionHolder r3 = RegionHolder(_rE);
+		RegionHolder r1(_rW);
+		RegionHolder r2(_rC);
+		RegionHolder r3(_rE);
 		TripleHolder t1 = r1.MiddleRow();
 		TripleHolder t2 = r2.MiddleRow();
 		TripleHolder t3 = r3.MiddleRow();
@@ -124,18 +124,18 @@ NineHolder Grid::getRow(unsigned char i)
 	}
 	if (i == 5)
 	{
-		RegionHolder r1 = RegionHolder(_rW);
-		RegionHolder r2 = RegionHolder(_rC);
-		RegionHolder r3 = RegionHolder(_rE);
+		RegionHolder r1(_rW);
+		RegionHolder r2(_rC);
+		RegionHolder r3(_rE);
 		TripleHolder t1 = r1.BottomRow();
 		TripleHolder t2 = r2.BottomRow();
 		TripleHolder t3 = r3.BottomRow();
 		return NineHolder(t1, t2, t3);
 	}if (i == 6)
 	{
-		RegionHolder r1 = RegionHolder(_rSW);
-		RegionHolder r2 = RegionHolder(_rS);
-		RegionHolder r3 = RegionHolder(_rSE);
+		RegionHolder r1(_rSW);
+		RegionHolder r2(_rS);
+		RegionHolder r3(_rSE);
 		TripleHolder t1 = r1.TopRow();
 		TripleHolder t2 = r2.TopRow();
 		TripleHolder t3 = r3.TopRow();
@@ -143,9 +143,9 @@ NineHolder Grid::getRow(unsigned char i)
 	}
 	if (i == 7)
 	{
-		RegionHolder r1 = RegionHolder(_rSW);
-		RegionHolder r2 = RegionHolder(_rS);
-		RegionHolder r3 = RegionHolder(_rSE);
+		RegionHolder r1(_rSW);
+		RegionHolder r2(_rS);
+		RegionHolder r3(_rSE);
 		TripleHolder t1 = r1.MiddleRow();
 		TripleHolder t2 = r2.MiddleRow();
 		TripleHolder t3 = r3.MiddleRow();
@@ -153,9 +153,9 @@ NineHolder Grid::getRow(unsigned char i)
 	}
 	if (i == 8)
 	{
-		RegionHolder r1 = RegionHolder(_rSW);
-		RegionHolder r2 = RegionHolder(_rS);
-		RegionHolder r3 = RegionHolder(_rSE);
+		RegionHolder r1(_rSW);
+		RegionHolder r2(_rS);
+		RegionHolder r3(_rSE);
 		TripleHolder t1 = r1.BottomRow();
 		TripleHolder t2 = r2.BottomRow();
 		TripleHolder t3 = r3.BottomRow();
@@ -171,9 +171,9 @@ NineHolder Grid::getColumn(unsigned char i)
 {
 	if (i == 0)
 	{
-		RegionHolder r1 = RegionHolder(_rNW);
-		RegionHolder r2 = RegionHolder(_rW);
-		RegionHolder r3 = RegionHolder(_rSW);
+		RegionHolder r1(_rNW);
+		RegionHolder r2(_rW);
+		RegionHolder r3(_rSW);
 		TripleHolder t1 = r1.LeftColumn();
 		TripleHolder t2 = r2.LeftColumn();
 		TripleHolder t3 = r3.LeftColumn();
@@ -181,9 +181,9 @@ NineHolder Grid::getColumn(unsigned char i)
 	}
 	if (i == 1)
 	{
-		RegionHolder r1 = RegionHolder(_rNW);
-		RegionHolder r2 = RegionHolder(_rW);
-		RegionHolder r3 = RegionHolder(_rSW);
+		RegionHolder r1(_rNW);
+		RegionHolder r2(_rW);
+		RegionHolder r3(_rSW);
 		TripleHolder t1 = r1.MiddleColumn();
 		TripleHolder t2 = r2.MiddleColumn();
 		TripleHolder t3 = r3.MiddleColumn();
@@ -191,18 +191,18 @@ NineHolder Grid::getColumn(unsigned char i)
 	}
 	if (i == 2)
 	{
-		RegionHolder r1 = RegionHolder(_rNW);
-		RegionHolder r2 = RegionHolder(_rW);
-		RegionHolder r3 = RegionHolder(_rSW);
+		RegionHolder r1(_rNW);
+		RegionHolder r2(_rW);
+		RegionHolder r3(_rSW);
 		TripleHolder t1 = r1.RightColumn();
 		TripleHolder t2 = r2.RightColumn();
 		TripleHolder t3 = r3.RightColumn();
 		return NineHolder(t1, t2, t3);
 	}if (i == 3)
 	{
-		RegionHolder r1 = RegionHolder(_rN);
-		RegionHolder r2 = RegionHolder(_rC);
-		RegionHolder r3 = RegionHolder(_rS);
+		RegionHolder r1(_rN);
+		RegionHolder r2(_rC);
+		RegionHolder r3(_rS);
 		TripleHolder t1 = r1.LeftColumn();
 		TripleHolder t2 = r2.LeftColumn();
 		TripleHolder t3 = r3.LeftColumn();
@@ -210,9 +210,9 @@ NineHolder Grid::getColumn(unsigned char i)
 	}
 	if (i == 4)
 	{
-		RegionHolder r1 = RegionHolder(_rN);
-		RegionHolder r2 = RegionHolder(_rC);
-		RegionHolder r3 = RegionHolder(_rS);
+		RegionHolder r1(_rN);
+		RegionHolder r2(_rC);
+		RegionHolder r3(_rS);
 		TripleHolder t1 = r1.MiddleColumn();
 		TripleHolder t2 = r2.MiddleColumn();
 		TripleHolder t3 = r3.MiddleColumn();
@@ -220,18 +220,18 @@ NineHolder Grid::getColumn(unsigned char i)
 	}
 	if (i == 5)
 	{
-		RegionHolder r1 = RegionHolder(_rN);
-		RegionHolder r2 = RegionHolder(_rC);
-		RegionHolder r3 = RegionHolder(_rS);
+		RegionHolder r1(_rN);
+		RegionHolder r2(_rC);
+		RegionHolder r3(_rS);
 		TripleHolder t1 = r1.RightColumn();
 		TripleHolder t2 = r2.RightColumn();
 		TripleHolder t3 = r3.RightColumn();
 		return NineHolder(t1, t2, t3);
 	}if (i == 6)
 	{
-		RegionHolder r1 = RegionHolder(_rNE);
-		RegionHolder r2 = RegionHolder(_rE);
-		RegionHolder r3 = RegionHolder(_rSE);
+		RegionHolder r1(_rNE);
+		RegionHolder r2(_rE);
+		RegionHolder r3(_rSE);
 		TripleHolder t1 = r1.LeftColumn();
 		TripleHolder t2 = r2.LeftColumn();
 		TripleHolder t3 = r3.LeftColumn();
@@ -239,9 +239,9 @@ NineHolder Grid::getColumn(unsigned char i)
 	}
 	if (i == 7)
 	{
-		RegionHolder r1 = RegionHolder(_rNE);
-		RegionHolder r2 = RegionHolder(_rE);
-		RegionHolder r3 = RegionHolder(_rSE);
+		RegionHolder r1(_rNE);
+		RegionHolder r2(_rE);
+		RegionHolder r3(_rSE);
 		TripleHolder t1 = r1.MiddleColumn();
 		TripleHolder t2 = r2.MiddleColumn();
 		TripleHolder t3 = r3.MiddleColumn();
@@ -249,9 +249,9 @@ NineHolder Grid::getColumn(unsigned char i)
 	}
 	if (i == 8)
 	{
-		RegionHolder r1 = RegionHolder(_rNE);
-		RegionHolder r2 = RegionHolder(_rE);
-		RegionHolder r3 = RegionHolder(_rSE);
+		RegionHolder r1(_rNE);
+		RegionHolder r2(_rE);
+		RegionHolder r3(_rSE);
 		TripleHolder t1 = r1.RightColumn();
 		TripleHolder t2 = r2.RightColumn();
 		TripleHolder t3 = r3.RightColumn();

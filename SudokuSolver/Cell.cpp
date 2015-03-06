@@ -26,13 +26,15 @@ Cell::Cell(int value)
 }
 
 Cell::Cell(char chr, string allowed){
-	if (allowed.find(chr) != string::npos) {
+	// allowed is the string of authorized characters
+	if (allowed.find(chr) != string::npos) // string.find(chr) returns npos if chr not found
+	{
 		if (chr == '-'){
 			_value = -1;
 		}
 		else{
 			int i = chr - '0';
-			_value = i;
+			_value = i; // int i corresponds to the figure chr represents
 		}
 	}
 	else{
