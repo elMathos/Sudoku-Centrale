@@ -74,3 +74,4 @@ _Resharper*
 *.pdf
 *.gz
 *.vsp
+*.coverage

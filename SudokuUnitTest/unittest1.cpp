@@ -53,6 +53,20 @@ namespace SudokuUnitTest
 			Assert::IsTrue(thrown);
 		}
 
+		TEST_METHOD(CellToCharCast)
+		{
+			Cell cell(5);
+			Assert::AreEqual((unsigned char)cell, (unsigned char)5);
+		}
+
+		TEST_METHOD(CellEqualCharOperator)
+		{
+			Cell cell(2);
+			Assert::AreEqual(cell.getValue(), 2);
+			cell = 5;
+			Assert::AreEqual(cell.getValue(), 5);
+		}
+
 		TEST_METHOD(RegionStringConstructor1)
 		{
 			Region myRegion1 = Region("1-3456789");

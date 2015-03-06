@@ -8,7 +8,7 @@
 
 using namespace std;
 
-// a few tests are here, the rest can be found as UT in unittest1.cpp
+// a few tests are here, the rest can be found as UT in unittest1.cpp (project SudokuUnitTest)
 
 int main(int argc, char *argv[])
 {
