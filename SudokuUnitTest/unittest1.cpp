@@ -23,20 +23,20 @@ namespace SudokuUnitTest
 	public:
 		TEST_METHOD(CellValue1)
 		{
-			Cell cell = Cell(2);
+			Cell cell(2);
 			Assert::AreEqual(cell.getValue(), 2);
 		}
 
 		TEST_METHOD(EmptyCell)
 		{
-			Cell cell = Cell();
+			Cell cell;
 			Assert::AreEqual(cell.getValue(), -1);
 		}
 
 		TEST_METHOD(WrongInputCell1)
 		{
 			bool thrown = false;
-			try{ Cell cell = Cell(10); }
+			try{ Cell cell(10); }
 			catch (invalid_argument& e){
 				thrown = true;
 			}
@@ -46,7 +46,7 @@ namespace SudokuUnitTest
 		TEST_METHOD(WrongInputCell2)
 		{
 			bool thrown = false;
-			try{ Cell cell = Cell(0); }
+			try{ Cell cell(0); }
 			catch (invalid_argument& e){
 				thrown = true;
 			}
@@ -69,7 +69,7 @@ namespace SudokuUnitTest
 
 		TEST_METHOD(RegionStringConstructor1)
 		{
-			Region myRegion1 = Region("1-3456789");
+			Region myRegion1("1-3456789");
 
 			Assert::AreEqual(1, myRegion1.getCell(0, 0).getValue());
 			Assert::AreEqual(-1, myRegion1.getCell(0, 1).getValue());
@@ -86,7 +86,7 @@ namespace SudokuUnitTest
 		{
 			bool thrown = false;
 			try{
-				Region myRegion1 = Region("1-345678a"); // a is not a valid character
+				Region myRegion1("1-345678a"); // a is not a valid character
 			}
 			catch (invalid_argument& e){
 				thrown = true;
@@ -98,7 +98,7 @@ namespace SudokuUnitTest
 		{
 			bool thrown = false;
 			try{
-				Region myRegion1 = Region("1-34567890"); //input string is too long
+				Region myRegion1("1-34567890"); //input string is too long
 			}
 			catch (invalid_argument& e){
 				thrown = true;
@@ -110,7 +110,7 @@ namespace SudokuUnitTest
 		{
 			bool thrown = false;
 			try{
-				Region myRegion1 = Region("12345678"); //input string is too short
+				Region myRegion1("12345678"); //input string is too short
 			}
 			catch (invalid_argument& e){
 				thrown = true;
@@ -126,13 +126,13 @@ namespace SudokuUnitTest
 			{
 				stringInput[i] = "123456789";
 			}
-			Grid grid1 = Grid(stringInput);
-			RegionHolder regHold = RegionHolder(grid1.getRegion(0, 0));
+			Grid grid1(stringInput);
+			RegionHolder regHold(grid1.getRegion(0, 0));
 			RowHolder topRow1 = regHold.TopRow();
 			RowHolder middleRow1 = regHold.MiddleRow();
 			RowHolder bottomRow1 = regHold.BottomRow();
 
-			LastCellFinder last = LastCellFinder(topRow1, middleRow1, bottomRow1);
+			LastCellFinder last(topRow1, middleRow1, bottomRow1);
 			Assert::AreEqual(-1 , grid1.getRegion(0, 0).getCell(1, 1).getValue());
 			bool visited = last.fill();
 			Assert::IsTrue(visited);
@@ -147,13 +147,13 @@ namespace SudokuUnitTest
 			{
 				stringInput[i] = "123456789";
 			}
-			Grid grid1 = Grid(stringInput);
+			Grid grid1(stringInput);
 			//Here's the different part compared to LastCellFinderWithHolderAccessors
-			TripleHolder topRow1 = TripleHolder(grid1.getRegion(0, 0).getCell(0, 0), grid1.getRegion(0, 0).getCell(0, 1), grid1.getRegion(0, 0).getCell(0, 2));
-			TripleHolder middleRow1 = TripleHolder(grid1.getRegion(0, 0).getCell(1, 0), grid1.getRegion(0, 0).getCell(1, 1), grid1.getRegion(0, 0).getCell(1, 2));
-			TripleHolder bottomRow1 = TripleHolder(grid1.getRegion(0, 0).getCell(2, 0), grid1.getRegion(0, 0).getCell(2, 1), grid1.getRegion(0, 0).getCell(2, 2));
+			TripleHolder topRow1(grid1.getRegion(0, 0).getCell(0, 0), grid1.getRegion(0, 0).getCell(0, 1), grid1.getRegion(0, 0).getCell(0, 2));
+			TripleHolder middleRow1(grid1.getRegion(0, 0).getCell(1, 0), grid1.getRegion(0, 0).getCell(1, 1), grid1.getRegion(0, 0).getCell(1, 2));
+			TripleHolder bottomRow1(grid1.getRegion(0, 0).getCell(2, 0), grid1.getRegion(0, 0).getCell(2, 1), grid1.getRegion(0, 0).getCell(2, 2));
 
-			LastCellFinder lastCF = LastCellFinder(topRow1, middleRow1, bottomRow1);
+			LastCellFinder lastCF(topRow1, middleRow1, bottomRow1);
 			Assert::AreEqual(-1, grid1.getRegion(0, 0).getCell(1, 1).getValue());
 			bool visited = lastCF.fill();
 			Assert::IsTrue(visited);
@@ -177,10 +177,10 @@ namespace SudokuUnitTest
 				stringInput[i] = "---------"; 			//we don't care about the rest
 
 			}
-			Grid grid = Grid(stringInput);
+			Grid grid(stringInput);
 			Assert::AreEqual(-1, grid.getRegion(0, 0).getCell(0, 0).getValue());
 
-			OnlyOneChoiceInRowVisitor visitor = OnlyOneChoiceInRowVisitor();
+			OnlyOneChoiceInRowVisitor visitor;
 			bool visited = grid.Accept(visitor);
 			Assert::IsTrue(visited);
 			Assert::AreEqual(1, grid.getRegion(0, 0).getCell(0, 0).getValue());
@@ -201,8 +201,8 @@ namespace SudokuUnitTest
 				stringInput[2+3*i] = "789789789";
 			}
 
-			OnlyOneChoiceInRowVisitor visitor = OnlyOneChoiceInRowVisitor();
-			Grid grid = Grid(stringInput);
+			OnlyOneChoiceInRowVisitor visitor;
+			Grid grid(stringInput);
 			Assert::AreEqual(-1, grid.getRegion(0, 0).getCell(0, 0).getValue());
 			Assert::AreEqual(-1, grid.getRegion(0, 0).getCell(1, 0).getValue());
 			Assert::AreEqual(-1, grid.getRegion(0, 0).getCell(2, 0).getValue());
@@ -245,7 +245,7 @@ namespace SudokuUnitTest
 			stringInput[8] = "777888999";
 
 			OnlyOneChoiceInColumnVisitor visitor;
-			Grid grid = Grid(stringInput);
+			Grid grid(stringInput);
 			Assert::AreEqual(-1, grid.getRegion(0, 0).getCell(0, 0).getValue());
 			Assert::AreEqual(-1, grid.getRegion(0, 0).getCell(0, 1).getValue());
 			Assert::AreEqual(-1, grid.getRegion(0, 0).getCell(0, 2).getValue());
@@ -283,7 +283,7 @@ namespace SudokuUnitTest
 			}
 
 			OnlyOneChoiceInRegionVisitor visitor;
-			Grid grid = Grid(stringInput);
+			Grid grid(stringInput);
 			Assert::AreEqual(-1, grid.getRegion(0, 0).getCell(2, 0).getValue());
 			Assert::AreEqual(-1, grid.getRegion(0, 1).getCell(2, 0).getValue());
 			Assert::AreEqual(-1, grid.getRegion(0, 2).getCell(2, 0).getValue());
@@ -322,7 +322,7 @@ namespace SudokuUnitTest
 			{
 				stringInput[i] = "123456789";
 			}
-			Grid grid = Grid(stringInput);
+			Grid grid(stringInput);
 			NineHolder nh = grid.getRow(0);
 			for (unsigned char i = 0; i < 9; i++){
 				Assert::AreEqual(i + 1, nh.getCell(i).getValue());
@@ -343,7 +343,7 @@ namespace SudokuUnitTest
 			{
 				stringInput[i] = "123456789";
 			}
-			Grid grid = Grid(stringInput);
+			Grid grid(stringInput);
 			NineHolder nh = grid.getRow(0);
 			Assert::IsTrue(nh.isValuePresent(1));
 			Assert::IsTrue(nh.isValuePresent(5));
@@ -370,7 +370,7 @@ namespace SudokuUnitTest
 			stringInput[7] = "763518249";
 			stringInput[8] = "--87-2561";
 
-			Grid grid = Grid(stringInput);
+			Grid grid(stringInput);
 			OnlySquareVisitor visitor;
 			Assert::AreEqual(-1, grid.getRegion(0, 0).getCell(1, 1).getValue());
 			Assert::AreEqual(-1, grid.getRegion(0, 2).getCell(1, 0).getValue());
@@ -394,7 +394,7 @@ namespace SudokuUnitTest
 			stringInput[7] = "--6-28479";
 			stringInput[8] = "-75--6821";
 
-			Grid grid = Grid(stringInput);
+			Grid grid(stringInput);
 			OnlySquareVisitor visitor;
 			Assert::AreEqual(-1, grid.getRegion(0, 0).getCell(1, 1).getValue());
 			Assert::AreEqual(-1, grid.getRegion(2, 0).getCell(0, 1).getValue());
@@ -419,7 +419,7 @@ namespace SudokuUnitTest
 			stringInput[7] = "754---96-";
 			stringInput[8] = "-8-7-2-51";
 
-			Grid grid = Grid(stringInput);
+			Grid grid(stringInput);
 			OnlySquareVisitor visitor;
 			Assert::AreEqual(-1, grid.getRegion(1, 0).getCell(1, 0).getValue());
 			Assert::AreEqual(-1, grid.getRegion(1, 2).getCell(1, 2).getValue());
@@ -444,7 +444,7 @@ namespace SudokuUnitTest
 			stringInput[7] = "763518249";
 			stringInput[8] = "--87-2561";
 
-			Grid grid = Grid(stringInput);
+			Grid grid(stringInput);
 			OnlySquareVisitor visitor;
 			Assert::AreEqual(-1, grid.getRegion(0, 0).getCell(1, 1).getValue());
 			Assert::AreEqual(-1, grid.getRegion(0, 2).getCell(1, 0).getValue());
@@ -468,7 +468,7 @@ namespace SudokuUnitTest
 			stringInput[7] = "---------";
 			stringInput[8] = "---------";
 
-			Grid grid = Grid(stringInput);
+			Grid grid(stringInput);
 			TwoOutOfThreeRowVisitor visitor;
 			Assert::AreEqual(-1, grid.getRegion(0, 0).getCell(2, 1).getValue());
 			bool visited = grid.Accept(visitor);
@@ -500,7 +500,7 @@ namespace SudokuUnitTest
 			stringInput[7] = "-----4---";
 			stringInput[8] = "---------";
 
-			Grid grid = Grid(stringInput);
+			Grid grid(stringInput);
 			TwoOutOfThreeColumnVisitor visitor;
 			Assert::AreEqual(-1, grid.getRegion(0, 1).getCell(2, 0).getValue());
 			bool visited = grid.Accept(visitor);
@@ -523,7 +523,7 @@ namespace SudokuUnitTest
 			stringInput[7] = "754---96-";
 			stringInput[8] = "-8-7-2-51";
 
-			Grid grid = Grid(stringInput);
+			Grid grid(stringInput);
 			RowColumnRegionVisitor visitor;
 			Assert::AreEqual(-1, grid.getRegion(0, 0).getCell(1, 1).getValue());
 			bool visited = grid.Accept(visitor);
@@ -546,7 +546,7 @@ namespace SudokuUnitTest
 			{
 				stringInput[i] = "123456789";
 			}
-			Grid grid = Grid(stringInput);
+			Grid grid(stringInput);
 			NineHolder firstRow = grid.getRow(0);
 			NineHolder fourthRow = grid.getRow(3);
 			Assert::IsTrue(firstRow.isConsistent());
@@ -568,7 +568,7 @@ namespace SudokuUnitTest
 			{
 				stringInput[i] = "123456789";
 			}
-			Grid grid = Grid(stringInput);
+			Grid grid(stringInput);
 			RegionHolder firstReg = grid.getRegion(0, 0);
 			RegionHolder secondReg = grid.getRegion(1, 2);
 			Assert::IsFalse(firstReg.isConsistent());
@@ -590,7 +590,7 @@ namespace SudokuUnitTest
 			{
 				stringInput[i] = "123456789";
 			}
-			Grid grid = Grid(stringInput);
+			Grid grid(stringInput);
 			Assert::IsFalse(grid.isConsistent());
 		}
 
@@ -608,7 +608,7 @@ namespace SudokuUnitTest
 			stringInput[7] = "153264879";
 			stringInput[8] = "869537214";
 
-			Grid grid = Grid(stringInput);
+			Grid grid(stringInput);
 			Assert::IsTrue(grid.isConsistent());
 		}
 
@@ -626,7 +626,7 @@ namespace SudokuUnitTest
 			stringInput[7] = "153264879";
 			stringInput[8] = "869537214";
 
-			Grid grid = Grid(stringInput);
+			Grid grid(stringInput);
 			Assert::IsFalse(grid.isConsistent());
 		}
 
@@ -643,7 +643,7 @@ namespace SudokuUnitTest
 			stringInput[7] = "15--64879";
 			stringInput[8] = "-6953-14-";
 
-			Grid grid = Grid(stringInput);
+			Grid grid(stringInput);
 			NineHolder fullRow = grid.getRow(0);
 			RegionHolder fullReg = grid.getRegion(2, 1);
 			Assert::IsTrue(fullRow.isConsistent());
@@ -663,7 +663,7 @@ namespace SudokuUnitTest
 			stringInput[7] = "15326--79";
 			stringInput[8] = "86953721-";
 
-			Grid grid = Grid(stringInput);
+			Grid grid(stringInput);
 			Assert::IsTrue(grid.isConsistent());
 		}
 
@@ -682,7 +682,7 @@ namespace SudokuUnitTest
 			stringInput[7] = "153264879";
 			stringInput[8] = "869537214";
 
-			Grid grid = Grid(stringInput);
+			Grid grid(stringInput);
 			Assert::IsTrue(grid.isFull());
 		}
 
@@ -700,7 +700,7 @@ namespace SudokuUnitTest
 			stringInput[7] = "153264879";
 			stringInput[8] = "86953721-";
 
-			Grid grid = Grid(stringInput);
+			Grid grid(stringInput);
 			Assert::IsFalse(grid.isFull());
 		}
 
@@ -717,7 +717,7 @@ namespace SudokuUnitTest
 			}
 
 			OnlyOneChoiceGlobalVisitor visitor;
-			Grid grid = Grid(stringInput);
+			Grid grid(stringInput);
 			Assert::AreEqual(-1, grid.getRegion(0, 0).getCell(2, 0).getValue());
 			Assert::AreEqual(-1, grid.getRegion(0, 1).getCell(2, 0).getValue());
 			Assert::AreEqual(-1, grid.getRegion(0, 2).getCell(2, 0).getValue());
@@ -756,7 +756,7 @@ namespace SudokuUnitTest
 			stringInput[7] = "1532-4879";
 			stringInput[8] = "86953721-";
 
-			Grid grid = Grid(stringInput);
+			Grid grid(stringInput);
 			grid.SolveWithEasyStrategies();
 			Assert::AreEqual(5, grid.getRegion(0, 0).getCell(1, 0).getValue());
 			Assert::AreEqual(7, grid.getRegion(0, 1).getCell(1, 2).getValue());
@@ -783,7 +783,7 @@ namespace SudokuUnitTest
 			stringInput[7] = "1532-4879";
 			stringInput[8] = "-6953721-";
 
-			Grid grid = Grid(stringInput);
+			Grid grid(stringInput);
 			grid.SolveWithEasyStrategies();
 			Assert::AreEqual(5, grid.getRegion(0, 0).getCell(1, 0).getValue());
 			Assert::AreEqual(2, grid.getRegion(0, 1).getCell(0, 2).getValue());
@@ -814,7 +814,7 @@ namespace SudokuUnitTest
 			stringInput[7] = "1----48--";
 			stringInput[8] = "8--5-----";
 
-			Grid grid = Grid(stringInput);
+			Grid grid(stringInput);
 			grid.SolveWithEasyStrategies();
 			Assert::IsTrue(grid.isFull());
 			Assert::IsTrue(grid.isConsistent());
@@ -835,7 +835,7 @@ namespace SudokuUnitTest
 			stringInput[7] = "754---96-";
 			stringInput[8] = "-8-7-2-51";
 
-			Grid grid = Grid(stringInput);
+			Grid grid(stringInput);
 			grid.SolveWithEasyStrategies();
 			Assert::IsTrue(grid.isFull());
 			Assert::IsTrue(grid.isConsistent());
@@ -854,7 +854,7 @@ namespace SudokuUnitTest
 			stringInput[7] = "-2---9---";
 			stringInput[8] = "3-8-2-5-4";
 
-			Grid grid = Grid(stringInput);
+			Grid grid(stringInput);
 			set<unsigned char> possibleVal = grid.getPossibleValues(0, 4);
 			int nbPossVal = possibleVal.size();
 			set<unsigned char>::iterator iter = possibleVal.begin();
@@ -879,7 +879,7 @@ namespace SudokuUnitTest
 			stringInput[7] = "-2---9---";
 			stringInput[8] = "3-8-2-5-4";
 
-			Grid grid = Grid(stringInput);
+			Grid grid(stringInput);
 			vector<unsigned char> bestIndices = grid.getIndicesCellWithLessChoices();
 			int rowIdx = bestIndices[0];
 			int colIdx = bestIndices[1];
@@ -901,7 +901,7 @@ namespace SudokuUnitTest
 			stringInput[7] = "-2---9---";
 			stringInput[8] = "3-8-2-5-4";
 
-			Grid grid = Grid(stringInput);
+			Grid grid(stringInput);
 			grid.SolveWithEasyStrategies();
 			Assert::IsFalse(grid.isFull()); //grid too complicated without hypothesis
 			Assert::IsTrue(grid.isConsistent());
@@ -925,7 +925,7 @@ namespace SudokuUnitTest
 			stringInput[7] = "9-----2--";
 			stringInput[8] = "--6--14--";
 
-			Grid grid = Grid(stringInput);
+			Grid grid(stringInput);
 			grid.SolveWithEasyStrategies();
 			Assert::IsFalse(grid.isFull()); //grid too complicated without hypothesis
 			Assert::IsTrue(grid.isConsistent());
