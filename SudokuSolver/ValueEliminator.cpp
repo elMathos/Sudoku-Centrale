@@ -19,12 +19,10 @@ void ValueEliminator::flag(unsigned char iValue)
 int ValueEliminator::availableValues()
 {
 	int count = 0;
-
 	for (int i = 0; i < 9; i++)
 	{
 		count += _alreadySeen[i] ? 0 : 1;
 	}
-
 	return count;
 }
 
@@ -39,7 +37,6 @@ set<unsigned char> ValueEliminator::availableValue()
 	return valueSet;
 }
 
-//TODO argument must be const ?
 void ValueEliminator::setFlags(RegionHolder& regionHolder)
 {
 	for (unsigned char i = 0; i < 3; i++)
@@ -62,7 +59,6 @@ void ValueEliminator::setFlags(TripleHolder& tripleHolder)
 		flag(tripleHolder.Cell2());
 	if (!tripleHolder.Cell3().IsEmpty())
 		flag(tripleHolder.Cell3());
-
 }
 
 void ValueEliminator::setFlags(NineHolder& regionHolder)
@@ -72,5 +68,4 @@ void ValueEliminator::setFlags(NineHolder& regionHolder)
 		if (!regionHolder.getCell(i).IsEmpty())
 			flag(regionHolder.getCell(i));
 	}
-
 }

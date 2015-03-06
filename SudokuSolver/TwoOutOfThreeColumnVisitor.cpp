@@ -145,7 +145,6 @@ bool TwoOutOfThreeColumnVisitor::Visit(Grid& ioGrid) const
 			}
 		}
 	}
-
 	return visited;
 }
 
