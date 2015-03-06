@@ -14,7 +14,7 @@ NineHolder::~NineHolder()
 {
 }
 
-Cell& NineHolder::GetCell(unsigned char i)
+Cell& NineHolder::getCell(unsigned char i)
 {
 	//Careful there is an offset between i and celli+1
 	if (i == 0) return _cell1;
@@ -52,7 +52,7 @@ bool NineHolder::isConsistent()
 	int value = 0;
 	for (int i = 0; i < 9; i++)
 	{
-		value = GetCell(i).GetValue();
+		value = getCell(i).getValue();
 		if (alreadySeen.find(value) != alreadySeen.end())
 		{
 			consistent = false;
@@ -70,7 +70,7 @@ bool NineHolder::isFull()
 	bool full = true;
 	for (int i = 0; i < 9; i++)
 	{
-		if (GetCell(i).IsEmpty())
+		if (getCell(i).IsEmpty())
 		{
 			full = false;
 			break;

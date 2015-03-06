@@ -24,13 +24,13 @@ namespace SudokuUnitTest
 		TEST_METHOD(CellValue1)
 		{
 			Cell cell = Cell(2);
-			Assert::AreEqual(cell.GetValue(), 2);
+			Assert::AreEqual(cell.getValue(), 2);
 		}
 
 		TEST_METHOD(EmptyCell)
 		{
 			Cell cell = Cell();
-			Assert::AreEqual(cell.GetValue(), -1);
+			Assert::AreEqual(cell.getValue(), -1);
 		}
 
 		TEST_METHOD(WrongInputCell1)
@@ -57,15 +57,15 @@ namespace SudokuUnitTest
 		{
 			Region myRegion1 = Region("1-3456789");
 
-			Assert::AreEqual(1, myRegion1.GetCell(0, 0).GetValue());
-			Assert::AreEqual(-1, myRegion1.GetCell(0, 1).GetValue());
-			Assert::AreEqual(3, myRegion1.GetCell(0, 2).GetValue());
-			Assert::AreEqual(4, myRegion1.GetCell(1, 0).GetValue());
-			Assert::AreEqual(5, myRegion1.GetCell(1, 1).GetValue());
-			Assert::AreEqual(6, myRegion1.GetCell(1, 2).GetValue());
-			Assert::AreEqual(7, myRegion1.GetCell(2, 0).GetValue());
-			Assert::AreEqual(8, myRegion1.GetCell(2, 1).GetValue());
-			Assert::AreEqual(9, myRegion1.GetCell(2, 2).GetValue());
+			Assert::AreEqual(1, myRegion1.getCell(0, 0).getValue());
+			Assert::AreEqual(-1, myRegion1.getCell(0, 1).getValue());
+			Assert::AreEqual(3, myRegion1.getCell(0, 2).getValue());
+			Assert::AreEqual(4, myRegion1.getCell(1, 0).getValue());
+			Assert::AreEqual(5, myRegion1.getCell(1, 1).getValue());
+			Assert::AreEqual(6, myRegion1.getCell(1, 2).getValue());
+			Assert::AreEqual(7, myRegion1.getCell(2, 0).getValue());
+			Assert::AreEqual(8, myRegion1.getCell(2, 1).getValue());
+			Assert::AreEqual(9, myRegion1.getCell(2, 2).getValue());
 		}
 
 		TEST_METHOD(RegionStringConstructor2)
@@ -113,16 +113,16 @@ namespace SudokuUnitTest
 				stringInput[i] = "123456789";
 			}
 			Grid grid1 = Grid(stringInput);
-			RegionHolder regHold = RegionHolder(grid1.GetRegion(0, 0));
+			RegionHolder regHold = RegionHolder(grid1.getRegion(0, 0));
 			RowHolder topRow1 = regHold.TopRow();
 			RowHolder middleRow1 = regHold.MiddleRow();
 			RowHolder bottomRow1 = regHold.BottomRow();
 
 			LastCellFinder last = LastCellFinder(topRow1, middleRow1, bottomRow1);
-			Assert::AreEqual(-1 , grid1.GetRegion(0, 0).GetCell(1, 1).GetValue());
+			Assert::AreEqual(-1 , grid1.getRegion(0, 0).getCell(1, 1).getValue());
 			bool visited = last.fill();
 			Assert::IsTrue(visited);
-			Assert::AreEqual(5, grid1.GetRegion(0, 0).GetCell(1, 1).GetValue());
+			Assert::AreEqual(5, grid1.getRegion(0, 0).getCell(1, 1).getValue());
 		}
 
 		TEST_METHOD(LastCellFinderWithHolderCells)
@@ -135,15 +135,15 @@ namespace SudokuUnitTest
 			}
 			Grid grid1 = Grid(stringInput);
 			//Here's the different part compared to LastCellFinderWithHolderAccessors
-			TripleHolder topRow1 = TripleHolder(grid1.GetRegion(0, 0).GetCell(0, 0), grid1.GetRegion(0, 0).GetCell(0, 1), grid1.GetRegion(0, 0).GetCell(0, 2));
-			TripleHolder middleRow1 = TripleHolder(grid1.GetRegion(0, 0).GetCell(1, 0), grid1.GetRegion(0, 0).GetCell(1, 1), grid1.GetRegion(0, 0).GetCell(1, 2));
-			TripleHolder bottomRow1 = TripleHolder(grid1.GetRegion(0, 0).GetCell(2, 0), grid1.GetRegion(0, 0).GetCell(2, 1), grid1.GetRegion(0, 0).GetCell(2, 2));
+			TripleHolder topRow1 = TripleHolder(grid1.getRegion(0, 0).getCell(0, 0), grid1.getRegion(0, 0).getCell(0, 1), grid1.getRegion(0, 0).getCell(0, 2));
+			TripleHolder middleRow1 = TripleHolder(grid1.getRegion(0, 0).getCell(1, 0), grid1.getRegion(0, 0).getCell(1, 1), grid1.getRegion(0, 0).getCell(1, 2));
+			TripleHolder bottomRow1 = TripleHolder(grid1.getRegion(0, 0).getCell(2, 0), grid1.getRegion(0, 0).getCell(2, 1), grid1.getRegion(0, 0).getCell(2, 2));
 
 			LastCellFinder lastCF = LastCellFinder(topRow1, middleRow1, bottomRow1);
-			Assert::AreEqual(-1, grid1.GetRegion(0, 0).GetCell(1, 1).GetValue());
+			Assert::AreEqual(-1, grid1.getRegion(0, 0).getCell(1, 1).getValue());
 			bool visited = lastCF.fill();
 			Assert::IsTrue(visited);
-			Assert::AreEqual(5, grid1.GetRegion(0, 0).GetCell(1, 1).GetValue());
+			Assert::AreEqual(5, grid1.getRegion(0, 0).getCell(1, 1).getValue());
 		}
 
 		TEST_METHOD(OnlyOneChoiceRow1)
@@ -164,12 +164,12 @@ namespace SudokuUnitTest
 
 			}
 			Grid grid = Grid(stringInput);
-			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(0, 0).GetValue());
+			Assert::AreEqual(-1, grid.getRegion(0, 0).getCell(0, 0).getValue());
 
 			OnlyOneChoiceInRowVisitor visitor = OnlyOneChoiceInRowVisitor();
 			bool visited = grid.Accept(visitor);
 			Assert::IsTrue(visited);
-			Assert::AreEqual(1, grid.GetRegion(0, 0).GetCell(0, 0).GetValue());
+			Assert::AreEqual(1, grid.getRegion(0, 0).getCell(0, 0).getValue());
 		}
 
 		TEST_METHOD(OnlyOneChoiceRow2)
@@ -189,28 +189,28 @@ namespace SudokuUnitTest
 
 			OnlyOneChoiceInRowVisitor visitor = OnlyOneChoiceInRowVisitor();
 			Grid grid = Grid(stringInput);
-			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(0, 0).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(1, 0).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(2, 0).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(1, 0).GetCell(0, 0).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(1, 0).GetCell(1, 0).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(1, 0).GetCell(2, 0).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(2, 0).GetCell(0, 0).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(2, 0).GetCell(1, 0).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(2, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.getRegion(0, 0).getCell(0, 0).getValue());
+			Assert::AreEqual(-1, grid.getRegion(0, 0).getCell(1, 0).getValue());
+			Assert::AreEqual(-1, grid.getRegion(0, 0).getCell(2, 0).getValue());
+			Assert::AreEqual(-1, grid.getRegion(1, 0).getCell(0, 0).getValue());
+			Assert::AreEqual(-1, grid.getRegion(1, 0).getCell(1, 0).getValue());
+			Assert::AreEqual(-1, grid.getRegion(1, 0).getCell(2, 0).getValue());
+			Assert::AreEqual(-1, grid.getRegion(2, 0).getCell(0, 0).getValue());
+			Assert::AreEqual(-1, grid.getRegion(2, 0).getCell(1, 0).getValue());
+			Assert::AreEqual(-1, grid.getRegion(2, 0).getCell(2, 0).getValue());
 			bool visited = grid.Accept(visitor);
 			Assert::IsTrue(visited);
 
 			//First column of grid should have been filled with 1s
-			Assert::AreEqual(1, grid.GetRegion(0, 0).GetCell(0, 0).GetValue());
-			Assert::AreEqual(1, grid.GetRegion(0, 0).GetCell(1, 0).GetValue());
-			Assert::AreEqual(1, grid.GetRegion(0, 0).GetCell(2, 0).GetValue());
-			Assert::AreEqual(1, grid.GetRegion(1, 0).GetCell(0, 0).GetValue());
-			Assert::AreEqual(1, grid.GetRegion(1, 0).GetCell(1, 0).GetValue());
-			Assert::AreEqual(1, grid.GetRegion(1, 0).GetCell(2, 0).GetValue());
-			Assert::AreEqual(1, grid.GetRegion(2, 0).GetCell(0, 0).GetValue());
-			Assert::AreEqual(1, grid.GetRegion(2, 0).GetCell(1, 0).GetValue());
-			Assert::AreEqual(1, grid.GetRegion(2, 0).GetCell(2, 0).GetValue());
+			Assert::AreEqual(1, grid.getRegion(0, 0).getCell(0, 0).getValue());
+			Assert::AreEqual(1, grid.getRegion(0, 0).getCell(1, 0).getValue());
+			Assert::AreEqual(1, grid.getRegion(0, 0).getCell(2, 0).getValue());
+			Assert::AreEqual(1, grid.getRegion(1, 0).getCell(0, 0).getValue());
+			Assert::AreEqual(1, grid.getRegion(1, 0).getCell(1, 0).getValue());
+			Assert::AreEqual(1, grid.getRegion(1, 0).getCell(2, 0).getValue());
+			Assert::AreEqual(1, grid.getRegion(2, 0).getCell(0, 0).getValue());
+			Assert::AreEqual(1, grid.getRegion(2, 0).getCell(1, 0).getValue());
+			Assert::AreEqual(1, grid.getRegion(2, 0).getCell(2, 0).getValue());
 		}
 
 		TEST_METHOD(OnlyOneChoiceColumn)
@@ -232,28 +232,28 @@ namespace SudokuUnitTest
 
 			OnlyOneChoiceInColumnVisitor visitor;
 			Grid grid = Grid(stringInput);
-			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(0, 0).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(0, 1).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(0, 2).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(0, 1).GetCell(0, 0).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(0, 1).GetCell(0, 1).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(0, 1).GetCell(0, 2).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(0, 2).GetCell(0, 0).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(0, 2).GetCell(0, 1).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(0, 2).GetCell(0, 2).GetValue());
+			Assert::AreEqual(-1, grid.getRegion(0, 0).getCell(0, 0).getValue());
+			Assert::AreEqual(-1, grid.getRegion(0, 0).getCell(0, 1).getValue());
+			Assert::AreEqual(-1, grid.getRegion(0, 0).getCell(0, 2).getValue());
+			Assert::AreEqual(-1, grid.getRegion(0, 1).getCell(0, 0).getValue());
+			Assert::AreEqual(-1, grid.getRegion(0, 1).getCell(0, 1).getValue());
+			Assert::AreEqual(-1, grid.getRegion(0, 1).getCell(0, 2).getValue());
+			Assert::AreEqual(-1, grid.getRegion(0, 2).getCell(0, 0).getValue());
+			Assert::AreEqual(-1, grid.getRegion(0, 2).getCell(0, 1).getValue());
+			Assert::AreEqual(-1, grid.getRegion(0, 2).getCell(0, 2).getValue());
 			bool visited = grid.Accept(visitor);
 			Assert::IsTrue(visited);
 
 			//First column of grid should have been filled with 1s
-			Assert::AreEqual(1, grid.GetRegion(0, 0).GetCell(0, 0).GetValue());
-			Assert::AreEqual(1, grid.GetRegion(0, 0).GetCell(0, 1).GetValue());
-			Assert::AreEqual(1, grid.GetRegion(0, 0).GetCell(0, 2).GetValue());
-			Assert::AreEqual(1, grid.GetRegion(0, 1).GetCell(0, 0).GetValue());
-			Assert::AreEqual(1, grid.GetRegion(0, 1).GetCell(0, 1).GetValue());
-			Assert::AreEqual(1, grid.GetRegion(0, 1).GetCell(0, 2).GetValue());
-			Assert::AreEqual(1, grid.GetRegion(0, 2).GetCell(0, 0).GetValue());
-			Assert::AreEqual(1, grid.GetRegion(0, 2).GetCell(0, 1).GetValue());
-			Assert::AreEqual(1, grid.GetRegion(0, 2).GetCell(0, 2).GetValue());
+			Assert::AreEqual(1, grid.getRegion(0, 0).getCell(0, 0).getValue());
+			Assert::AreEqual(1, grid.getRegion(0, 0).getCell(0, 1).getValue());
+			Assert::AreEqual(1, grid.getRegion(0, 0).getCell(0, 2).getValue());
+			Assert::AreEqual(1, grid.getRegion(0, 1).getCell(0, 0).getValue());
+			Assert::AreEqual(1, grid.getRegion(0, 1).getCell(0, 1).getValue());
+			Assert::AreEqual(1, grid.getRegion(0, 1).getCell(0, 2).getValue());
+			Assert::AreEqual(1, grid.getRegion(0, 2).getCell(0, 0).getValue());
+			Assert::AreEqual(1, grid.getRegion(0, 2).getCell(0, 1).getValue());
+			Assert::AreEqual(1, grid.getRegion(0, 2).getCell(0, 2).getValue());
 		}
 
 		TEST_METHOD(OnlyOneChoiceRegion)
@@ -270,28 +270,28 @@ namespace SudokuUnitTest
 
 			OnlyOneChoiceInRegionVisitor visitor;
 			Grid grid = Grid(stringInput);
-			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(2, 0).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(0, 1).GetCell(2, 0).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(0, 2).GetCell(2, 0).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(1, 0).GetCell(2, 0).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(1, 1).GetCell(2, 0).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(1, 2).GetCell(2, 0).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(2, 0).GetCell(2, 0).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(2, 1).GetCell(2, 0).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(2, 2).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.getRegion(0, 0).getCell(2, 0).getValue());
+			Assert::AreEqual(-1, grid.getRegion(0, 1).getCell(2, 0).getValue());
+			Assert::AreEqual(-1, grid.getRegion(0, 2).getCell(2, 0).getValue());
+			Assert::AreEqual(-1, grid.getRegion(1, 0).getCell(2, 0).getValue());
+			Assert::AreEqual(-1, grid.getRegion(1, 1).getCell(2, 0).getValue());
+			Assert::AreEqual(-1, grid.getRegion(1, 2).getCell(2, 0).getValue());
+			Assert::AreEqual(-1, grid.getRegion(2, 0).getCell(2, 0).getValue());
+			Assert::AreEqual(-1, grid.getRegion(2, 1).getCell(2, 0).getValue());
+			Assert::AreEqual(-1, grid.getRegion(2, 2).getCell(2, 0).getValue());
 			bool visited = grid.Accept(visitor);
 			Assert::IsTrue(visited);
 
 			//Cells should have been filled with 7s
-			Assert::AreEqual(7, grid.GetRegion(0, 0).GetCell(2, 0).GetValue());
-			Assert::AreEqual(7, grid.GetRegion(0, 1).GetCell(2, 0).GetValue());
-			Assert::AreEqual(7, grid.GetRegion(0, 2).GetCell(2, 0).GetValue());
-			Assert::AreEqual(7, grid.GetRegion(1, 0).GetCell(2, 0).GetValue());
-			Assert::AreEqual(7, grid.GetRegion(1, 1).GetCell(2, 0).GetValue());
-			Assert::AreEqual(7, grid.GetRegion(1, 2).GetCell(2, 0).GetValue());
-			Assert::AreEqual(7, grid.GetRegion(2, 0).GetCell(2, 0).GetValue());
-			Assert::AreEqual(7, grid.GetRegion(2, 1).GetCell(2, 0).GetValue());
-			Assert::AreEqual(7, grid.GetRegion(2, 2).GetCell(2, 0).GetValue());
+			Assert::AreEqual(7, grid.getRegion(0, 0).getCell(2, 0).getValue());
+			Assert::AreEqual(7, grid.getRegion(0, 1).getCell(2, 0).getValue());
+			Assert::AreEqual(7, grid.getRegion(0, 2).getCell(2, 0).getValue());
+			Assert::AreEqual(7, grid.getRegion(1, 0).getCell(2, 0).getValue());
+			Assert::AreEqual(7, grid.getRegion(1, 1).getCell(2, 0).getValue());
+			Assert::AreEqual(7, grid.getRegion(1, 2).getCell(2, 0).getValue());
+			Assert::AreEqual(7, grid.getRegion(2, 0).getCell(2, 0).getValue());
+			Assert::AreEqual(7, grid.getRegion(2, 1).getCell(2, 0).getValue());
+			Assert::AreEqual(7, grid.getRegion(2, 2).getCell(2, 0).getValue());
 		}
 
 		TEST_METHOD(NineHolderForGrid)
@@ -309,9 +309,9 @@ namespace SudokuUnitTest
 				stringInput[i] = "123456789";
 			}
 			Grid grid = Grid(stringInput);
-			NineHolder nh = grid.GetRow(0);
+			NineHolder nh = grid.getRow(0);
 			for (unsigned char i = 0; i < 9; i++){
-				Assert::AreEqual(i + 1, nh.GetCell(i).GetValue());
+				Assert::AreEqual(i + 1, nh.getCell(i).getValue());
 			}
 		}
 
@@ -330,7 +330,7 @@ namespace SudokuUnitTest
 				stringInput[i] = "123456789";
 			}
 			Grid grid = Grid(stringInput);
-			NineHolder nh = grid.GetRow(0);
+			NineHolder nh = grid.getRow(0);
 			Assert::IsTrue(nh.isValuePresent(1));
 			Assert::IsTrue(nh.isValuePresent(5));
 			Assert::IsTrue(nh.isValuePresent(7));
@@ -358,12 +358,12 @@ namespace SudokuUnitTest
 
 			Grid grid = Grid(stringInput);
 			OnlySquareVisitor visitor;
-			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(1, 1).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(0, 2).GetCell(1, 0).GetValue());
+			Assert::AreEqual(-1, grid.getRegion(0, 0).getCell(1, 1).getValue());
+			Assert::AreEqual(-1, grid.getRegion(0, 2).getCell(1, 0).getValue());
 			bool visited = grid.Accept(visitor);
 			Assert::IsTrue(visited);
-			Assert::AreEqual(3, grid.GetRegion(0, 0).GetCell(1, 1).GetValue());
-			Assert::AreEqual(2, grid.GetRegion(0, 2).GetCell(1, 0).GetValue());
+			Assert::AreEqual(3, grid.getRegion(0, 0).getCell(1, 1).getValue());
+			Assert::AreEqual(2, grid.getRegion(0, 2).getCell(1, 0).getValue());
 		}
 
 		TEST_METHOD(OnlySquareOnColumnNoRegion)
@@ -382,12 +382,12 @@ namespace SudokuUnitTest
 
 			Grid grid = Grid(stringInput);
 			OnlySquareVisitor visitor;
-			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(1, 1).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(2, 0).GetCell(0, 1).GetValue());
+			Assert::AreEqual(-1, grid.getRegion(0, 0).getCell(1, 1).getValue());
+			Assert::AreEqual(-1, grid.getRegion(2, 0).getCell(0, 1).getValue());
 			bool visited = grid.Accept(visitor);
 			Assert::IsTrue(visited);
-			Assert::AreEqual(3, grid.GetRegion(0, 0).GetCell(1, 1).GetValue());
-			Assert::AreEqual(2, grid.GetRegion(2, 0).GetCell(0, 1).GetValue());
+			Assert::AreEqual(3, grid.getRegion(0, 0).getCell(1, 1).getValue());
+			Assert::AreEqual(2, grid.getRegion(2, 0).getCell(0, 1).getValue());
 		}
 
 
@@ -407,12 +407,12 @@ namespace SudokuUnitTest
 
 			Grid grid = Grid(stringInput);
 			OnlySquareVisitor visitor;
-			Assert::AreEqual(-1, grid.GetRegion(1, 0).GetCell(1, 0).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(1, 2).GetCell(1, 2).GetValue());
+			Assert::AreEqual(-1, grid.getRegion(1, 0).getCell(1, 0).getValue());
+			Assert::AreEqual(-1, grid.getRegion(1, 2).getCell(1, 2).getValue());
 			bool visited = grid.Accept(visitor);
 			Assert::IsTrue(visited);
-			Assert::AreEqual(1, grid.GetRegion(1, 0).GetCell(1, 0).GetValue());
-			Assert::AreEqual(4, grid.GetRegion(1, 2).GetCell(1, 2).GetValue());
+			Assert::AreEqual(1, grid.getRegion(1, 0).getCell(1, 0).getValue());
+			Assert::AreEqual(4, grid.getRegion(1, 2).getCell(1, 2).getValue());
 		}
 
 
@@ -432,12 +432,12 @@ namespace SudokuUnitTest
 
 			Grid grid = Grid(stringInput);
 			OnlySquareVisitor visitor;
-			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(1, 1).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(0, 2).GetCell(1, 0).GetValue());
+			Assert::AreEqual(-1, grid.getRegion(0, 0).getCell(1, 1).getValue());
+			Assert::AreEqual(-1, grid.getRegion(0, 2).getCell(1, 0).getValue());
 			bool visited = grid.Accept(visitor);
 			Assert::IsTrue(visited);
-			Assert::AreEqual(3, grid.GetRegion(0, 0).GetCell(1, 1).GetValue());
-			Assert::AreEqual(2, grid.GetRegion(0, 2).GetCell(1, 0).GetValue());
+			Assert::AreEqual(3, grid.getRegion(0, 0).getCell(1, 1).getValue());
+			Assert::AreEqual(2, grid.getRegion(0, 2).getCell(1, 0).getValue());
 		}
 
 		TEST_METHOD(TwoOutOfThreeRows)
@@ -456,10 +456,10 @@ namespace SudokuUnitTest
 
 			Grid grid = Grid(stringInput);
 			TwoOutOfThreeRowVisitor visitor;
-			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(2, 1).GetValue());
+			Assert::AreEqual(-1, grid.getRegion(0, 0).getCell(2, 1).getValue());
 			bool visited = grid.Accept(visitor);
 			Assert::IsTrue(visited);
-			Assert::AreEqual(1, grid.GetRegion(0, 0).GetCell(2, 1).GetValue());
+			Assert::AreEqual(1, grid.getRegion(0, 0).getCell(2, 1).getValue());
 		}
 
 		TEST_METHOD(TwoOutOfThreeColumns)
@@ -488,10 +488,10 @@ namespace SudokuUnitTest
 
 			Grid grid = Grid(stringInput);
 			TwoOutOfThreeColumnVisitor visitor;
-			Assert::AreEqual(-1, grid.GetRegion(0, 1).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.getRegion(0, 1).getCell(2, 0).getValue());
 			bool visited = grid.Accept(visitor);
 			Assert::IsTrue(visited);
-			Assert::AreEqual(4, grid.GetRegion(0, 1).GetCell(2, 0).GetValue());
+			Assert::AreEqual(4, grid.getRegion(0, 1).getCell(2, 0).getValue());
 		}
 
 
@@ -511,10 +511,10 @@ namespace SudokuUnitTest
 
 			Grid grid = Grid(stringInput);
 			RowColumnRegionVisitor visitor;
-			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(1, 1).GetValue());
+			Assert::AreEqual(-1, grid.getRegion(0, 0).getCell(1, 1).getValue());
 			bool visited = grid.Accept(visitor);
 			Assert::IsTrue(visited);
-			Assert::AreEqual(4, grid.GetRegion(0, 0).GetCell(1, 1).GetValue());
+			Assert::AreEqual(4, grid.getRegion(0, 0).getCell(1, 1).getValue());
 		}
 
 		TEST_METHOD(NineHolderRowConsistent)
@@ -533,8 +533,8 @@ namespace SudokuUnitTest
 				stringInput[i] = "123456789";
 			}
 			Grid grid = Grid(stringInput);
-			NineHolder firstRow = grid.GetRow(0);
-			NineHolder fourthRow = grid.GetRow(3);
+			NineHolder firstRow = grid.getRow(0);
+			NineHolder fourthRow = grid.getRow(3);
 			Assert::IsTrue(firstRow.isConsistent());
 			Assert::IsFalse(fourthRow.isConsistent());
 		}
@@ -555,8 +555,8 @@ namespace SudokuUnitTest
 				stringInput[i] = "123456789";
 			}
 			Grid grid = Grid(stringInput);
-			RegionHolder firstReg = grid.GetRegion(0, 0);
-			RegionHolder secondReg = grid.GetRegion(1, 2);
+			RegionHolder firstReg = grid.getRegion(0, 0);
+			RegionHolder secondReg = grid.getRegion(1, 2);
 			Assert::IsFalse(firstReg.isConsistent());
 			Assert::IsTrue(secondReg.isConsistent());
 		}
@@ -630,8 +630,8 @@ namespace SudokuUnitTest
 			stringInput[8] = "-6953-14-";
 
 			Grid grid = Grid(stringInput);
-			NineHolder fullRow = grid.GetRow(0);
-			RegionHolder fullReg = grid.GetRegion(2, 1);
+			NineHolder fullRow = grid.getRow(0);
+			RegionHolder fullReg = grid.getRegion(2, 1);
 			Assert::IsTrue(fullRow.isConsistent());
 			Assert::IsTrue(fullReg.isConsistent());
 		}
@@ -704,28 +704,28 @@ namespace SudokuUnitTest
 
 			OnlyOneChoiceGlobalVisitor visitor;
 			Grid grid = Grid(stringInput);
-			Assert::AreEqual(-1, grid.GetRegion(0, 0).GetCell(2, 0).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(0, 1).GetCell(2, 0).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(0, 2).GetCell(2, 0).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(1, 0).GetCell(2, 0).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(1, 1).GetCell(2, 0).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(1, 2).GetCell(2, 0).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(2, 0).GetCell(2, 0).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(2, 1).GetCell(2, 0).GetValue());
-			Assert::AreEqual(-1, grid.GetRegion(2, 2).GetCell(2, 0).GetValue());
+			Assert::AreEqual(-1, grid.getRegion(0, 0).getCell(2, 0).getValue());
+			Assert::AreEqual(-1, grid.getRegion(0, 1).getCell(2, 0).getValue());
+			Assert::AreEqual(-1, grid.getRegion(0, 2).getCell(2, 0).getValue());
+			Assert::AreEqual(-1, grid.getRegion(1, 0).getCell(2, 0).getValue());
+			Assert::AreEqual(-1, grid.getRegion(1, 1).getCell(2, 0).getValue());
+			Assert::AreEqual(-1, grid.getRegion(1, 2).getCell(2, 0).getValue());
+			Assert::AreEqual(-1, grid.getRegion(2, 0).getCell(2, 0).getValue());
+			Assert::AreEqual(-1, grid.getRegion(2, 1).getCell(2, 0).getValue());
+			Assert::AreEqual(-1, grid.getRegion(2, 2).getCell(2, 0).getValue());
 			bool visited = grid.Accept(visitor);
 			Assert::IsTrue(visited);
 
 			//Cells should have been filled with 7s
-			Assert::AreEqual(7, grid.GetRegion(0, 0).GetCell(2, 0).GetValue());
-			Assert::AreEqual(7, grid.GetRegion(0, 1).GetCell(2, 0).GetValue());
-			Assert::AreEqual(7, grid.GetRegion(0, 2).GetCell(2, 0).GetValue());
-			Assert::AreEqual(7, grid.GetRegion(1, 0).GetCell(2, 0).GetValue());
-			Assert::AreEqual(7, grid.GetRegion(1, 1).GetCell(2, 0).GetValue());
-			Assert::AreEqual(7, grid.GetRegion(1, 2).GetCell(2, 0).GetValue());
-			Assert::AreEqual(7, grid.GetRegion(2, 0).GetCell(2, 0).GetValue());
-			Assert::AreEqual(7, grid.GetRegion(2, 1).GetCell(2, 0).GetValue());
-			Assert::AreEqual(7, grid.GetRegion(2, 2).GetCell(2, 0).GetValue());
+			Assert::AreEqual(7, grid.getRegion(0, 0).getCell(2, 0).getValue());
+			Assert::AreEqual(7, grid.getRegion(0, 1).getCell(2, 0).getValue());
+			Assert::AreEqual(7, grid.getRegion(0, 2).getCell(2, 0).getValue());
+			Assert::AreEqual(7, grid.getRegion(1, 0).getCell(2, 0).getValue());
+			Assert::AreEqual(7, grid.getRegion(1, 1).getCell(2, 0).getValue());
+			Assert::AreEqual(7, grid.getRegion(1, 2).getCell(2, 0).getValue());
+			Assert::AreEqual(7, grid.getRegion(2, 0).getCell(2, 0).getValue());
+			Assert::AreEqual(7, grid.getRegion(2, 1).getCell(2, 0).getValue());
+			Assert::AreEqual(7, grid.getRegion(2, 2).getCell(2, 0).getValue());
 		}
 
 		TEST_METHOD(SolveEasyGrid1)
@@ -744,15 +744,15 @@ namespace SudokuUnitTest
 
 			Grid grid = Grid(stringInput);
 			grid.SolveWithEasyStrategies();
-			Assert::AreEqual(5, grid.GetRegion(0, 0).GetCell(1, 0).GetValue());
-			Assert::AreEqual(7, grid.GetRegion(0, 1).GetCell(1, 2).GetValue());
-			Assert::AreEqual(6, grid.GetRegion(0, 2).GetCell(0, 0).GetValue());
-			Assert::AreEqual(7, grid.GetRegion(1, 0).GetCell(0, 0).GetValue());
-			Assert::AreEqual(8, grid.GetRegion(1, 1).GetCell(2, 2).GetValue());
-			Assert::AreEqual(8, grid.GetRegion(1, 2).GetCell(1, 2).GetValue());
-			Assert::AreEqual(7, grid.GetRegion(2, 0).GetCell(0, 2).GetValue());
-			Assert::AreEqual(6, grid.GetRegion(2, 1).GetCell(1, 1).GetValue());
-			Assert::AreEqual(4, grid.GetRegion(2, 2).GetCell(2, 2).GetValue());
+			Assert::AreEqual(5, grid.getRegion(0, 0).getCell(1, 0).getValue());
+			Assert::AreEqual(7, grid.getRegion(0, 1).getCell(1, 2).getValue());
+			Assert::AreEqual(6, grid.getRegion(0, 2).getCell(0, 0).getValue());
+			Assert::AreEqual(7, grid.getRegion(1, 0).getCell(0, 0).getValue());
+			Assert::AreEqual(8, grid.getRegion(1, 1).getCell(2, 2).getValue());
+			Assert::AreEqual(8, grid.getRegion(1, 2).getCell(1, 2).getValue());
+			Assert::AreEqual(7, grid.getRegion(2, 0).getCell(0, 2).getValue());
+			Assert::AreEqual(6, grid.getRegion(2, 1).getCell(1, 1).getValue());
+			Assert::AreEqual(4, grid.getRegion(2, 2).getCell(2, 2).getValue());
 		}
 
 		TEST_METHOD(SolveEasyGrid2)
@@ -771,18 +771,18 @@ namespace SudokuUnitTest
 
 			Grid grid = Grid(stringInput);
 			grid.SolveWithEasyStrategies();
-			Assert::AreEqual(5, grid.GetRegion(0, 0).GetCell(1, 0).GetValue());
-			Assert::AreEqual(2, grid.GetRegion(0, 1).GetCell(0, 2).GetValue());
-			Assert::AreEqual(7, grid.GetRegion(0, 1).GetCell(1, 2).GetValue());
-			Assert::AreEqual(6, grid.GetRegion(0, 2).GetCell(0, 0).GetValue());
-			Assert::AreEqual(7, grid.GetRegion(1, 0).GetCell(0, 0).GetValue());
-			Assert::AreEqual(8, grid.GetRegion(1, 1).GetCell(2, 2).GetValue());
-			Assert::AreEqual(3, grid.GetRegion(1, 1).GetCell(2, 1).GetValue());
-			Assert::AreEqual(8, grid.GetRegion(1, 2).GetCell(1, 2).GetValue());
-			Assert::AreEqual(7, grid.GetRegion(2, 0).GetCell(0, 2).GetValue());
-			Assert::AreEqual(6, grid.GetRegion(2, 1).GetCell(1, 1).GetValue());
-			Assert::AreEqual(4, grid.GetRegion(2, 2).GetCell(2, 2).GetValue());
-			Assert::AreEqual(8, grid.GetRegion(2, 2).GetCell(0, 0).GetValue());
+			Assert::AreEqual(5, grid.getRegion(0, 0).getCell(1, 0).getValue());
+			Assert::AreEqual(2, grid.getRegion(0, 1).getCell(0, 2).getValue());
+			Assert::AreEqual(7, grid.getRegion(0, 1).getCell(1, 2).getValue());
+			Assert::AreEqual(6, grid.getRegion(0, 2).getCell(0, 0).getValue());
+			Assert::AreEqual(7, grid.getRegion(1, 0).getCell(0, 0).getValue());
+			Assert::AreEqual(8, grid.getRegion(1, 1).getCell(2, 2).getValue());
+			Assert::AreEqual(3, grid.getRegion(1, 1).getCell(2, 1).getValue());
+			Assert::AreEqual(8, grid.getRegion(1, 2).getCell(1, 2).getValue());
+			Assert::AreEqual(7, grid.getRegion(2, 0).getCell(0, 2).getValue());
+			Assert::AreEqual(6, grid.getRegion(2, 1).getCell(1, 1).getValue());
+			Assert::AreEqual(4, grid.getRegion(2, 2).getCell(2, 2).getValue());
+			Assert::AreEqual(8, grid.getRegion(2, 2).getCell(0, 0).getValue());
 		}
 
 

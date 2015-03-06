@@ -16,7 +16,7 @@ bool OnlySquareVisitor::Visit(Grid& ioGrid) const
 	// on rows :
 	for (unsigned char i = 0; i < 9; i++)
 	{
-		NineHolder fullRow = ioGrid.GetRow(i);
+		NineHolder fullRow = ioGrid.getRow(i);
 		ValueEliminator valueEliminator;
 		fullRow.flagValues(valueEliminator);
 		set<unsigned char> availableValues = valueEliminator.availableValue();
@@ -35,7 +35,7 @@ bool OnlySquareVisitor::Visit(Grid& ioGrid) const
 			int secondRegionColIndex = -1;
 			for (int j = 0; j < 9; j++)
 			{
-				if (fullRow.GetCell(j).IsEmpty())
+				if (fullRow.getCell(j).IsEmpty())
 				{
 					if (firstColumnIndex == -1)
 					{
@@ -49,34 +49,34 @@ bool OnlySquareVisitor::Visit(Grid& ioGrid) const
 					}		
 				}
 			}
-			NineHolder firstColumn = ioGrid.GetColumn(firstColumnIndex);
-			NineHolder secondColumn = ioGrid.GetColumn(secondColumnIndex);
-			RegionHolder firstRegion = ioGrid.GetRegion(i/3, firstRegionColIndex);
-			RegionHolder secondRegion = ioGrid.GetRegion(i/3, secondRegionColIndex);
+			NineHolder firstColumn = ioGrid.getColumn(firstColumnIndex);
+			NineHolder secondColumn = ioGrid.getColumn(secondColumnIndex);
+			RegionHolder firstRegion = ioGrid.getRegion(i/3, firstRegionColIndex);
+			RegionHolder secondRegion = ioGrid.getRegion(i/3, secondRegionColIndex);
 
 			// check if one of the two missing values already in firstColumn or secondColumn
 			if (firstColumn.isValuePresent(firstValue))
 			{
-				fullRow.GetCell(firstColumnIndex) = secondValue;
-				fullRow.GetCell(secondColumnIndex) = firstValue;
+				fullRow.getCell(firstColumnIndex) = secondValue;
+				fullRow.getCell(secondColumnIndex) = firstValue;
 				visited = true;
 			}
 			else if (firstColumn.isValuePresent(secondValue))
 			{
-				fullRow.GetCell(firstColumnIndex) = firstValue;
-				fullRow.GetCell(secondColumnIndex) = secondValue;
+				fullRow.getCell(firstColumnIndex) = firstValue;
+				fullRow.getCell(secondColumnIndex) = secondValue;
 				visited = true;
 			}
 			else if (secondColumn.isValuePresent(firstValue))
 			{
-				fullRow.GetCell(firstColumnIndex) = firstValue;
-				fullRow.GetCell(secondColumnIndex) = secondValue;
+				fullRow.getCell(firstColumnIndex) = firstValue;
+				fullRow.getCell(secondColumnIndex) = secondValue;
 				visited = true;
 			}
 			else if (secondColumn.isValuePresent(secondValue))
 			{
-				fullRow.GetCell(firstColumnIndex) = secondValue;
-				fullRow.GetCell(secondColumnIndex) = firstValue;
+				fullRow.getCell(firstColumnIndex) = secondValue;
+				fullRow.getCell(secondColumnIndex) = firstValue;
 				visited = true;
 			}
 			
@@ -89,26 +89,26 @@ bool OnlySquareVisitor::Visit(Grid& ioGrid) const
 				{
 					if (firstRegion.isValuePresent(firstValue))
 					{
-						fullRow.GetCell(firstColumnIndex) = secondValue;
-						fullRow.GetCell(secondColumnIndex) = firstValue;
+						fullRow.getCell(firstColumnIndex) = secondValue;
+						fullRow.getCell(secondColumnIndex) = firstValue;
 						visited = true;
 					}
 					else if (firstRegion.isValuePresent(secondValue))
 					{
-						fullRow.GetCell(firstColumnIndex) = firstValue;
-						fullRow.GetCell(secondColumnIndex) = secondValue;
+						fullRow.getCell(firstColumnIndex) = firstValue;
+						fullRow.getCell(secondColumnIndex) = secondValue;
 						visited = true;
 					}
 					else if (secondRegion.isValuePresent(firstValue))
 					{
-						fullRow.GetCell(firstColumnIndex) = firstValue;
-						fullRow.GetCell(secondColumnIndex) = secondValue;
+						fullRow.getCell(firstColumnIndex) = firstValue;
+						fullRow.getCell(secondColumnIndex) = secondValue;
 						visited = true;
 					}
 					else if (secondRegion.isValuePresent(secondValue))
 					{
-						fullRow.GetCell(firstColumnIndex) = secondValue;
-						fullRow.GetCell(secondColumnIndex) = firstValue;
+						fullRow.getCell(firstColumnIndex) = secondValue;
+						fullRow.getCell(secondColumnIndex) = firstValue;
 						visited = true;
 					}
 				}
@@ -120,7 +120,7 @@ bool OnlySquareVisitor::Visit(Grid& ioGrid) const
 	// same for the 9 columns :
 	for (unsigned char i = 0; i < 9; i++)
 	{
-		NineHolder fullColumn = ioGrid.GetColumn(i);
+		NineHolder fullColumn = ioGrid.getColumn(i);
 		ValueEliminator valueEliminator;
 		fullColumn.flagValues(valueEliminator);
 		set<unsigned char> availableValues = valueEliminator.availableValue();
@@ -139,7 +139,7 @@ bool OnlySquareVisitor::Visit(Grid& ioGrid) const
 			int secondRegionRowIndex = -1;
 			for (int j = 0; j < 9; j++)
 			{
-				if (fullColumn.GetCell(j).IsEmpty())
+				if (fullColumn.getCell(j).IsEmpty())
 				{
 					if (firstRowIndex == -1)
 					{
@@ -153,33 +153,33 @@ bool OnlySquareVisitor::Visit(Grid& ioGrid) const
 					}				
 				}
 			}
-			NineHolder firstRow = ioGrid.GetRow(firstRowIndex);
-			NineHolder secondRow = ioGrid.GetRow(secondRowIndex);
-			RegionHolder firstRegion = ioGrid.GetRegion(firstRegionRowIndex, i / 3);
-			RegionHolder secondRegion = ioGrid.GetRegion(secondRegionRowIndex, i / 3);
+			NineHolder firstRow = ioGrid.getRow(firstRowIndex);
+			NineHolder secondRow = ioGrid.getRow(secondRowIndex);
+			RegionHolder firstRegion = ioGrid.getRegion(firstRegionRowIndex, i / 3);
+			RegionHolder secondRegion = ioGrid.getRegion(secondRegionRowIndex, i / 3);
 			// check if one of the two missing values already in firstRow or secondRow
 			if (firstRow.isValuePresent(firstValue))
 			{
-				fullColumn.GetCell(firstRowIndex) = secondValue;
-				fullColumn.GetCell(secondRowIndex) = firstValue;
+				fullColumn.getCell(firstRowIndex) = secondValue;
+				fullColumn.getCell(secondRowIndex) = firstValue;
 				visited = true;
 			}
 			else if (firstRow.isValuePresent(secondValue))
 			{
-				fullColumn.GetCell(firstRowIndex) = firstValue;
-				fullColumn.GetCell(secondRowIndex) = secondValue;
+				fullColumn.getCell(firstRowIndex) = firstValue;
+				fullColumn.getCell(secondRowIndex) = secondValue;
 				visited = true;
 			}
 			else if (secondRow.isValuePresent(firstValue))
 			{
-				fullColumn.GetCell(firstRowIndex) = firstValue;
-				fullColumn.GetCell(secondRowIndex) = secondValue;
+				fullColumn.getCell(firstRowIndex) = firstValue;
+				fullColumn.getCell(secondRowIndex) = secondValue;
 				visited = true;
 			}
 			else if (secondRow.isValuePresent(secondValue))
 			{
-				fullColumn.GetCell(firstRowIndex) = secondValue;
-				fullColumn.GetCell(secondRowIndex) = firstValue;
+				fullColumn.getCell(firstRowIndex) = secondValue;
+				fullColumn.getCell(secondRowIndex) = firstValue;
 				visited = true;
 			}
 			else
@@ -192,26 +192,26 @@ bool OnlySquareVisitor::Visit(Grid& ioGrid) const
 				{
 					if (firstRegion.isValuePresent(firstValue))
 					{
-						fullColumn.GetCell(firstRowIndex) = secondValue;
-						fullColumn.GetCell(secondRowIndex) = firstValue;
+						fullColumn.getCell(firstRowIndex) = secondValue;
+						fullColumn.getCell(secondRowIndex) = firstValue;
 						visited = true;
 					}
 					else if (firstRegion.isValuePresent(secondValue))
 					{
-						fullColumn.GetCell(firstRowIndex) = firstValue;
-						fullColumn.GetCell(secondRowIndex) = secondValue;
+						fullColumn.getCell(firstRowIndex) = firstValue;
+						fullColumn.getCell(secondRowIndex) = secondValue;
 						visited = true;
 					}
 					else if (secondRegion.isValuePresent(firstValue))
 					{
-						fullColumn.GetCell(firstRowIndex) = firstValue;
-						fullColumn.GetCell(secondRowIndex) = secondValue;
+						fullColumn.getCell(firstRowIndex) = firstValue;
+						fullColumn.getCell(secondRowIndex) = secondValue;
 						visited = true;
 					}
 					else if (secondRegion.isValuePresent(secondValue))
 					{
-						fullColumn.GetCell(firstRowIndex) = secondValue;
-						fullColumn.GetCell(secondRowIndex) = firstValue;
+						fullColumn.getCell(firstRowIndex) = secondValue;
+						fullColumn.getCell(secondRowIndex) = firstValue;
 						visited = true;
 					}
 				}

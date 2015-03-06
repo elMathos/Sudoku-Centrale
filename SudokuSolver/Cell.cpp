@@ -7,7 +7,7 @@ Cell::Cell()
 	_value = -1;
 }
 
-int Cell::GetValue()
+int Cell::getValue()
 {
 	return _value;
 }

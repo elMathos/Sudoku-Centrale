@@ -2,9 +2,9 @@
 #include "ValueEliminator.h"
 
 
-RegionHolder::RegionHolder(Region& reg) : _cNW(reg.GetCell(0, 0)), _cN(reg.GetCell(0, 1)), _cNE(reg.GetCell(0, 2)),
-_cW(reg.GetCell(1, 0)), _cC(reg.GetCell(1, 1)), _cE(reg.GetCell(1, 2)),
-_cSW(reg.GetCell(2, 0)), _cS(reg.GetCell(2, 1)), _cSE(reg.GetCell(2, 2))
+RegionHolder::RegionHolder(Region& reg) : _cNW(reg.getCell(0, 0)), _cN(reg.getCell(0, 1)), _cNE(reg.getCell(0, 2)),
+_cW(reg.getCell(1, 0)), _cC(reg.getCell(1, 1)), _cE(reg.getCell(1, 2)),
+_cSW(reg.getCell(2, 0)), _cS(reg.getCell(2, 1)), _cSE(reg.getCell(2, 2))
 {
 }
 
@@ -83,7 +83,7 @@ bool RegionHolder::isValuePresent(unsigned char iTarget)
 	// if in availableValues then it is absent from the set
 }
 
-Cell& RegionHolder::GetCell(unsigned char i, unsigned char j)
+Cell& RegionHolder::getCell(unsigned char i, unsigned char j)
 {
 	if (i == 0 && j == 0) return _cNW;
 	if (i == 0 && j == 1) return _cN;
@@ -111,7 +111,7 @@ bool RegionHolder::isConsistent()
 	{
 		for (int j = 0; j < 3; j++)
 		{
-			value = GetCell(i, j).GetValue();
+			value = getCell(i, j).getValue();
 			if (value != -1 && alreadySeen.find(value) != alreadySeen.end())
 			{
 				consistent = false;
@@ -132,7 +132,7 @@ bool RegionHolder::isFull()
 	{
 		for (int j = 0; j < 3; j++)
 		{
-			if (GetCell(i, j).IsEmpty())
+			if (getCell(i, j).IsEmpty())
 			{
 				full = false;
 				break;

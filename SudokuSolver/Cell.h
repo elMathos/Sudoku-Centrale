@@ -19,7 +19,7 @@ public:
 	Cell& operator=(unsigned char iValue);
 	operator unsigned char() const;
 	bool operator==(unsigned char iValue) const;
-	int GetValue();
+	int getValue();
 
 private:
 	int _value;

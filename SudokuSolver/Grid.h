@@ -24,9 +24,9 @@ public:
 	Grid(vector<string>& values);
 	Grid(vector<Region>& regions);
 	~Grid();
-	RegionHolder GetRegion(unsigned char i, unsigned char j);
-	NineHolder GetRow(unsigned char i);
-	NineHolder GetColumn(unsigned char i);
+	RegionHolder getRegion(unsigned char i, unsigned char j);
+	NineHolder getRow(unsigned char i);
+	NineHolder getColumn(unsigned char i);
 	bool Accept(const IVisitor& visitor);
 	bool isConsistent();
 	bool isFull();

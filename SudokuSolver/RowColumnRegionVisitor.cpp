@@ -25,17 +25,17 @@ bool RowColumnRegionVisitor::Visit(Grid& ioGrid) const
 	{
 		for (int jReg = 0; jReg < 3; jReg++)
 		{
-			RegionHolder regHold = ioGrid.GetRegion(iReg, jReg);
+			RegionHolder regHold = ioGrid.getRegion(iReg, jReg);
 			// test all cells of the region
 			for (int iCell = 0; iCell < 3; iCell++)
 			{
 				for (int jCell = 0; jCell < 3; jCell++)
 				{
 					//TODO: This CAN be speeded up by instantiating the 18 nineholders once and for all before the loop (to be stored in 2 sets)
-					if (regHold.GetCell(iCell, jCell).IsEmpty())
+					if (regHold.getCell(iCell, jCell).IsEmpty())
 					{
-						NineHolder fullCol = ioGrid.GetColumn(3 * jReg + jCell);
-						NineHolder fullRow = ioGrid.GetRow(3 * iReg + iCell);
+						NineHolder fullCol = ioGrid.getColumn(3 * jReg + jCell);
+						NineHolder fullRow = ioGrid.getRow(3 * iReg + iCell);
 						int possibleValues = 9;
 						int valueToSet = 0;
 						for (unsigned char digit = 1; digit < 10; digit++)
@@ -54,7 +54,7 @@ bool RowColumnRegionVisitor::Visit(Grid& ioGrid) const
 							//we've been exactly 8 times in the if, 1 time in the else
 							//we can set the value of the cell to valueToSet
 						{
-							regHold.GetCell(iCell, jCell) = valueToSet;
+							regHold.getCell(iCell, jCell) = valueToSet;
 							visited = true;
 						}
 					}

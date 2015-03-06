@@ -8,13 +8,15 @@
 
 using namespace std;
 
+// a few tests are here, the rest can be found as UT in unittest1.cpp
+
 int main(int argc, char *argv[])
 {
 	Cell myCell1 =  Cell();
-	cout << "Cell value: expected -1, got " << myCell1.GetValue() << "\n";
+	cout << "Cell value: expected -1, got " << myCell1.getValue() << "\n";
 
 	Cell myCell2 =  Cell(9);
-	cout << "Cell value: expected 9, got " << myCell2.GetValue() << "\n";
+	cout << "Cell value: expected 9, got " << myCell2.getValue() << "\n";
 
 	try{
 		Cell myCell3 =  Cell(-1);
@@ -32,8 +34,8 @@ int main(int argc, char *argv[])
 
 	try{
 		Region myRegion1 = Region("1-3456789");
-		cout << "Expected 1, got " << myRegion1.GetCell(0, 0).GetValue() << "\n";
-		cout << "Expected -1, got  " << myRegion1.GetCell(0, 1).GetValue() << "\n";
+		cout << "Expected 1, got " << myRegion1.getCell(0, 0).getValue() << "\n";
+		cout << "Expected -1, got  " << myRegion1.getCell(0, 1).getValue() << "\n";
 	}
 	catch (const invalid_argument& e){
 		cout << e.what();
@@ -54,19 +56,19 @@ int main(int argc, char *argv[])
 	}
 
 	Grid grid1 = Grid(values1);
-	RegionHolder regHold1 = RegionHolder(grid1.GetRegion(2,2));
-	regHold1.GetCell(0, 0) = 8;
-	cout << "Expected 8, got " << grid1.GetRegion(2, 2).GetCell(0, 0).GetValue() << "\n";
+	RegionHolder regHold1 = RegionHolder(grid1.getRegion(2,2));
+	regHold1.getCell(0, 0) = 8;
+	cout << "Expected 8, got " << grid1.getRegion(2, 2).getCell(0, 0).getValue() << "\n";
 
-	RegionHolder regHold2 = RegionHolder(grid1.GetRegion(0,0));
+	RegionHolder regHold2 = RegionHolder(grid1.getRegion(0,0));
 	RowHolder topRow1 = regHold2.TopRow();
 	RowHolder middleRow1 = regHold2.MiddleRow();
 	RowHolder bottomRow1 = regHold2.BottomRow();
 
 	LastCellFinder last1 = LastCellFinder(topRow1, middleRow1, bottomRow1);
-	cout << "Expected -1, got " << grid1.GetRegion(0, 0).GetCell(1, 1).GetValue() << "\n";
+	cout << "Expected -1, got " << grid1.getRegion(0, 0).getCell(1, 1).getValue() << "\n";
 	last1.fill();
-	cout << "Expected 5, got " << grid1.GetRegion(0, 0).GetCell(1, 1).GetValue() << "\n";
+	cout << "Expected 5, got " << grid1.getRegion(0, 0).getCell(1, 1).getValue() << "\n";
 
 	return 0;
 }

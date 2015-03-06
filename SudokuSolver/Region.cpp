@@ -40,7 +40,7 @@ Region::~Region()
 }
 
 
-Cell& Region::GetCell(unsigned char i, unsigned char j)
+Cell& Region::getCell(unsigned char i, unsigned char j)
 {
 	if (i == 0 && j == 0) return _cNW;
 	if (i == 0 && j == 1) return _cN;

@@ -46,9 +46,9 @@ void ValueEliminator::setFlags(RegionHolder& regionHolder)
 	{
 		for (unsigned char j = 0; j < 3; j++)
 		{
-			if (!regionHolder.GetCell(i, j).IsEmpty())
+			if (!regionHolder.getCell(i, j).IsEmpty())
 			{
-				flag(regionHolder.GetCell(i, j));
+				flag(regionHolder.getCell(i, j));
 			}
 		}
 	}
@@ -69,8 +69,8 @@ void ValueEliminator::setFlags(NineHolder& regionHolder)
 {
 	for (int i = 0; i < 9; i++)
 	{
-		if (!regionHolder.GetCell(i).IsEmpty())
-			flag(regionHolder.GetCell(i));
+		if (!regionHolder.getCell(i).IsEmpty())
+			flag(regionHolder.getCell(i));
 	}
 
 }

@@ -19,55 +19,55 @@ bool LastCellFinder::fill()
 
 	if (!_t1.Cell1().IsEmpty())
 	{
-		values[_t1.Cell1().GetValue() - 1] = true;
+		values[_t1.Cell1().getValue() - 1] = true;
 		valuesAvailable++;
 	}
 
 	if (!_t1.Cell2().IsEmpty())
 	{
-		values[_t1.Cell2().GetValue() - 1] = true;
+		values[_t1.Cell2().getValue() - 1] = true;
 		valuesAvailable++;
 	}
 
 	if (!_t1.Cell3().IsEmpty())
 	{
-		values[_t1.Cell3().GetValue() - 1] = true;
+		values[_t1.Cell3().getValue() - 1] = true;
 		valuesAvailable++;
 	}
 
 	if (!_t2.Cell1().IsEmpty())
 	{
-		values[_t2.Cell1().GetValue() - 1] = true;
+		values[_t2.Cell1().getValue() - 1] = true;
 		valuesAvailable++;
 	}
 
 	if (!_t2.Cell2().IsEmpty())
 	{
-		values[_t2.Cell2().GetValue() - 1] = true;
+		values[_t2.Cell2().getValue() - 1] = true;
 		valuesAvailable++;
 	}
 
 	if (!_t2.Cell3().IsEmpty())
 	{
-		values[_t2.Cell3().GetValue() - 1] = true;
+		values[_t2.Cell3().getValue() - 1] = true;
 		valuesAvailable++;
 	}
 
 	if (!_t3.Cell1().IsEmpty())
 	{
-		values[_t3.Cell1().GetValue() - 1] = true;
+		values[_t3.Cell1().getValue() - 1] = true;
 		valuesAvailable++;
 	}
 
 	if (!_t3.Cell2().IsEmpty())
 	{
-		values[_t3.Cell2().GetValue() - 1] = true;
+		values[_t3.Cell2().getValue() - 1] = true;
 		valuesAvailable++;
 	}
 
 	if (!_t3.Cell3().IsEmpty())
 	{
-		values[_t3.Cell3().GetValue() - 1] = true;
+		values[_t3.Cell3().getValue() - 1] = true;
 		valuesAvailable++;
 	}
 		

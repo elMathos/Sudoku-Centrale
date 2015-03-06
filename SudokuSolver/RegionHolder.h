@@ -34,7 +34,7 @@ public:
 	bool isFull();
 
 	//TODO: (also?) Make all accessors as const
-	Cell& GetCell(unsigned char, unsigned char);
+	Cell& getCell(unsigned char, unsigned char);
 
 private:
 

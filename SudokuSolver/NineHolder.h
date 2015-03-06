@@ -15,7 +15,7 @@ class ExportedByDll NineHolder
 public:
 	NineHolder(TripleHolder&, TripleHolder&, TripleHolder&);
 	~NineHolder();
-	Cell& GetCell(unsigned char i);
+	Cell& getCell(unsigned char i);
 	void flagValues(ValueEliminator& v);
 	bool isValuePresent(unsigned char);
 	bool isConsistent();

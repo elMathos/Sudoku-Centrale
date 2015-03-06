@@ -20,9 +20,9 @@ bool TwoOutOfThreeColumnVisitor::Visit(Grid& ioGrid) const
 	bool visited = false;
 	for (unsigned char i = 0; i < 3; i++)
 	{
-		NineHolder FullLeftColumn = ioGrid.GetColumn(3 * i);
-		NineHolder FullMiddleColumn = ioGrid.GetColumn(3 * i + 1);
-		NineHolder FullRightColumn = ioGrid.GetColumn(3 * i + 2);
+		NineHolder FullLeftColumn = ioGrid.getColumn(3 * i);
+		NineHolder FullMiddleColumn = ioGrid.getColumn(3 * i + 1);
+		NineHolder FullRightColumn = ioGrid.getColumn(3 * i + 2);
 
 		for (unsigned char digit = 1; digit < 10; digit++)
 		{
@@ -38,18 +38,18 @@ bool TwoOutOfThreeColumnVisitor::Visit(Grid& ioGrid) const
 				absences++;
 			}
 			else{ //erase Row in which the digit is present from the set rowAbsence
-				if (FullLeftColumn.GetCell(0).GetValue() == digit || FullLeftColumn.GetCell(1).GetValue() == digit
-					|| FullLeftColumn.GetCell(2).GetValue() == digit)
+				if (FullLeftColumn.getCell(0).getValue() == digit || FullLeftColumn.getCell(1).getValue() == digit
+					|| FullLeftColumn.getCell(2).getValue() == digit)
 				{
 					rowAbsence.erase(0);
 				}
-				if (FullLeftColumn.GetCell(3).GetValue() == digit || FullLeftColumn.GetCell(4).GetValue() == digit
-					|| FullLeftColumn.GetCell(5).GetValue() == digit)
+				if (FullLeftColumn.getCell(3).getValue() == digit || FullLeftColumn.getCell(4).getValue() == digit
+					|| FullLeftColumn.getCell(5).getValue() == digit)
 				{
 					rowAbsence.erase(1);
 				}
-				if (FullLeftColumn.GetCell(6).GetValue() == digit || FullLeftColumn.GetCell(7).GetValue() == digit
-					|| FullLeftColumn.GetCell(8).GetValue() == digit)
+				if (FullLeftColumn.getCell(6).getValue() == digit || FullLeftColumn.getCell(7).getValue() == digit
+					|| FullLeftColumn.getCell(8).getValue() == digit)
 				{
 					rowAbsence.erase(2);
 				}
@@ -60,18 +60,18 @@ bool TwoOutOfThreeColumnVisitor::Visit(Grid& ioGrid) const
 				columnDigitAbsent = 3 * i + 1; absences++;
 			}
 			else{ //erase Row in which the digit is present from the set rowAbsence
-				if (FullMiddleColumn.GetCell(0).GetValue() == digit || FullMiddleColumn.GetCell(1).GetValue() == digit
-					|| FullMiddleColumn.GetCell(2).GetValue() == digit)
+				if (FullMiddleColumn.getCell(0).getValue() == digit || FullMiddleColumn.getCell(1).getValue() == digit
+					|| FullMiddleColumn.getCell(2).getValue() == digit)
 				{
 					rowAbsence.erase(0);
 				}
-				if (FullMiddleColumn.GetCell(3).GetValue() == digit || FullMiddleColumn.GetCell(4).GetValue() == digit
-					|| FullMiddleColumn.GetCell(5).GetValue() == digit)
+				if (FullMiddleColumn.getCell(3).getValue() == digit || FullMiddleColumn.getCell(4).getValue() == digit
+					|| FullMiddleColumn.getCell(5).getValue() == digit)
 				{
 					rowAbsence.erase(1);
 				}
-				if (FullMiddleColumn.GetCell(6).GetValue() == digit || FullMiddleColumn.GetCell(7).GetValue() == digit
-					|| FullMiddleColumn.GetCell(8).GetValue() == digit)
+				if (FullMiddleColumn.getCell(6).getValue() == digit || FullMiddleColumn.getCell(7).getValue() == digit
+					|| FullMiddleColumn.getCell(8).getValue() == digit)
 				{
 					rowAbsence.erase(2);
 				}
@@ -82,18 +82,18 @@ bool TwoOutOfThreeColumnVisitor::Visit(Grid& ioGrid) const
 				absences++; 
 			}
 			else{ //erase Column in which the digit is present from the set rowAbsence
-				if (FullRightColumn.GetCell(0).GetValue() == digit || FullRightColumn.GetCell(1).GetValue() == digit
-					|| FullRightColumn.GetCell(2).GetValue() == digit)
+				if (FullRightColumn.getCell(0).getValue() == digit || FullRightColumn.getCell(1).getValue() == digit
+					|| FullRightColumn.getCell(2).getValue() == digit)
 				{
 					rowAbsence.erase(0);
 				}
-				if (FullRightColumn.GetCell(3).GetValue() == digit || FullRightColumn.GetCell(4).GetValue() == digit
-					|| FullRightColumn.GetCell(5).GetValue() == digit)
+				if (FullRightColumn.getCell(3).getValue() == digit || FullRightColumn.getCell(4).getValue() == digit
+					|| FullRightColumn.getCell(5).getValue() == digit)
 				{
 					rowAbsence.erase(1);
 				}
-				if (FullRightColumn.GetCell(6).GetValue() == digit || FullRightColumn.GetCell(7).GetValue() == digit
-					|| FullRightColumn.GetCell(8).GetValue() == digit)
+				if (FullRightColumn.getCell(6).getValue() == digit || FullRightColumn.getCell(7).getValue() == digit
+					|| FullRightColumn.getCell(8).getValue() == digit)
 				{
 					rowAbsence.erase(2);
 				}
@@ -108,27 +108,27 @@ bool TwoOutOfThreeColumnVisitor::Visit(Grid& ioGrid) const
 				set<unsigned char>::iterator iter = rowAbsence.begin();
 				int rowRegIndex = *iter;
 				//We could have a loop here but I think it is more readable this way.
-				NineHolder nh1 = ioGrid.GetRow(3 * rowRegIndex);
-				NineHolder nh2 = ioGrid.GetRow(3 * rowRegIndex + 1);
-				NineHolder nh3 = ioGrid.GetRow(3 * rowRegIndex + 2);
+				NineHolder nh1 = ioGrid.getRow(3 * rowRegIndex);
+				NineHolder nh2 = ioGrid.getRow(3 * rowRegIndex + 1);
+				NineHolder nh3 = ioGrid.getRow(3 * rowRegIndex + 2);
 
 				set<unsigned char> possiblePlaces;
 				possiblePlaces.insert(0);
 				possiblePlaces.insert(1);
 				possiblePlaces.insert(2);
-				RegionHolder regHolder = ioGrid.GetRegion(rowRegIndex, columnDigitAbsent / 3);
+				RegionHolder regHolder = ioGrid.getRegion(rowRegIndex, columnDigitAbsent / 3);
 
-				if (!regHolder.GetCell(0, columnDigitAbsent % 3).IsEmpty()
+				if (!regHolder.getCell(0, columnDigitAbsent % 3).IsEmpty()
 					|| nh1.isValuePresent(digit))
 				{
 					possiblePlaces.erase(0);
 				}
-				if (!regHolder.GetCell(1, columnDigitAbsent % 3).IsEmpty()
+				if (!regHolder.getCell(1, columnDigitAbsent % 3).IsEmpty()
 					|| nh2.isValuePresent(digit))
 				{
 					possiblePlaces.erase(1);
 				}
-				if (!regHolder.GetCell(2, columnDigitAbsent % 3).IsEmpty()
+				if (!regHolder.getCell(2, columnDigitAbsent % 3).IsEmpty()
 					|| nh3.isValuePresent(digit))
 				{
 					possiblePlaces.erase(2);
@@ -139,7 +139,7 @@ bool TwoOutOfThreeColumnVisitor::Visit(Grid& ioGrid) const
 				{
 					set<unsigned char>::iterator iter3 = possiblePlaces.begin();
 					int place = *iter3;
-					regHolder.GetCell(place, columnDigitAbsent % 3) = digit;
+					regHolder.getCell(place, columnDigitAbsent % 3) = digit;
 					visited = true;
 				}
 			}

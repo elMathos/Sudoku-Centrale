@@ -52,7 +52,7 @@ Grid::~Grid()
 {
 }
 
-RegionHolder Grid::GetRegion(unsigned char i, unsigned char j)
+RegionHolder Grid::getRegion(unsigned char i, unsigned char j)
 {
 	if (i == 0 && j == 0) return _rNW;
 	if (i == 0 && j == 1) return _rN;
@@ -71,7 +71,7 @@ bool Grid::Accept(const IVisitor& visitor)
 	return visitor.Visit(*this);
 }
 
-NineHolder Grid::GetRow(unsigned char i)
+NineHolder Grid::getRow(unsigned char i)
 {
 	if (i == 0)
 	{
@@ -167,7 +167,7 @@ NineHolder Grid::GetRow(unsigned char i)
 	}
 }
 
-NineHolder Grid::GetColumn(unsigned char i)
+NineHolder Grid::getColumn(unsigned char i)
 {
 	if (i == 0)
 	{
@@ -267,10 +267,10 @@ bool Grid::isConsistent()
 {
 	for (int i = 0; i < 9; i++)
 	{
-		NineHolder row = GetRow(i);
+		NineHolder row = getRow(i);
 		if (!row.isConsistent()) return false;
 
-		NineHolder col = GetColumn(i);
+		NineHolder col = getColumn(i);
 		if (!col.isConsistent()) return false;
 
 	}
@@ -279,7 +279,7 @@ bool Grid::isConsistent()
 	{
 		for (int j = 0; j < 3; j++)
 		{
-			RegionHolder reg = GetRegion(i, j);
+			RegionHolder reg = getRegion(i, j);
 			if (!reg.isConsistent()) return false;
 		}
 	}
@@ -292,7 +292,7 @@ bool Grid::isFull()
 	// grid fulled if each row is
 	for (int i = 0; i < 9; i++)
 	{
-		NineHolder row = GetRow(i);
+		NineHolder row = getRow(i);
 		full &= row.isFull();
 
 		if (!full)
@@ -305,9 +305,9 @@ bool Grid::isFull()
 set<unsigned char> Grid::getPossibleValues(unsigned char rowIdx, unsigned char colIdx)
 {
 	set<unsigned char> possibleValuesSet;
-	RegionHolder regHold = GetRegion(rowIdx / 3, colIdx / 3);
-	NineHolder fullRow = GetRow(rowIdx);
-	NineHolder fullCol = GetColumn(colIdx);
+	RegionHolder regHold = getRegion(rowIdx / 3, colIdx / 3);
+	NineHolder fullRow = getRow(rowIdx);
+	NineHolder fullCol = getColumn(colIdx);
 	for (unsigned char dig = 1; dig < 10; dig++) {
 		if (!(regHold.isValuePresent(dig) || fullCol.isValuePresent(dig)
 			|| fullRow.isValuePresent(dig)))
@@ -325,11 +325,11 @@ vector<unsigned char> Grid::getIndicesCellWithLessChoices()
 	{
 		for (int j = 0; j < 8; j++)
 		{
-			RegionHolder regHold = GetRegion(i / 3, j / 3);
-			if (regHold.GetCell(i % 3, j % 3).IsEmpty())
+			RegionHolder regHold = getRegion(i / 3, j / 3);
+			if (regHold.getCell(i % 3, j % 3).IsEmpty())
 			{
-				NineHolder fullRow = GetRow(i);
-				NineHolder fullCol = GetColumn(j);
+				NineHolder fullRow = getRow(i);
+				NineHolder fullCol = getColumn(j);
 				set<unsigned char> possibleValues = getPossibleValues(i, j);
 				int nbPossibleValues = possibleValues.size();
 				
@@ -401,7 +401,7 @@ void Grid::Solve()
 				unsigned char hyp = *pPossibleValue;
 				Grid clone = *this;
 				//making assumption on clone
-				clone.GetRegion(best_i / 3, best_j / 3).GetCell(best_i % 3, best_j % 3) = hyp;
+				clone.getRegion(best_i / 3, best_j / 3).getCell(best_i % 3, best_j % 3) = hyp;
 				try
 				{
 					clone.Solve();
