@@ -6,8 +6,14 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SudokuSolver", "SudokuSolver\SudokuSolver.vcxproj", "{B191AD5C-9CFF-4606-96C5-8ADDC58C5232}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestSudoku", "TestSudoku\TestSudoku.vcxproj", "{05E6CC8D-2ADE-427A-867B-67F87DA8BCB3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B191AD5C-9CFF-4606-96C5-8ADDC58C5232} = {B191AD5C-9CFF-4606-96C5-8ADDC58C5232}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SudokuUnitTest", "SudokuUnitTest\SudokuUnitTest.vcxproj", "{4E5ADBC1-84CC-48AF-9C78-AAC3FCB8E35E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B191AD5C-9CFF-4606-96C5-8ADDC58C5232} = {B191AD5C-9CFF-4606-96C5-8ADDC58C5232}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
