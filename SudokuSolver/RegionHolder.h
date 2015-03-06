@@ -32,8 +32,6 @@ public:
 	bool isValuePresent(unsigned char);
 	bool isConsistent();
 	bool isFull();
-
-	//TODO: (also?) Make all accessors as const
 	Cell& getCell(unsigned char, unsigned char);
 
 private:
